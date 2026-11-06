@@ -31,26 +31,44 @@ class Genome:
         return {'phases': self.phases, 'omega': self.omega}
 
 
-def random_genome(rng):
+def enforce_condition(genome, condition):
+    """Freeze the ablated genes after initialization and all variation steps."""
+    if condition not in C.EXPERIMENT_CONDITIONS:
+        raise ValueError(f'Unknown condition: {condition}')
+    if condition == 'body_only':
+        genome.phases = np.zeros(genome.body.shape)
+        genome.omega = C.FIXED_OMEGA
+    elif condition == 'control_only':
+        genome.body = np.array(C.DEMO_BODY, dtype=int)
+    return genome
+
+
+def random_genome(rng, condition='co_evolution'):
+    if condition == 'control_only':
+        body = np.array(C.DEMO_BODY, dtype=int)
+        return Genome(body, rng.uniform(0, 2*np.pi, body.shape),
+                      float(rng.uniform(C.OMEGA_MIN, C.OMEGA_MAX)))
     shape = (C.MAX_BODY_SIZE, C.MAX_BODY_SIZE)
     for _ in range(C.MAX_INITIALIZATION_ATTEMPTS):
         body = rng.choice(5, size=shape, p=C.INITIAL_MATERIAL_PROBABILITIES)
         if is_valid(body):
-            return Genome(body, rng.uniform(0, 2*np.pi, shape),
-                          float(rng.uniform(C.OMEGA_MIN, C.OMEGA_MAX)))
+            return enforce_condition(Genome(body, rng.uniform(0, 2*np.pi, shape),
+                          float(rng.uniform(C.OMEGA_MIN, C.OMEGA_MAX))), condition)
     raise RuntimeError('Could not initialize a valid body; check material probabilities')
 
 
-def mutate(genome, rng):
+def mutate(genome, rng, condition='co_evolution'):
     """Return a new genome; parents and elites are never modified in place."""
     child = genome.copy()
-    mask = rng.random(child.body.shape) < C.MUTATION_RATE
-    child.body[mask] = rng.integers(0, 5, np.count_nonzero(mask))
-    child.phases = (child.phases + rng.normal(0, C.PHASE_MUTATION_STD,
-                                             child.phases.shape)) % (2*np.pi)
-    child.omega = float(np.clip(child.omega + rng.normal(0, C.OMEGA_MUTATION_STD),
-                               C.OMEGA_MIN, C.OMEGA_MAX))
-    return child
+    if condition != 'control_only':
+        mask = rng.random(child.body.shape) < C.MUTATION_RATE
+        child.body[mask] = rng.integers(0, 5, np.count_nonzero(mask))
+    if condition != 'body_only':
+        child.phases = (child.phases + rng.normal(0, C.PHASE_MUTATION_STD,
+                                                 child.phases.shape)) % (2*np.pi)
+        child.omega = float(np.clip(child.omega + rng.normal(0, C.OMEGA_MUTATION_STD),
+                                   C.OMEGA_MIN, C.OMEGA_MAX))
+    return enforce_condition(child, condition)
 
 
 def crossover(first, second, rng):
@@ -71,7 +89,7 @@ def tournament(population, fitness, rng):
     return population[int(contestants[np.argmax(fitness[contestants])])]
 
 
-def next_generation(population, fitness, rng):
+def next_generation(population, fitness, rng, condition='co_evolution'):
     order = np.argsort(-fitness, kind='stable')
     elite_count = max(1, int(len(population)*C.ELITE_FRACTION))
     children = [population[i].copy() for i in order[:elite_count]]
@@ -79,13 +97,13 @@ def next_generation(population, fitness, rng):
         first = tournament(population, fitness, rng)
         for _ in range(C.MAX_CHILD_RETRIES):
             second = tournament(population, fitness, rng)
-            child = mutate(crossover(first, second, rng), rng)
+            child = mutate(crossover(first, second, rng), rng, condition)
             if is_valid(child.body):
                 break
         else:
             # Bounded retry fallback: preserve a valid parent's body, still
             # mutate its controller. Never insert a disconnected candidate.
-            child = mutate(first, rng)
+            child = mutate(first, rng, condition)
             child.body = first.body.copy()
         children.append(child)
     return children
@@ -151,17 +169,17 @@ def audit_genome(genome):
             'sim_seconds':C.SIM_SECONDS}
 
 
-def run(population_size, generations, seed, workers, results_root):
+def run(population_size, generations, seed, workers, results_root, condition='co_evolution'):
     workers = available_cpu_count() if workers is None else workers
     if population_size < 2 or generations < 1 or workers < 1:
         raise ValueError('Need population >=2, generations >=1, workers >=1')
     start = perf_counter()
     rng = np.random.default_rng(seed)
-    population = [random_genome(rng) for _ in range(population_size)]
+    population = [random_genome(rng, condition) for _ in range(population_size)]
     folder = new_run_directory(Path(results_root))
     settings = {key: value for key, value in vars(C).items() if key.isupper()}
     settings.update(POPULATION_SIZE=population_size, GENERATIONS=generations,
-                    RANDOM_SEED=seed, WORKERS=workers)
+                    RANDOM_SEED=seed, WORKERS=workers, CONDITION=condition)
     (folder/'config_snapshot.json').write_text(json.dumps(settings, indent=2)+'\n', encoding='utf-8')
     print(f'results={folder} workers={workers} population={population_size} generations={generations}', flush=True)
     history = []
@@ -199,7 +217,7 @@ def run(population_size, generations, seed, workers, results_root):
                   f'seconds={elapsed:.3f} fallen={fallen} unstable={unstable} '
                   f'best_omega={best.omega:.4f}', flush=True)
             if generation < generations:
-                population = next_generation(population, fitness, rng)
+                population = next_generation(population, fitness, rng, condition)
     final_audit = audit_genome(best)
     (folder/'final_best_metrics.json').write_text(json.dumps(final_audit,indent=2)+'\n', encoding='utf-8')
     with (folder/'final_best_metrics.csv').open('w', newline='', encoding='utf-8') as metrics_file:
@@ -208,7 +226,7 @@ def run(population_size, generations, seed, workers, results_root):
         metrics_writer.writerow(final_audit)
     total = perf_counter()-start
     summary = {'total_seconds':total, 'seed':seed, 'population':population_size,
-               'generations':generations, 'workers':workers, 'history':history, 'final_best_metrics':final_audit}
+               'generations':generations, 'condition':condition, 'workers':workers, 'history':history, 'final_best_metrics':final_audit}
     (folder/'run_summary.json').write_text(json.dumps(summary,indent=2)+'\n', encoding='utf-8')
     print(f'total_seconds={total:.3f}', flush=True)
     return folder
@@ -216,6 +234,7 @@ def run(population_size, generations, seed, workers, results_root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--condition', choices=C.EXPERIMENT_CONDITIONS, default='co_evolution')
     parser.add_argument('--small', action='store_true', help='10 candidates, 5 generations')
     parser.add_argument('--seed', type=int, default=C.RANDOM_SEED)
     parser.add_argument('--workers', type=int, default=C.WORKERS)
@@ -223,7 +242,7 @@ def main():
     args = parser.parse_args()
     run(C.SMALL_POPULATION_SIZE if args.small else C.POPULATION_SIZE,
         C.SMALL_GENERATIONS if args.small else C.GENERATIONS,
-        args.seed, args.workers, args.results)
+        args.seed, args.workers, args.results, args.condition)
 
 
 if __name__ == '__main__':

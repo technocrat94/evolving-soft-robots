@@ -1,0 +1,11 @@
+{
+  "evaluations": 36000,
+  "unstable": 0,
+  "tilt_disqualified": 1549,
+  "saved_genomes": 600,
+  "audits_repeated": 15,
+  "all_fixed_genes_verified": true,
+  "all_best_histories_monotonic": true,
+  "all_frequencies_in_bounds": true,
+  "all_tilt_counts_match": true
+}

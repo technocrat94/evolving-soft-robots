@@ -72,7 +72,7 @@ fitness = mean(x_final) − mean(x_initial)
 
 Negative distances remain negative. Invalid, unstable or tilt-disqualified runs receive zero. The final actuation-disabled control is an audit measurement; it is not subtracted from fitness.
 
-All tunable parameters live in [config.py](config.py). The default full run uses **100 robots, 60 generations, seed 42 and all available CPU cores**. Random draws happen in the parent process, and ordered worker results make scheduling independent of selection. Floating-point differences across platforms or dependency versions can still change an evolutionary trajectory.
+All tunable parameters live in [config.py](config.py). The original showcase used **100 robots and 60 generations**. Upgrade A defaults to **60 robots, 40 generations, seed 42 and all available CPU cores**. Random draws happen in the parent process, and ordered worker results make scheduling independent of selection. Floating-point differences across platforms or dependency versions can still change an evolutionary trajectory.
 
 ## Results
 
@@ -100,12 +100,57 @@ The final robot uses a **galloping/hopping gait**. Its coordinated actuation alt
 
 Runtime was measured on the development macOS machine with 10 CPU cores and Python 3.12.14; it is not a performance guarantee. Saved scores come from that recorded run; the pinned dependencies provide a tested release environment.
 
+## Experiments (Upgrade A)
+
+The original **100 × 60, seed-42 showcase** above is preserved. This separate ablation study uses **60 robots × 40 generations**, the same five seeds **42, 43, 44, 45, 46**, and all available CPU cores for each of three conditions:
+
+| Condition | Evolved | Held fixed |
+|---|---|---|
+| `body_only` | Body materials/topology | omega = 3 rad/s; all phases = 0 |
+| `control_only` | Phases and omega | The hand-designed 4-row × 3-column Step 1 body |
+| `co_evolution` | Body and controller | Neither |
+
+The five co-evolution runs serve both the multi-seed experiment and the ablation; they are not counted twice. All conditions use identical simulation duration, physics, contact damping, tilt rule, selection/elitism settings, and evaluation budget: **2,400 candidate evaluations per run**, **36,000 total**. Frozen genes are enforced after initialization and every variation step. Five seeds quantify optimizer variability, not generalization to other tasks or terrains.
+
+![Three-condition ablation: mean best fitness with sample-standard-deviation bands](assets/ablation_plot.png)
+
+Lines show mean best eligible fitness; shaded bands show **±1 sample standard deviation (`ddof=1`) across five runs**, not a confidence interval.
+
+| Condition | Final best distance, mean ± sample SD (m) | Seeds |
+|---|---:|---:|
+| co_evolution | 13.026 ± 4.337 | 5 |
+| body_only | 6.981 ± 1.749 | 5 |
+| control_only | 13.525 ± 0.241 | 5 |
+
+`control_only` has the largest observed mean in this study. Interpret this descriptively: the body-only controller and control-only body are specific baselines, not optimal fixed choices. The showcase has a different budget and is excluded from these statistics. The fixed-body baseline has a slightly higher observed mean and much lower spread; joint search finds the best individual (20.768 m), but does not improve the observed mean within this budget.
+
+**Passive-drift caveat:** some body-only winners move appreciably without actuation; their raw fitness may include movement from settling as well as powered locomotion. No post-hoc passive subtraction or exclusion was applied. One body-only passive control topples; its 3.247 m is raw displacement, not eligible fitness, while the active robot passes the tilt rule.
+
+**Statistical comparison.** We use an exact **paired, two-sided sign-flip test** of mean final-distance differences, blocking by seed. It enumerates all **32** within-pair label swaps/sign patterns in NumPy, with no SciPy runtime dependency or Monte Carlo error. Under the null it assumes exchangeable condition labels within each seed pair (equivalently, independent symmetric paired differences about zero). See the [paired-permutation method reference](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html). Holm adjustment covers the two planned comparisons.
+
+co_evolution vs body_only: raw p = 0.0625, Holm-adjusted p = 0.1250; co_evolution vs control_only: raw p = 0.8125, Holm-adjusted p = 0.8125.
+
+**Neither comparison is significant at alpha = 0.05 after adjustment.** With only five pairs, the smallest possible two-sided raw p-value is **0.0625**, even if all differences have the same sign. Thus this design has coarse p-value resolution and low inferential power; the results do not establish superiority. More independent seeds and tasks are needed before stronger claims.
+
+**Validation.** Audited 36,000 evaluations: 0 numerically unstable, 1,549 tilt-disqualified. All 600 saved best genomes satisfy the appropriate frozen-gene constraints. Final active/passive metrics were saved for all 15 runs and independently repeated exactly. Passive distance ranges: co_evolution: 0.0057 to 0.0162 m; body_only: 0.4564 to 3.2467 m; control_only: 0.0000 to 0.0000 m. The passive audit is reported rather than subtracted from the objective, and does not rule out every contact or self-collision exploit.
+
+Total study runtime: **760.718 s** including 120 preview GIFs, final audits and aggregation on the development machine. [Per-seed results and passive checks](assets/ablation_runs.csv), [summary CSV](assets/ablation_table.csv), [Markdown table](assets/ablation_table.md), [statistics](assets/ablation_statistics.json), [curve data](assets/ablation_curves.csv) and [validation](assets/ablation_validation.json) are tracked. Large run folders remain ignored under `results/experiments/`.
+
+Reproduce the full study or reanalyze a saved study:
+
+```sh
+python experiments.py
+python experiments.py --analyze results/experiments/run_YYYYMMDD_HHMM
+```
+
+An individual condition can also be run with `python evolve.py --condition body_only --seed 42` (or `control_only` / `co_evolution`). Study outputs are written both to its timestamped results folder and to `assets/`; the original showcase media are not replaced.
+
 ## Validation
 
 - **Tilt rule:** the best-fit rotation of all nodes relative to the starting body is checked every `0.02 s`. More than **30°** of tilt sustained for **0.2 s** disqualifies the run. This discourages falling and sliding; it is a conservative heuristic, not a guarantee against every possible exploit.
 - **Actuation-disabled check:** rerun the same final body from the same initial state with actuator amplitude zero. It moves **0.078180 m**, compared with **19.239387 m** actively. The passive distance is raw displacement even if a passive run would fail the tilt rule.
 - **Stability:** all **6,000 candidate evaluations** in the full run stayed finite and within the simulator's safety bounds. The tilt rule disqualified **820 evaluations**, including repeated genomes across generations; no evaluation was numerically unstable.
-- **Tests:** 12 unit tests cover shared mesh topology, valid bodies, repeatability, ground contact, dense-body stability, frequency bounds, unchanged elites, saved-genome reloads and fall disqualification.
+- **Tests:** 15 unit tests cover shared mesh topology, valid bodies, repeatability, ground contact, dense-body stability, frequency bounds, unchanged elites, saved-genome reloads, fall disqualification, frozen-gene constraints and exact statistics.
 
 The curated CSV retains each generation's `best`, `average` and `tilt_disqualified` values. Supporting metrics and the original full-run integrity summary are included under `assets/`; large raw results are excluded.
 
@@ -135,7 +180,7 @@ Install dependencies and run tests:
 
 ```sh
 python -m pip install -r requirements.txt
-python -m unittest -v test_sim test_evolve
+python -m unittest -v test_sim test_evolve test_experiments
 ```
 
 Run the hand-designed demonstration, then the small evolution test:
@@ -165,7 +210,7 @@ Regenerate the README visuals immediately using the **seven bundled checkpoints*
 python visualize.py --run assets/checkpoints
 ```
 
-Or render a new full run by replacing the example timestamp with your newly printed results folder:
+To render another 60-generation showcase, first set `GENERATIONS = 60` in `config.py`, run evolution, then replace the example timestamp below. The default 40-generation experiments use their own ablation renderer:
 
 ```sh
 python visualize.py --run results/run_YYYYMMDD_HHMM
@@ -181,9 +226,11 @@ evolving-soft-robots/
 ├── sim.py                  # Shared-node mesh, physics, contact and tilt checks
 ├── evolve.py               # Genome, selection, mutation, multiprocessing and audit
 ├── visualize.py            # GIFs, fitness plot, body image and timeline
+├── experiments.py          # Matched-seed ablations, aggregation and exact statistics
 ├── main.py                 # Hand-designed robot demonstration
 ├── test_sim.py             # Physics and mesh tests
 ├── test_evolve.py          # Evolution and audit tests
+├── test_experiments.py     # Frozen-gene and statistical checks
 ├── assets/                 # README media, curated metrics and validation summaries
 │   └── checkpoints/        # Seven best genomes, fitness CSV and configuration
 ├── README.md               # English documentation

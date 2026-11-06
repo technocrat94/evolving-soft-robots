@@ -1,0 +1,15 @@
+{
+  "python": "3.12.14",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "dependencies": {
+    "numpy": "2.2.6",
+    "matplotlib": "3.10.7",
+    "pillow": "11.3.0"
+  },
+  "code_sha256": {
+    "config.py": "1fe2caec6b8cf75429a07b7582418aa21dd6aee1c4f6713bf51d11a74a20c859",
+    "sim.py": "144b7f8cd009c3012c3698291fa6dfd047b04069e11cd005cd4909bc3d29b542",
+    "evolve.py": "7f8f3c5da49ac8eb13f0c9fd78a304e9ff252c9b88168cf91ba0170d32a838d4",
+    "experiments.py": "c53b65090f98884d86c7d6cff7aeb21996a8f745419a2ea30b496e8a00473195"
+  }
+}

@@ -7,8 +7,8 @@ STIFFNESS = {1: 1800.0, 2: 250.0, 3: 500.0, 4: 500.0}
 SPRING_DAMPING = 6.0  # N s/m, relative axial velocity only
 CONTACT_SPRING_DAMPING = 4.0  # extra axial damping in springs touching the floor
 CONTACT_TOLERANCE = 1e-9  # m, numerical contact threshold (no adhesive contact)
-POPULATION_SIZE = 100
-GENERATIONS = 60
+POPULATION_SIZE = 60
+GENERATIONS = 40
 FRICTION = 0.9  # Coulomb coefficient; contact impulse limited by normal impulse
 AMPLITUDE = 0.2
 OMEGA = 3.0  # rad/s
@@ -55,3 +55,9 @@ COMPARISON_HEADER_HEIGHT = 100
 COMPARISON_MIN_VIEW_HEIGHT = 7.0
 PLOT_DPI = 160
 MATERIAL_NAMES = {1: 'Rigid', 2: 'Soft', 3: 'Horizontal actuator', 4: 'Vertical actuator'}
+
+# Upgrade A: matched-seed ablation study; original 100x60 assets are unchanged.
+EXPERIMENT_SEEDS = (42, 43, 44, 45, 46)
+EXPERIMENT_CONDITIONS = ('co_evolution', 'body_only', 'control_only')
+FIXED_OMEGA = 3.0
+STATISTICAL_ALPHA = 0.05

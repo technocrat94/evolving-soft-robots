@@ -1,0 +1,98 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "conditions": [
+    "co_evolution",
+    "body_only",
+    "control_only"
+  ],
+  "population": 60,
+  "generations": 40,
+  "runs": [
+    {
+      "condition": "co_evolution",
+      "seed": 42,
+      "path": "co_evolution/seed_42/run_20261107_0503"
+    },
+    {
+      "condition": "co_evolution",
+      "seed": 43,
+      "path": "co_evolution/seed_43/run_20261107_0504"
+    },
+    {
+      "condition": "co_evolution",
+      "seed": 44,
+      "path": "co_evolution/seed_44/run_20261107_0505"
+    },
+    {
+      "condition": "co_evolution",
+      "seed": 45,
+      "path": "co_evolution/seed_45/run_20261107_0506"
+    },
+    {
+      "condition": "co_evolution",
+      "seed": 46,
+      "path": "co_evolution/seed_46/run_20261107_0507"
+    },
+    {
+      "condition": "body_only",
+      "seed": 42,
+      "path": "body_only/seed_42/run_20261107_0508"
+    },
+    {
+      "condition": "body_only",
+      "seed": 43,
+      "path": "body_only/seed_43/run_20261107_0508"
+    },
+    {
+      "condition": "body_only",
+      "seed": 44,
+      "path": "body_only/seed_44/run_20261107_0509"
+    },
+    {
+      "condition": "body_only",
+      "seed": 45,
+      "path": "body_only/seed_45/run_20261107_0510"
+    },
+    {
+      "condition": "body_only",
+      "seed": 46,
+      "path": "body_only/seed_46/run_20261107_0511"
+    },
+    {
+      "condition": "control_only",
+      "seed": 42,
+      "path": "control_only/seed_42/run_20261107_0512"
+    },
+    {
+      "condition": "control_only",
+      "seed": 43,
+      "path": "control_only/seed_43/run_20261107_0513"
+    },
+    {
+      "condition": "control_only",
+      "seed": 44,
+      "path": "control_only/seed_44/run_20261107_0513"
+    },
+    {
+      "condition": "control_only",
+      "seed": 45,
+      "path": "control_only/seed_45/run_20261107_0514"
+    },
+    {
+      "condition": "control_only",
+      "seed": 46,
+      "path": "control_only/seed_46/run_20261107_0515"
+    }
+  ],
+  "band": "mean \u00b11 sample standard deviation (ddof=1)",
+  "statistical_method": "exact paired two-sided mean-difference sign-flip test; Holm adjustment",
+  "method_reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+  "simulations_seconds": 760.4070257507265,
+  "total_seconds": 760.7184975836426
+}

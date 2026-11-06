@@ -1,0 +1,20 @@
+[
+  {
+    "comparison": "co_evolution vs body_only",
+    "mean_paired_difference_m": 6.0450543297264785,
+    "p_value": 0.0625,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "holm_adjusted_p_value": 0.125,
+    "significant_after_holm": false
+  },
+  {
+    "comparison": "co_evolution vs control_only",
+    "mean_paired_difference_m": -0.4989627548466064,
+    "p_value": 0.8125,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "holm_adjusted_p_value": 0.8125,
+    "significant_after_holm": false
+  }
+]
