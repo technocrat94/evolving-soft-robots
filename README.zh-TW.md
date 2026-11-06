@@ -1,5 +1,7 @@
 [English](README.md) | [繁體中文](README.zh-TW.md)
 
+[開啟互動網頁展示](https://technocrat94.github.io/evolving-soft-robots/)
+
 # 演化軟體機器人（Evolving Soft Robots）
 
 這是一個 Python 作品集專案，透過自行實作的二維質點彈簧模擬器與遺傳演算法，同時演化體素機器人的**身體材料配置與運動方式**。
@@ -181,6 +183,21 @@ python verify_robustness.py --study results/experiments/robustness/run_YYYYMMDD_
 
 精簡 CSV 保留每一代的 `best`、`average` 與 `tilt_disqualified`。輔助指標與原始完整實驗的檢核摘要也保存在 `assets/`；大型原始結果不納入儲存庫。
 
+## 互動網頁展示（Upgrade C）
+
+[瀏覽器實驗室](https://technocrat94.github.io/evolving-soft-robots/) 使用 `docs/` 中的純 HTML、CSS 與 JavaScript，不需框架或建置步驟。可並排觀看第 1、30、60 代，暫停／重新開始，或編輯 5 × 5 身體並測試 1–6 rad/s 的 omega。點擊依序切換空白 → 剛性 → 柔性 → 水平致動器 → 垂直致動器。自訂身體使用同步正弦相位；無效或不連通的設計會被拒絕。頁面支援英文與繁體中文，並展示三項實驗圖表。
+
+`export_robots.py` 將展示檢查點與平地訓練最佳神經控制器匯出至 `docs/robots.json`，包含物理常數與固定崎嶇地形。JavaScript 模擬器也支援神經控制、崎嶇地形與推力。Node 重跑四個匯出個體，在此環境與 Python 的相對誤差皆低於 **4 × 10⁻¹³ %**，遠低於要求的 10%。這是數值一致性檢核，不是實體驗證。[精確比較表](assets/js_parity.csv)。
+
+```sh
+python export_robots.py
+node docs/validate.js
+python -m http.server 8000 --directory docs
+# 開啟 http://localhost:8000
+```
+
+GitHub Pages 使用 `main` 分支的 `/docs`。修改檢查點、控制器、物理常數或結果圖表後，請重新匯出並提交產生的檔案。直接以 `file://` 開啟 `index.html` 可能阻擋 JSON 載入，本機測試請使用 HTTP。
+
 ## 執行方式
 
 需要 **Python 3.10 以上**。以下使用 `python`；部分 macOS／Linux 環境請改用 `python3`。先複製自己的儲存庫並進入目錄：
@@ -207,7 +224,7 @@ source .venv/bin/activate
 
 ```sh
 python -m pip install -r requirements.txt
-python -m unittest -v test_sim test_evolve test_experiments
+python -m unittest discover -v
 ```
 
 執行手工設計機器人示範，再執行小規模演化測試：

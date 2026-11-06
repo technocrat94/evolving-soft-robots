@@ -1,5 +1,7 @@
 [English](README.md) | [繁體中文](README.zh-TW.md)
 
+[Open the interactive web demo](https://technocrat94.github.io/evolving-soft-robots/)
+
 # Evolving Soft Robots
 
 A Python portfolio project that evolves the **body materials and motion** of voxel robots using a custom 2D mass-spring simulator and a genetic algorithm.
@@ -181,6 +183,21 @@ python verify_robustness.py --study results/experiments/robustness/run_YYYYMMDD_
 
 The curated CSV retains each generation's `best`, `average` and `tilt_disqualified` values. Supporting metrics and the original full-run integrity summary are included under `assets/`; large raw results are excluded.
 
+## Interactive web demo (Upgrade C)
+
+The [browser lab](https://technocrat94.github.io/evolving-soft-robots/) runs plain HTML, CSS and JavaScript from `docs/`, with no framework or build step. Watch generations 1, 30 and 60 side by side, pause/restart them, or edit a 5 × 5 body and try omega from 1–6 rad/s. Clicking cycles empty → rigid → soft → horizontal actuator → vertical actuator. Custom bodies use synchronized sine phases; invalid or disconnected bodies are rejected. The page supports English and Traditional Chinese and includes the three experiment figures.
+
+`export_robots.py` exports the showcase checkpoints and the best flat-trained neural controller to `docs/robots.json`, including physical constants and a reproducible rough profile. The JavaScript simulator also supports neural control, rough ground and pushes. Node replay of all four exported robots matches Python within **4 × 10⁻¹³ percent** relative error in this environment—well within the requested 10% tolerance. This is a numerical parity check, not physical validation. [Exact comparison](assets/js_parity.csv).
+
+```sh
+python export_robots.py
+node docs/validate.js
+python -m http.server 8000 --directory docs
+# Open http://localhost:8000
+```
+
+GitHub Pages serves the `main` branch's `/docs` directory. Re-export after changing checkpoints, controllers, physics constants or result figures; commit the resulting files. Opening `index.html` directly with a `file://` URL can block the JSON fetch, so use HTTP locally.
+
 ## How to run
 
 Requires **Python 3.10+**. Commands below use `python`; on some macOS/Linux setups use `python3` instead. First clone your repository and enter its directory:
@@ -207,7 +224,7 @@ Install dependencies and run tests:
 
 ```sh
 python -m pip install -r requirements.txt
-python -m unittest -v test_sim test_evolve test_experiments
+python -m unittest discover -v
 ```
 
 Run the hand-designed demonstration, then the small evolution test:
@@ -254,6 +271,11 @@ evolving-soft-robots/
 ├── evolve.py               # Genome, selection, mutation, multiprocessing and audit
 ├── visualize.py            # GIFs, fitness plot, body image and timeline
 ├── experiments.py          # Matched-seed ablations, aggregation and exact statistics
+├── controllers.py          # Sensors, neural policy and reproducible terrain
+├── robustness.py           # Fixed-body feedback experiment and robustness audits
+├── verify_robustness.py    # Independent checkpoint and winner replay checks
+├── export_robots.py        # Portable web data and Python reference scores
+├── docs/                   # Static bilingual web demo and Node parity checker
 ├── main.py                 # Hand-designed robot demonstration
 ├── test_sim.py             # Physics and mesh tests
 ├── test_evolve.py          # Evolution and audit tests
