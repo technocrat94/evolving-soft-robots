@@ -1,0 +1,12 @@
+{
+  "fitness_m": 19.239387436503346,
+  "distance_m": 19.239387436503346,
+  "max_tilt_degrees": 19.325715807656298,
+  "grounded_percentage": 46.12,
+  "fell": false,
+  "omega_rad_s": 6.0,
+  "actuation_disabled_distance_m": 0.07818001112058681,
+  "actuation_disabled_max_tilt_degrees": 5.768216287376669,
+  "actuation_disabled_fell": false,
+  "sim_seconds": 5.0
+}

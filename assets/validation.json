@@ -1,0 +1,32 @@
+{
+  "comparison_frames": 125,
+  "duration_ms": 5000,
+  "size_px": [
+    1440,
+    540
+  ],
+  "all_three_scores_match_saved_values": true,
+  "shared_pixels_per_meter": 48.0,
+  "no_robot_clipping_over_all_frames": true,
+  "frame_bounds": {
+    "1": {
+      "min_x_px": 102.47021018647575,
+      "max_x_px": 370.2151314863418,
+      "min_y_px": 220.45503959228574,
+      "max_y_px": 475.0
+    },
+    "30": {
+      "min_x_px": 91.54998038649123,
+      "max_x_px": 423.42527886022583,
+      "min_y_px": 171.7996878203947,
+      "max_y_px": 475.0
+    },
+    "60": {
+      "min_x_px": 78.14049855850806,
+      "max_x_px": 427.31564596003625,
+      "min_y_px": 180.83946997555586,
+      "max_y_px": 475.0
+    }
+  },
+  "all_pngs_decode": true
+}

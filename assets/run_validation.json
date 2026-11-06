@@ -1,0 +1,12 @@
+{
+  "evaluations": 6000,
+  "generations": 60,
+  "saved_genomes": 60,
+  "five_second_gifs_verified": 12,
+  "all_omegas_in_bounds": true,
+  "tilt_counts_match_details": true,
+  "best_fitness_monotonic": true,
+  "unstable_evaluations": 0,
+  "tilt_disqualifications": 820,
+  "final_metrics_match_independent_repeat": true
+}

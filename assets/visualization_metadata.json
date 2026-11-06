@@ -1,0 +1,18 @@
+{
+  "generations": [
+    1,
+    30,
+    60
+  ],
+  "distances_m": [
+    1.696913254787479,
+    14.325100023540502,
+    19.239387436503346
+  ],
+  "frames": 125,
+  "duration_seconds": 5.0,
+  "pixels_per_meter": 48.0,
+  "max_recorded_height_m": 6.316673170408444,
+  "source_run": "run_20261107_0420",
+  "render_seconds": 3.102292791940272
+}

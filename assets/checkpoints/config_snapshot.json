@@ -1,0 +1,104 @@
+{
+  "DT": 0.002,
+  "SIM_SECONDS": 5.0,
+  "MASS": 0.1,
+  "GRAVITY": 9.81,
+  "STIFFNESS": {
+    "1": 1800.0,
+    "2": 250.0,
+    "3": 500.0,
+    "4": 500.0
+  },
+  "SPRING_DAMPING": 6.0,
+  "CONTACT_SPRING_DAMPING": 4.0,
+  "CONTACT_TOLERANCE": 1e-09,
+  "POPULATION_SIZE": 100,
+  "GENERATIONS": 60,
+  "FRICTION": 0.9,
+  "AMPLITUDE": 0.2,
+  "OMEGA": 3.0,
+  "START_HEIGHT": 0.02,
+  "MAX_POSITION": 10000.0,
+  "MAX_BODY_SIZE": 5,
+  "RANDOM_SEED": 42,
+  "FPS": 25,
+  "IMAGE_SIZE": [
+    720,
+    550
+  ],
+  "CAMERA_WIDTH": 10.0,
+  "COLORS": {
+    "1": "#444444",
+    "2": "#bbbbbb",
+    "3": "#f39c35",
+    "4": "#88ccee"
+  },
+  "DEMO_BODY": [
+    [
+      3,
+      1,
+      3
+    ],
+    [
+      4,
+      2,
+      4
+    ],
+    [
+      4,
+      0,
+      4
+    ],
+    [
+      3,
+      0,
+      3
+    ]
+  ],
+  "DEMO_PHASES": [
+    [
+      0.0,
+      0.0,
+      3.14
+    ],
+    [
+      1.57,
+      0.0,
+      4.71
+    ],
+    [
+      1.57,
+      0.0,
+      4.71
+    ],
+    [
+      0.0,
+      0.0,
+      3.14
+    ]
+  ],
+  "OMEGA_MIN": 1.0,
+  "OMEGA_MAX": 6.0,
+  "MUTATION_RATE": 0.08,
+  "ELITE_FRACTION": 0.2,
+  "TOURNAMENT_SIZE": 3,
+  "PHASE_MUTATION_STD": 0.25,
+  "OMEGA_MUTATION_STD": 0.35,
+  "INITIAL_MATERIAL_PROBABILITIES": [
+    0.3,
+    0.15,
+    0.15,
+    0.2,
+    0.2
+  ],
+  "MAX_INITIALIZATION_ATTEMPTS": 10000,
+  "MAX_CHILD_RETRIES": 50,
+  "WORKERS": 10,
+  "PREVIEW_INTERVAL": 5,
+  "SMALL_POPULATION_SIZE": 10,
+  "SMALL_GENERATIONS": 5,
+  "RUN_UTC_OFFSET_HOURS": 8,
+  "FALL_ANGLE_DEGREES": 30.0,
+  "FALL_DURATION": 0.2,
+  "POSTURE_CHECK_INTERVAL": 10
+}
