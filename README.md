@@ -114,7 +114,7 @@ The curated CSV retains each generation's `best`, `average` and `tilt_disqualifi
 Requires **Python 3.10+**. Commands below use `python`; on some macOS/Linux setups use `python3` instead. First clone your repository and enter its directory:
 
 ```sh
-git clone https://github.com/YOUR_USERNAME/evolving-soft-robots.git
+git clone https://github.com/technocrat94/evolving-soft-robots.git
 cd evolving-soft-robots
 python -m venv .venv
 ```

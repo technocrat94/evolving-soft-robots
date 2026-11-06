@@ -114,7 +114,7 @@ fitness = mean(x_final) − mean(x_initial)
 需要 **Python 3.10 以上**。以下使用 `python`；部分 macOS／Linux 環境請改用 `python3`。先複製自己的儲存庫並進入目錄：
 
 ```sh
-git clone https://github.com/YOUR_USERNAME/evolving-soft-robots.git
+git clone https://github.com/technocrat94/evolving-soft-robots.git
 cd evolving-soft-robots
 python -m venv .venv
 ```
