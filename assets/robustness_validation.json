@@ -1,0 +1,8 @@
+{
+  "candidate_evaluations": 24000,
+  "unstable_evaluations": 0,
+  "tilt_disqualified_evaluations": 8308,
+  "fixed_body_checkpoints_checked": 400,
+  "final_training_winners_replayed": 10,
+  "active_passive_environment_audits": 30
+}

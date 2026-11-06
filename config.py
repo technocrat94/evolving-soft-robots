@@ -61,3 +61,19 @@ EXPERIMENT_SEEDS = (42, 43, 44, 45, 46)
 EXPERIMENT_CONDITIONS = ('co_evolution', 'body_only', 'control_only')
 FIXED_OMEGA = 3.0
 STATISTICAL_ALPHA = 0.05
+
+# Upgrade B: seven sensors, eight hidden units, one output per actuator voxel.
+CONTROL_INTERVAL = 10
+NN_INPUTS = 7
+NN_HIDDEN = 8
+NN_INITIAL_STD = 0.5
+NN_MUTATION_STD = 0.15
+ROUGH_SEED = 2026
+ROUGH_SPACING = 0.5
+ROUGH_START = -20.0
+ROUGH_END = 100.0
+ROUGH_HEIGHT = 0.12
+PUSH_TIME = 2.5
+PUSH_DELTA_V = -1.5  # uniform backward velocity impulse (m/s)
+ROBUSTNESS_SEEDS = (42, 43, 44, 45, 46)
+ROBUSTNESS_TRAINING = 'flat'

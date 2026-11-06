@@ -6,6 +6,7 @@ Contact uses a non-bouncing normal impulse and Coulomb friction.
 """
 import numpy as np
 import config as C
+from controllers import angle, sensors, neural_output, ground
 
 
 def _body_ok(body):
@@ -85,10 +86,11 @@ def upright_cosine(reference, positions):
 
 
 def simulate(body, controller_params=None, steps=None, record=False, diagnostics=None,
-             actuation_enabled=True):
+             actuation_enabled=True, terrain='flat', push=False):
     """Return signed COM displacement; with record, return (fitness, frames).
 
-    controller_params: {'omega': scalar radians/s, 'phases': body-shaped array}.
+    Open-loop params contain ``omega`` and body-shaped ``phases``. Closed-loop
+    params also set ``kind='closed_loop'`` and provide the four neural arrays.
     Invalid bodies or unstable runs return zero; failed recordings are empty.
     Sustained toppling disqualifies a run (fitness zero); otherwise fitness is
     exactly signed COM displacement. actuation_enabled=False provides a passive
@@ -113,6 +115,8 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
         raise ValueError('steps must be a nonnegative integer')
     p, springs, owners, rest, _ = _mesh(body)
     p[:,1] += C.START_HEIGHT
+    if terrain != 'flat':
+        p[:,1] += float(ground(p[:,0], terrain)[0].max())
     v = np.zeros_like(p)
     initial_x = p[:,0].mean()
     reference = p - p.mean(axis=0)
@@ -121,6 +125,27 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     fell = False
     worst_cosine = 1.0
     a, b = springs.T
+    neural = params.get('kind', 'open_loop') == 'closed_loop'
+    actuator_cells = np.argwhere((body == 3) | (body == 4))
+    cell_index = {tuple(cell):i for i,cell in enumerate(actuator_cells)}
+    owner_matrix = np.zeros((len(owners),len(actuator_cells)))
+    if neural:
+        expected = ((C.NN_HIDDEN, C.NN_INPUTS), (C.NN_HIDDEN,),
+                    (len(actuator_cells), C.NN_HIDDEN), (len(actuator_cells),))
+        arrays = tuple(np.asarray(params.get(name), dtype=float)
+                       for name in ('w1', 'b1', 'w2', 'b2'))
+        if tuple(a.shape for a in arrays) != expected or not all(np.all(np.isfinite(a)) for a in arrays):
+            raise ValueError('Closed-loop controller has invalid neural-network parameters')
+        for spring, group in enumerate(owners):
+            for r,c,_,active in group:
+                if active:
+                    owner_matrix[spring,cell_index[(r,c)]] += 1/len(group)
+    output = np.zeros(len(actuator_cells))
+    previous_angle = angle(reference,p)
+    front = reference[:,0] >= 0
+    if neural and not np.any(~front):
+        front = p[:,0] > p[:,0].min()
+    pushed = False
     stiffness = np.array([np.mean([C.STIFFNESS[o[2]] for o in group]) for group in owners])
     # Precompute sine/cosine coefficients so no spring loop occurs in integration.
     sin_coef = np.array([np.mean([np.cos(phases[r,c]) if active else 0.0
@@ -132,10 +157,18 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     frames = [p.copy()] if record else []
     if diagnostics is not None:
         min_y = np.empty(steps + 1)
-        min_y[0] = p[:,1].min()
+        min_y[0] = (p[:,1]-ground(p[:,0],terrain)[0]).min()
     for step in range(steps):
         t = step * C.DT
-        target = rest * (1 + amplitude * (sin_coef*np.sin(omega*t) + cos_coef*np.cos(omega*t)))
+        surface, _ = ground(p[:,0], terrain) if terrain != 'flat' else (0.0, 0.0)
+        if neural:
+            if step % C.CONTROL_INTERVAL == 0:
+                inputs, previous_angle = sensors(reference,p,v,surface,front,previous_angle,t,omega)
+                output = neural_output(params,inputs)
+            modulation = np.sum(owner_matrix * output[None,:], axis=1)
+        else:
+            modulation = sin_coef*np.sin(omega*t) + cos_coef*np.cos(omega*t)
+        target = rest * (1 + amplitude*modulation)
         delta = p[b] - p[a]
         length = np.sqrt(np.sum(delta*delta, axis=1))
         direction = delta / np.maximum(length[:,None], 1e-12)
@@ -143,7 +176,12 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
         # Dissipate axial motion in springs incident on a contacting node.
         # Equal/opposite forces remove elastic energy without sticking feet to
         # the floor or adding a downward adhesive ground force.
-        touching = (p[a,1] <= C.CONTACT_TOLERANCE) | (p[b,1] <= C.CONTACT_TOLERANCE)
+        if terrain == 'flat':
+            touching = ((p[a,1] <= C.CONTACT_TOLERANCE)
+                        | (p[b,1] <= C.CONTACT_TOLERANCE))
+        else:
+            touching = ((p[a,1] <= surface[a] + C.CONTACT_TOLERANCE)
+                        | (p[b,1] <= surface[b] + C.CONTACT_TOLERANCE))
         damping = C.SPRING_DAMPING + C.CONTACT_SPRING_DAMPING * touching
         force = (stiffness*(length-target) + damping*speed)[:,None]*direction
         # bincount accumulates equal-and-opposite forces at shared nodes.
@@ -152,14 +190,31 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
             acc[:,axis] = (np.bincount(a, weights=force[:,axis], minlength=len(p))
                           - np.bincount(b, weights=force[:,axis], minlength=len(p))) / C.MASS
         acc[:,1] -= C.GRAVITY
+        if push and not pushed and step >= round(C.PUSH_TIME/C.DT):
+            v[:,0] += C.PUSH_DELTA_V
+            pushed = True
         v += C.DT * acc
         p += C.DT * v
-        contact = p[:,1] < 0
-        normal_dv = np.maximum(-v[contact,1], 0)
-        p[contact,1] = 0
-        v[contact,1] = np.maximum(v[contact,1], 0)
-        vx = v[contact,0]
-        v[contact,0] = np.sign(vx)*np.maximum(np.abs(vx)-C.FRICTION*normal_dv, 0)
+        if terrain == 'flat':
+            contact = p[:,1] < 0
+            normal_dv = np.maximum(-v[contact,1], 0)
+            p[contact,1] = 0
+            v[contact,1] = np.maximum(v[contact,1], 0)
+            vx = v[contact,0]
+            v[contact,0] = np.sign(vx)*np.maximum(np.abs(vx)-C.FRICTION*normal_dv, 0)
+        else:
+            heights, slopes = ground(p[:,0],terrain)
+            contact = p[:,1] < heights
+            p[contact,1] = heights[contact]
+            slopes = slopes[contact]
+            normal = np.column_stack([-slopes,np.ones(len(slopes))])
+            normal /= np.sqrt(1+slopes*slopes)[:,None]
+            tangent = np.column_stack([normal[:,1],-normal[:,0]])
+            normal_dv = np.maximum(-np.sum(v[contact]*normal,axis=1),0)
+            velocity = v[contact]+normal_dv[:,None]*normal
+            vt = np.sum(velocity*tangent,axis=1)
+            friction_dv = np.clip(vt,-C.FRICTION*normal_dv,C.FRICTION*normal_dv)
+            v[contact] = velocity-friction_dv[:,None]*tangent
         if not np.all(np.isfinite(p)) or np.max(np.abs(p)) > C.MAX_POSITION:
             return (0.0, empty) if record else 0.0
         if (step+1) % C.POSTURE_CHECK_INTERVAL == 0:
@@ -169,7 +224,7 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
                            if cosine < fall_cosine else 0.0)
             fell = fell or tilted_time >= C.FALL_DURATION - 1e-12
         if diagnostics is not None:
-            min_y[step+1] = p[:,1].min()
+            min_y[step+1] = (p[:,1]-ground(p[:,0],terrain)[0]).min() if terrain != 'flat' else p[:,1].min()
         if record and ((step+1) % stride == 0 or step+1 == steps):
             frames.append(p.copy())
     if diagnostics is not None:

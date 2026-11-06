@@ -145,6 +145,33 @@ python experiments.py --analyze results/experiments/run_YYYYMMDD_HHMM
 
 An individual condition can also be run with `python evolve.py --condition body_only --seed 42` (or `control_only` / `co_evolution`). Study outputs are written both to its timestamped results folder and to `assets/`; the original showcase media are not replaced.
 
+## Closed-loop control (Upgrade B)
+
+The original controller is **open-loop**: fixed sine waves receive no feedback. Control theory motivates feedback for disturbance rejection, but a sensor-connected policy must still learn a useful response. We test that distinction with neuroevolution rather than gradient training.
+
+Every 10 physics steps (0.02 s), a **7 → 8 tanh → actuator-count tanh** network reads body tilt, angular velocity, COM vertical velocity, front/back contact flags, and `sin(omega*t)` / `cos(omega*t)`. Tilt is divided by pi, angular velocity by 10, and vertical velocity by 5. The front half is defined by starting-node x relative to the COM; contact uses local terrain height. Outputs are held between updates and scaled to the same **0.2** rest-length amplitude. Weights/biases and omega evolve; omega remains bounded to 1–6 rad/s.
+
+Both families use the **fixed generation-60 showcase body**, five seeds (42–46), **60 candidates × 40 generations**, tournament selection and 20% elitism. Controller crossover is uniform; neural mutation perturbs 8% of weights/biases with Gaussian SD 0.15, while sine phases retain SD 0.25 perturbations. This matches evaluation budgets, not parameter counts or optimization difficulty. Both train only on flat ground; frozen winners face flat ground, rough terrain, and a backward push. Roughness is one reproducible piecewise-linear profile (seed 2026, 0.5 m spacing, heights 0–0.12 m); contact resolves velocity in local normal/tangent directions. The push applies **−1.5 m/s** to every node at **2.5 s**. Contact damping and the tilt rule are retained.
+
+![Controller robustness with sample-SD error bars](assets/robustness_plot.png)
+
+| Evaluation | Open-loop sine, mean ± SD (m) | Closed-loop neural, mean ± SD (m) | Tilt failures, sine / neural |
+|---|---:|---:|---:|
+| Flat | 21.262 ± 1.123 | 16.123 ± 2.858 | 0 / 0 |
+| Rough | 11.174 ± 10.204 | 0.000 ± 0.000 | 2 / 5 |
+| Backward push | 11.437 ± 10.490 | 8.475 ± 8.111 | 2 / 2 |
+
+Distances are **eligible fitness**, with sustained tilt failures assigned zero; raw distances remain in the [per-seed table](assets/robustness_runs.csv). Error bars are sample SD across five optimizer seeds, not confidence intervals. Neural control **did not outperform sine control** in these observed means; all five neural winners fail on rough terrain. Possible explanations include flat-only training, many more neural parameters, limited search budget, a body already optimized for sine actuation, and no explicit disturbance-rejection objective. These results do not show that feedback in general is ineffective. One rough profile and one push magnitude cannot establish broad robustness; a clock-enabled network may rely heavily on its clock rather than sensors.
+
+![Seed-42 sine and neural winners on the same rough terrain](assets/closed_loop_vs_open_loop.gif)
+
+The GIF uses preselected seed 42 for both families. The exported neural robot is selected by **flat training fitness**, never by rough/push performance. All **24,000** candidate evaluations were stable; **8,308** were tilt-disqualified. All **400** checkpoints retained the fixed body and omega bounds; all ten final training scores reproduced independently. Active and actuation-disabled audits cover all **30** winner/environment combinations. Study time: **360.247 s**, including audits and GIF/plot generation, calculated from completed sine runs plus the corrected neural/aggregation run; an interrupted diagnostic batch is excluded. Raw folders are ignored; [summary CSV](assets/robustness_table.csv), [validation](assets/robustness_validation.json), and [manifest](assets/robustness_manifest.json) are tracked.
+
+```sh
+python robustness.py
+python verify_robustness.py --study results/experiments/robustness/run_YYYYMMDD_HHMM
+```
+
 ## Validation
 
 - **Tilt rule:** the best-fit rotation of all nodes relative to the starting body is checked every `0.02 s`. More than **30°** of tilt sustained for **0.2 s** disqualifies the run. This discourages falling and sliding; it is a conservative heuristic, not a guarantee against every possible exploit.

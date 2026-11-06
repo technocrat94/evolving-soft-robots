@@ -1,0 +1,73 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "controllers": [
+    "open_loop",
+    "closed_loop"
+  ],
+  "population": 60,
+  "generations": 40,
+  "training_terrain": "flat",
+  "runs": [
+    {
+      "controller": "open_loop",
+      "seed": 42,
+      "path": "open_loop/seed_42/run_20261107_0528"
+    },
+    {
+      "controller": "open_loop",
+      "seed": 43,
+      "path": "open_loop/seed_43/run_20261107_0529"
+    },
+    {
+      "controller": "open_loop",
+      "seed": 44,
+      "path": "open_loop/seed_44/run_20261107_0529"
+    },
+    {
+      "controller": "open_loop",
+      "seed": 45,
+      "path": "open_loop/seed_45/run_20261107_0530"
+    },
+    {
+      "controller": "open_loop",
+      "seed": 46,
+      "path": "open_loop/seed_46/run_20261107_0531"
+    },
+    {
+      "controller": "closed_loop",
+      "seed": 42,
+      "path": "closed_loop/seed_42/run_20261107_0533"
+    },
+    {
+      "controller": "closed_loop",
+      "seed": 43,
+      "path": "closed_loop/seed_43/run_20261107_0533"
+    },
+    {
+      "controller": "closed_loop",
+      "seed": 44,
+      "path": "closed_loop/seed_44/run_20261107_0534"
+    },
+    {
+      "controller": "closed_loop",
+      "seed": 45,
+      "path": "closed_loop/seed_45/run_20261107_0535"
+    },
+    {
+      "controller": "closed_loop",
+      "seed": 46,
+      "path": "closed_loop/seed_46/run_20261107_0535"
+    }
+  ],
+  "runs_total": 10,
+  "evaluation_design": "train on flat; evaluate frozen winners on flat, rough, and flat plus push",
+  "reused_open_loop_source": "results/experiments/robustness/run_20261107_0528",
+  "training_seconds": 349.39991383161396,
+  "total_seconds": 360.2467453312129
+}
