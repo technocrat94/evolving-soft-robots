@@ -217,11 +217,11 @@
   <section id="experiments" class="block">
     <div class="block-head">
       <p class="eyebrow"><span class="num">05</span> <span data-i18n="expEyebrow">EXPERIMENTS</span></p>
-      <h2 data-i18n="expTitle">Three hypotheses. Honest answers.</h2>
-      <p class="section-lead" data-i18n="expLead">A single impressive run proves little. These experiments repeat everything over five random seeds and report what the data says — including when it disagrees with the hypothesis.</p>
+      <h2 data-i18n="expTitle">Four experiments. Honest answers.</h2>
+      <p class="section-lead" data-i18n="expLead">A single impressive run proves little. These experiments repeat everything over five or six random seeds and report what the data says — including when it disagrees with the hypothesis.</p>
     </div>
 
-    <div class="tabs" role="tablist">
+    <div class="tabs" role="navigation" aria-label="Experiments">
       <button class="tab active" role="tab" data-tab="ablation" type="button" data-i18n="tabA">A · Body vs. brain</button>
       <button class="tab" role="tab" data-tab="robust" type="button" data-i18n="tabB">B · Does feedback help?</button>
       <button class="tab" role="tab" data-tab="domain" type="button" data-i18n="tabC">C · Domain randomization</button>
@@ -229,6 +229,7 @@
     </div>
 
     <div class="tabpanel" data-panel="ablation">
+      <h3 class="exp-title" data-i18n="tabA">A · Body vs. brain</h3>
       <div class="exp-grid">
         <div class="card">
           <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypA">Evolving body and controller together beats evolving only one of them.</span></p>
@@ -248,7 +249,8 @@
       </div>
     </div>
 
-    <div class="tabpanel" data-panel="robust" hidden>
+    <div class="tabpanel" data-panel="robust">
+      <h3 class="exp-title" data-i18n="tabB">B · Does feedback help?</h3>
       <div class="exp-grid">
         <div class="card">
           <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypB">A closed-loop neural controller with sensors is more robust to rough ground and pushes than an open-loop sine controller.</span></p>
@@ -288,7 +290,8 @@
         </div>
       </div>
     </div>
-    <div class="tabpanel" data-panel="domain" hidden>
+    <div class="tabpanel" data-panel="domain">
+      <h3 class="exp-title" data-i18n="tabC">C · Domain randomization</h3>
       <div class="exp-grid">
         <div class="card">
           <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypC">Feedback helps when the controller is trained in varied environments where feedback can be useful.</span></p>
@@ -316,7 +319,8 @@
       </div>
     </div>
 
-    <div class="tabpanel" data-panel="coevo" hidden>
+    <div class="tabpanel" data-panel="coevo">
+      <h3 class="exp-title" data-i18n="tabD">D · Co-evolving from scratch</h3>
       <div class="exp-grid">
         <div class="card">
           <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypD">Tabs B and C borrowed a body that evolved with a sine controller. If each controller evolves its own body from scratch, closed-loop feedback should win.</span></p>

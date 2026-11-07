@@ -45,8 +45,8 @@ const I18N = {
     frequency: '頻率 ω', rhythm: '節奏',
     rSync: '所有格子同步', rWave: '行進波（前 → 後）', rAlt: '上下列交替', rEvolved: '演化出的相位（僅限預設）',
     ghostToggle: '跟冠軍的幽靈比賽', run: '▶ 執行', share: '🔗 複製連結',
-    expEyebrow: '實驗', expTitle: '三個假設，誠實的答案。',
-    expLead: '一次漂亮的結果證明不了什麼。這些實驗全部用 5 個隨機種子重複，並照實呈現數據——包括數據和假設不一致的時候。',
+    expEyebrow: '實驗', expTitle: '四個實驗，誠實的答案。',
+    expLead: '一次漂亮的結果證明不了什麼。這些實驗全部用 5 到 6 個隨機種子重複，並照實呈現數據——包括數據和假設不一致的時候。',
     tabA: 'A · 身體 vs. 大腦', tabB: 'B · 回授有用嗎？', hyp: '假設',
     hypA: '同時演化身體和控制器，會比只演化其中一個更好。',
     ablationCaption: '每一代最佳距離的平均值，每種條件 5 個種子，60 隻 × 40 代。陰影 = ±1 標準差。點擊圖例可以切換顯示。',
@@ -592,30 +592,27 @@ function initCoevo() {
     view:pl=>{const s=pl.entries[0].sim,n=pl.entries[1].sim,cx=(s.mean(0)+n.mean(0))/2,w=viewWidth(pl.canvas,20,15),pt=DATA.R.robustness_push.push_time;
       return {left:cx-w/2,width:w,ground:.8,flash:env==='push'&&s.time>pt&&s.time<pt+.6?'← '+t('pushNow'):''};},
     onTick:pl=>{const [s,n]=pl.entries;$('cd-sine').textContent=s.sim.fell?t('fell'):fmt(s.sim.distance);$('cd-nn').textContent=n.sim.fell?t('fell'):fmt(n.sim.distance);},
-    onDone:pl=>{clearTimeout(pl.again);pl.again=setTimeout(()=>{if(pl.visible&&!$('panel-coevo').hidden){pl.reset();pl.play();}},1500);}
+    onDone:pl=>{clearTimeout(pl.again);pl.again=setTimeout(()=>{if(pl.visible){pl.reset();pl.play();}},1500);}
   });
   $$('#coevo-metric .chip').forEach(b=>b.addEventListener('click',()=>{$$('#coevo-metric .chip').forEach(x=>x.classList.toggle('active',x===b));metric=b.dataset.coevoMetric;chart();}));
   $$('#coevo-env .chip').forEach(b=>b.addEventListener('click',()=>{$$('#coevo-env .chip').forEach(x=>x.classList.toggle('active',x===b));env=b.dataset.coevoEnv;player.reset();player.play();}));
-  window.addEventListener('lab-tab',ev=>{if(ev.detail==='coevo'){chart();player.reset();player.play();}else player.playing=false;});
+  new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!player.playing){player.reset();player.play();}}else player.playing=false;},{threshold:.3}).observe($('coevo-canvas'));
   listeners.push(()=>{chart();player.entries[0].label=name('coevo_sine');player.entries[1].label=name('coevo_feedback');player.draw();});
   chart();
 }
 function initTabs() {
-  const tabs=$$('.tab');
-  function select(key){
-    tabs.forEach(tab=>{const active=tab.dataset.tab===key;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});
-    $$('.tabpanel').forEach(panel=>panel.hidden=panel.dataset.panel!==key);
-    window.dispatchEvent(new Event('resize'));
-    window.dispatchEvent(new CustomEvent('lab-tab',{detail:key}));
-  }
-  tabs.forEach((tab,index)=>{
-    tab.id='tab-'+tab.dataset.tab;tab.setAttribute('aria-controls','panel-'+tab.dataset.tab);
-    const panel=document.querySelector(`[data-panel=${tab.dataset.tab}]`);panel.id='panel-'+tab.dataset.tab;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id);
-    tab.addEventListener('click',()=>select(tab.dataset.tab));
-    tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();select(tabs[next].dataset.tab);tabs[next].focus();});
-  });
-  $$('[data-show-tab]').forEach(button=>button.addEventListener('click',()=>{select(button.dataset.showTab);(button.dataset.showTab==='robust'?$('robust-canvas'):$('experiments')).scrollIntoView({behavior:'smooth',block:'start'});}));
-  select('ablation');
+  // All experiments stay visible; the tab row is a sticky jump bar with scroll-spy.
+  const tabs=$$('.tab'),panels=$$('.tabpanel'),seen=new Set();
+  const mark=key=>tabs.forEach(tab=>{const on=tab.dataset.tab===key;tab.classList.toggle('active',on);if(on){tab.setAttribute('aria-current','true');const bar=tab.parentElement;if(bar.scrollWidth>bar.clientWidth)bar.scrollTo({left:tab.offsetLeft-16,behavior:'smooth'});}else tab.removeAttribute('aria-current');});
+  const go=key=>{const panel=document.querySelector(`[data-panel=${key}]`);const bar=document.querySelector('.tabs');
+    window.scrollTo({top:panel.getBoundingClientRect().top+window.scrollY-(bar?bar.offsetHeight:0)-70,behavior:'smooth'});};
+  panels.forEach(panel=>{panel.id='panel-'+panel.dataset.panel;panel.hidden=false;});
+  tabs.forEach(tab=>tab.addEventListener('click',()=>go(tab.dataset.tab)));
+  $$('[data-show-tab]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.showTab==='robust')$('robust-canvas').scrollIntoView({behavior:'smooth',block:'center'});else go(button.dataset.showTab);}));
+  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{const key=entry.target.dataset.panel;
+    if(entry.isIntersecting){mark(key);if(!seen.has(key)){seen.add(key);window.dispatchEvent(new CustomEvent('lab-tab',{detail:key}));}}}),{rootMargin:'-35% 0px -55% 0px'});
+  panels.forEach(panel=>io.observe(panel));
+  mark('ablation');
 }
 
 /* ---------------- reveal on scroll ---------------- */
