@@ -155,7 +155,9 @@
           <text x="190" y="134" class="svg-t">μ = 0.9</text>
         </svg>
         <p data-i18n="physicsText">Neighbouring cells share corners, so a robot is one connected mesh. Actuator cells change their springs' rest length with a sine wave; the ground pushes back with friction. Integration uses semi-implicit Euler at Δt = 2 ms.</p>
-        <div class="materials mono" id="materials"></div>
+        <p class="caption" data-i18n="materialHint">Select a material to see its color and how it behaves.</p>
+        <div class="materials mono" id="materials" role="group" aria-label="Material"></div>
+        <p class="caption" id="material-description" aria-live="polite"></p>
       </article>
       <article class="card how-card">
         <p class="card-label mono" data-i18n="gaLabel">B · EVOLUTION</p>

@@ -117,6 +117,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 @keyframes breathe{50%{transform:scaleX(1.2) scaleY(.9)}}
 .materials{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--muted);margin-top:14px}
 .materials span{display:inline-flex;align-items:center;gap:6px}.materials i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.materials button{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid var(--line2);border-radius:7px;background:transparent;color:var(--muted);font:inherit;cursor:pointer}
+.materials button[aria-pressed="true"]{color:var(--ink);border-color:var(--orange)}
+.materials button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.voxel-diagram[data-material] .vx-fill{fill:var(--material-color);fill-opacity:.4}
+.voxel-diagram[data-material] .sp.act{stroke:var(--material-color)}
+.voxel-diagram[data-material="1"] .vx-anim,.voxel-diagram[data-material="2"] .vx-anim{animation:none}
+.voxel-diagram[data-material="4"] .vx-anim{animation-name:breathe-vertical}
+@keyframes breathe-vertical{50%{transform:scaleY(1.2) scaleX(.9)}}
 .ga-loop{list-style:none;padding:0;margin:8px 0 16px;counter-reset:s;display:grid;gap:10px}
 .ga-loop li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;column-gap:12px;align-items:start;padding:10px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);animation:glow 6s infinite}
 .ga-loop li::before{content:counter(s);grid-row:span 2;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:13px;background:var(--line);color:var(--ink)}

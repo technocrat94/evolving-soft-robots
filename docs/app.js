@@ -28,6 +28,8 @@ const I18N = {
     raceLead: '讓三個世代比賽，或讓開迴路和回授機器人在崎嶇地面、被推的情況下對決。唯一的差別，是演化寫進牠們基因裡的東西。',
     startRace: '▶ 開始比賽', reset: '重設',
     howEyebrow: '背後的原理', howTitle: '由彈簧與天擇組成。',
+    materialHint: '點選材質，查看對應顏色與動作示意。',
+    materialDescriptions: ['深灰色：硬材質，彈簧較硬（k = 1800），不主動改變自然長度。', '淺灰色：軟材質，彈簧較軟（k = 250），不主動改變自然長度。', '橘色 ↔：水平肌肉，主動改變水平彈簧的自然長度（k = 500）。', '藍色 ↕：垂直肌肉，主動改變垂直彈簧的自然長度（k = 500）。'],
     physicsLabel: 'A · 物理', physicsTitle: '每一格都是四個質點加六根彈簧',
     physicsText: '相鄰的格子共用頂點，所以整隻機器人是一張相連的網格。致動器格子會用 sin 波改變彈簧的自然長度；地面以摩擦力反推。積分方法為半隱式歐拉法，Δt = 2 ms。',
     gaLabel: 'B · 演化', gaTitle: '一個獎勵「走得遠」的迴圈',
@@ -110,6 +112,7 @@ const I18N = {
   }
 };
 const EN_DYN = {
+  materialDescriptions: ['Dark grey: rigid material, stiffer springs (k = 1800); no active rest-length change.', 'Light grey: soft material, softer springs (k = 250); no active rest-length change.', 'Orange ↔: horizontal muscle actively changes horizontal spring rest lengths (k = 500).', 'Blue ↕: vertical muscle actively changes vertical spring rest lengths (k = 500).'],
   brainNoteFb: 'The co-evolved feedback network (seed 42): every cell reads tilt, angular velocity, vertical velocity, front/back foot contact and a clock, then decides how hard to push. It evolved for its own body, so it may struggle on yours — try it!',
   raceNoteEras: 'Best robot of generations 1, 30 and 60 (all open-loop).',
   raceNoteControl: 'Orange = co-evolved open-loop · violet = co-evolved feedback · grey = feedback trained on flat ground only, with a borrowed body. All seed 42, fixed in advance. One race is one sample: on this rough profile the flat-trained robot happens to win, but it falls under the push — and across all 10 held-out rough profiles it survives only 8% of the time (tabs C and D below).',
@@ -376,7 +379,22 @@ function initRace() {
 }
 
 /* ---------------- 03 materials legend ---------------- */
-function renderMaterials() { $('materials').innerHTML = [1, 2, 3, 4].map(m => `<span><i style="background:${MAT[m]}"></i>${t('mats')[m]}</span>`).join(''); }
+let selectedMaterial = 3;
+function renderMaterials() {
+  const diagram = document.querySelector('.voxel-diagram');
+  $('materials').setAttribute('aria-label', lang === 'zh' ? '材質' : 'Material');
+  $('materials').innerHTML = [1, 2, 3, 4].map(m => `<button type="button" aria-pressed="${m === selectedMaterial}" data-material="${m}"><i style="background:${MAT[m]}"></i>${t('mats')[m]}${m === 3 ? ' ↔' : m === 4 ? ' ↕' : ''}</button>`).join('');
+  $('materials').querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
+    selectedMaterial = Number(button.dataset.material); renderMaterials();
+  }));
+  diagram.dataset.material = selectedMaterial;
+  diagram.style.setProperty('--material-color', MAT[selectedMaterial]);
+  diagram.querySelectorAll('.sp:not(.diag)').forEach(line => {
+    const horizontal = line.getAttribute('y1') === line.getAttribute('y2');
+    line.classList.toggle('act', selectedMaterial === (horizontal ? 3 : 4));
+  });
+  $('material-description').textContent = t('materialDescriptions')[selectedMaterial - 1];
+}
 
 /* ---------------- 04 build ---------------- */
 function initBuild() {
