@@ -111,6 +111,9 @@ def main():
             controller['w2']=[controller['w2'][i] for i in cells];controller['b2']=[controller['b2'][i] for i in cells]
         coevo_live[condition]={'id':condition,'body':body.tolist(),'controller':controller,
                                'python_distance_m':references['flat']['distance_m'],'references':references,'seed':42}
+    # Full 25-output feedback brain (one output per grid cell) so the builder can drive any body with it.
+    _b,_g,_=load_controller(ASSETS/'coevo_winners/coevo_feedback_42.npz')
+    brain={k:v.tolist() if isinstance(v,np.ndarray) else v for k,v in _g.parameters().items()}
     bodies={}
     for condition in ('coevo_sine','coevo_feedback'):
         for seed in coevo_stats['seeds']:
@@ -118,7 +121,7 @@ def main():
     payload['coevolution']={
         'summary':coevo_stats['summary'],'tests':coevo_stats['paired_tests'],
         'runs':[{k:num(v) for k,v in r.items()} for r in rows(ASSETS/'coevolution_runs.csv')],
-        'bodies':bodies,'controllers':coevo_live,'seeds':coevo_stats['seeds'],
+        'bodies':bodies,'controllers':coevo_live,'brain25':brain,'seeds':coevo_stats['seeds'],
         'population':coevo_stats['population'],'generations':coevo_stats['generations'],
         'training_episodes':coevo_stats['training_episodes'],'training_unstable_episodes':coevo_stats['training_unstable_episodes']}
     out = ROOT / 'docs' / 'lab.json'

@@ -24,8 +24,8 @@ const I18N = {
     distance: '距離', cells: '格數', actuators: '致動器',
     fitnessLabel: '適應度歷史 · 100 隻 × 60 代', best: '最佳', average: '平均', disq: '傾倒淘汰數',
     fitnessCaption: '進步不是平滑的。最佳距離在第 30 到 41 代停在 14.33 m，之後才突破——這種「間斷式」的進步，跟生物演化很像。把游標移到圖上可以查看每一代的數據。',
-    raceEyebrow: '幽靈競速', raceTitle: '同樣的物理，同樣的 5 秒，三個世代。',
-    raceLead: '第 1、30、60 代的最佳機器人站在同一條起跑線。唯一的差別，是演化寫進牠們基因裡的東西。',
+    raceEyebrow: '幽靈競速', raceTitle: '同樣的物理，同樣的 5 秒，誰會贏？',
+    raceLead: '讓三個世代比賽，或讓開迴路和回授機器人在崎嶇地面、被推的情況下對決。唯一的差別，是演化寫進牠們基因裡的東西。',
     startRace: '▶ 開始比賽', reset: '重設',
     howEyebrow: '背後的原理', howTitle: '由彈簧與天擇組成。',
     physicsLabel: 'A · 物理', physicsTitle: '每一格都是四個質點加六根彈簧',
@@ -40,8 +40,8 @@ const I18N = {
     guardText: '早期實驗發現倒下後滑行可獲得高分，因此加入兩項檢核：傾角超過 30° 且持續 0.2 秒得零分，並將最佳個體關閉致動器重跑，量測被動沉降。這些檢核抑制取巧，但不保證動作符合真實物理。',
     guard1: '傾倒規則', guard2: '冠軍關掉肌肉後的位移',
     buildEyebrow: '換你試試', buildTitle: '你能贏過演化嗎？',
-    buildLead: '點格子切換材料，選一種節奏，跟第 60 代冠軍的幽靈比賽。',
-    presets: '預設', pDemo: '步行者', pGen1: '第 1 代', pGen60: '冠軍', pRandom: '🎲 隨機', pClear: '清空',
+    buildLead: '點格子切換材料，選開迴路節奏或裝上演化出的回授大腦，再到平地、崎嶇地面或被推的情況下測試你的設計。',
+    presets: '預設', pDemo: '步行者', pFb: '🧠 回授冠軍', pGen1: '第 1 代', pGen60: '冠軍', pRandom: '🎲 隨機', pClear: '清空',
     frequency: '頻率 ω', rhythm: '節奏',
     rSync: '所有格子同步', rWave: '行進波（前 → 後）', rAlt: '上下列交替', rEvolved: '演化出的相位（僅限預設）',
     ghostToggle: '跟冠軍的幽靈比賽', run: '▶ 執行', share: '🔗 複製連結',
@@ -61,6 +61,13 @@ const I18N = {
     vNo: '僅平地訓練時，假說未獲支持',
     findB: 'B 的原始測試中，平地訓練神經控制器的平均表現較差，五個最佳個體皆在崎嶇地形翻倒。C 測試多變環境訓練是否改變結果：保留崎嶇測試成功率由 8% 提升至 94%，但尚未在統計上確立回授特有的優勢。',
     takeB: '回授提供資訊；抗擾動需要控制器經過適當設計或訓練來使用資訊。請看 C 的隨機環境訓練與純時鐘消融。',
+    modeEras: '三個世代', modeControl: '開迴路 vs. 回授',
+    raceTitle2: '', brainLabel: '大腦', brainSine: '開迴路節奏', brainFeedback: '回授大腦 🧠',
+    brainNote: '固定的 sin 波——機器人從不看感測器。',
+    brainNoteFb: '共同演化的回授網路（種子 42）：每一格讀取傾斜、角速度、垂直速度、前後腳著地與時鐘訊號，再決定怎麼出力。它是為自己的身體演化的，放到你的身體上不一定好用——試試看！',
+    terrainLabel: '測試地面',
+    raceNoteEras: '第 1、30、60 代的最佳機器人（開迴路）。',
+    raceNoteControl: '橘＝共同演化開迴路；紫＝共同演化回授；灰＝只在平地訓練、借用身體的回授。三者都用種子 42，事先決定。一場比賽只是一個樣本：在這塊崎嶇地形上平地訓練的剛好贏了，但被推時會翻倒；而在全部 10 塊保留崎嶇地形上，它只有 8% 的機率不翻倒（見下方 C、D 實驗）。',
     tabD: 'D · 從零開始共同演化',
     hypD: 'B 和 C 分頁借用的是搭配 sin 波演化出來的身體。如果讓每種控制器從零開始演化自己的身體，閉迴路回授應該會贏。',
     coevoCaption: '長條 = 6 個配對種子（42–47）的平均，點 = 各個種子，誤差線 = ±1 標準差。兩種條件都從隨機身體開始，用 C 分頁的領域隨機化訓練（60 隻 × 40 代，每隻 4 個情境），並接受相同的保留測試集。',
@@ -103,6 +110,9 @@ const I18N = {
   }
 };
 const EN_DYN = {
+  brainNoteFb: 'The co-evolved feedback network (seed 42): every cell reads tilt, angular velocity, vertical velocity, front/back foot contact and a clock, then decides how hard to push. It evolved for its own body, so it may struggle on yours — try it!',
+  raceNoteEras: 'Best robot of generations 1, 30 and 60 (all open-loop).',
+  raceNoteControl: 'Orange = co-evolved open-loop · violet = co-evolved feedback · grey = feedback trained on flat ground only, with a borrowed body. All seed 42, fixed in advance. One race is one sample: on this rough profile the flat-trained robot happens to win, but it falls under the push — and across all 10 held-out rough profiles it survives only 8% of the time (tabs C and D below).',
   domainCond: {flat_sine:'Flat · sine',flat_neural:'Flat · neural',randomized_sine:'Randomized · sine',randomized_neural_feedback:'Randomized · feedback',randomized_neural_clock_only:'Randomized · clock only'},
   thDistance:'Distance (m)',thSuccess:'Success (%)',statDistance:'distance',statSuccess:'success',rawLive:'Raw displacement (1 / 2)',
   compareClock:'Feedback vs clock-only',compareSine:'Feedback vs sine',
@@ -332,20 +342,36 @@ function fitnessChart(container, hist, checkpoints, onPick) {
 }
 
 /* ---------------- 02 race ---------------- */
+function envOptions(env) { return env === 'rough' ? {terrain: 'rough', terrain_heights: DATA.R.robustness_terrain.heights} : env === 'push' ? DATA.R.robustness_push : {}; }
 function initRace() {
-  const racers = [1, 30, 60].map(g => DATA.cp.find(c => c.generation === g));
+  let mode = 'eras', env = 'flat';
+  const eras = [1, 30, 60].map(g => DATA.cp.find(c => c.generation === g));
+  const E = DATA.L.coevolution, D = DATA.L.domain_randomization;
+  const contenders = () => [
+    {robot: E.controllers.coevo_sine, key: 'cs', color: ORANGE, name: t('coevoSine')},
+    {robot: E.controllers.coevo_feedback, key: 'cf', color: VIOLET, name: t('coevoFeedback'), outline: VIOLET, outlineFill: 'rgba(185,163,255,.10)'},
+    {robot: D.controllers.flat_neural, key: 'fn', color: '#8fa39b', name: lang === 'zh' ? '平地訓練回授' : 'Flat-trained feedback', outline: '#8fa39b', outlineFill: 'rgba(143,163,155,.08)'}];
   const player = new Player($('race-canvas'), {
-    make: () => racers.map(r => ({sim: newSim(r), gen: r.generation, outline: r.generation === 60 ? null : ERA[r.generation], outlineFill: r.generation === 1 ? 'rgba(143,163,155,.08)' : 'rgba(136,204,238,.08)', label: t('gen')(r.generation), labelColor: ERA[r.generation], labelDy: r.generation === 30 ? 16 : 0, trail: [], trailColor: ERA[r.generation] + '66'})),
-    view: pl => { const w = viewWidth(pl.canvas, 25, 24); return {left: -2.2, width: w, ground: .84, finish: 19.24}; },
+    make: () => {
+      const o = envOptions(env);
+      if (mode === 'eras') return eras.map(r => ({sim: newSim(r, o), gen: r.generation, color: ERA[r.generation], name: t('gen')(r.generation), outline: r.generation === 60 ? null : ERA[r.generation], outlineFill: r.generation === 1 ? 'rgba(143,163,155,.08)' : 'rgba(136,204,238,.08)', label: t('gen')(r.generation), labelColor: ERA[r.generation], labelDy: r.generation === 30 ? 16 : 0, trail: [], trailColor: ERA[r.generation] + '66'}));
+      return contenders().map((c, i) => ({sim: newSim(c.robot, o), color: c.color, name: c.name, outline: c.outline || null, outlineFill: c.outlineFill, label: c.name, labelColor: c.color, labelDy: i * 16, trail: [], trailColor: c.color + '66'}));
+    },
+    view: pl => { const w = viewWidth(pl.canvas, 25, 24); return {left: -2.2, width: w, ground: .84, finish: mode === 'eras' && env === 'flat' ? 19.24 : undefined, flash: env === 'push' && pl.entries[0].sim.time > DATA.R.robustness_push.push_time && pl.entries[0].sim.time < DATA.R.robustness_push.push_time + .6 ? '← ' + t('pushNow') : ''}; },
     onTick: pl => board(pl)
   });
   function board(pl) {
-    const sorted = pl.entries.slice().sort((a, b) => b.sim.distance - a.sim.distance);
-    $('leaderboard').innerHTML = sorted.map((e, i) => `<div><span class="rank">${t('rank')[i]}</span><i style="background:${ERA[e.gen]}"></i>${t('gen')(e.gen)}<b>${fmt(e.sim.distance)}</b></div>`).join('');
+    const sorted = pl.entries.slice().sort((a, b) => (b.sim.fell ? -1e9 : b.sim.distance) - (a.sim.fell ? -1e9 : a.sim.distance));
+    $('leaderboard').innerHTML = sorted.map((e, i) => `<div><span class="rank">${t('rank')[i]}</span><i style="background:${e.color}"></i>${e.name}<b>${e.sim.fell ? t('fell') : fmt(e.sim.distance)}</b></div>`).join('');
   }
-  $('race-start').addEventListener('click', () => { player.reset(); player.play(); });
+  function note() { $('race-note').textContent = t(mode === 'eras' ? 'raceNoteEras' : 'raceNoteControl'); }
+  const restart = () => { note(); player.reset(); player.play(); };
+  $$('#race-mode .chip').forEach(b => b.addEventListener('click', () => { $$('#race-mode .chip').forEach(x => x.classList.toggle('active', x === b)); mode = b.dataset.raceMode; restart(); }));
+  $$('#race-env .chip').forEach(b => b.addEventListener('click', () => { $$('#race-env .chip').forEach(x => x.classList.toggle('active', x === b)); env = b.dataset.raceEnv; restart(); }));
+  $('race-start').addEventListener('click', restart);
   $('race-reset').addEventListener('click', () => { player.playing = false; player.reset(); });
-  listeners.push(() => { player.entries.forEach(e => e.label = t('gen')(e.gen)); player.draw(); board(player); });
+  listeners.push(() => { note(); player.reset(); board(player); });
+  note();
   const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { player.reset(); player.play(); io.disconnect(); } }, {threshold: .5}); io.observe($('race-canvas'));
 }
 
@@ -377,22 +403,31 @@ function initBuild() {
     if (mode === 'evolved' && presetPhases) return presetPhases;
     return grid.map((row, r) => row.map((_, c) => mode === 'wave' ? -c * Math.PI / 2 : mode === 'alt' ? (r % 2) * Math.PI : 0));
   }
-  function robot() { return {body: grid.map(r => r.slice()), controller: {kind: 'open_loop', omega: +$('omega').value, phases: phases()}}; }
+  let brain = 'sine', benv = 'flat';
+  function robot() {
+    const body = grid.map(r => r.slice());
+    if (brain === 'feedback') {
+      const B = DATA.L.coevolution.brain25, cells = [];
+      body.forEach((row, r) => row.forEach((m, c) => { if (m === 3 || m === 4) cells.push(r * 5 + c); }));
+      return {body, controller: {kind: 'closed_loop', omega: B.omega, w1: B.w1, b1: B.b1, w2: cells.map(i => B.w2[i]), b2: cells.map(i => B.b2[i])}};
+    }
+    return {body, controller: {kind: 'open_loop', omega: +$('omega').value, phases: phases()}};
+  }
   function status(key, extra = '', err = false) { statusKey = key; $('build-status').textContent = t(key) + extra; $('build-status').classList.toggle('error', err); }
   const player = new Player($('build-canvas'), {
     make: () => {
-      const out = []; if ($('ghost').checked) out.push({sim: newSim(champ), outline: 'rgba(243,156,53,.55)', outlineFill: 'rgba(243,156,53,.05)', label: lang === 'zh' ? '冠軍幽靈' : 'champion ghost', labelColor: 'rgba(243,156,53,.7)', labelDy: 18});
-      if (SoftRobot.valid(grid)) out.push({sim: newSim(robot()), you: true, trail: [], label: lang === 'zh' ? '你' : 'you', labelColor: GREEN});
+      const out = [], o = envOptions(benv); if ($('ghost').checked) out.push({sim: newSim(champ, o), outline: 'rgba(243,156,53,.55)', outlineFill: 'rgba(243,156,53,.05)', label: lang === 'zh' ? '冠軍幽靈' : 'champion ghost', labelColor: 'rgba(243,156,53,.7)', labelDy: 18});
+      if (SoftRobot.valid(grid)) out.push({sim: newSim(robot(), o), you: true, trail: [], label: lang === 'zh' ? '你' : 'you', labelColor: GREEN});
       return out.length ? out : [{sim: null}];
     },
     view: pl => { const you = pl.entries.find(e => e.you); return followView(you ? you.sim : null, viewWidth(pl.canvas, 16, 11), {ground: .8}); },
     onTick: pl => { const you = pl.entries.find(e => e.you); if (!you) return; $('b-time').textContent = you.sim.time.toFixed(2) + ' s'; $('b-dist').textContent = fmt(you.sim.distance); },
-    onDone: pl => { const you = pl.entries.find(e => e.you); if (you) verdict(you.sim); }
+    onDone: pl => { const you = pl.entries.find(e => e.you), ghost = pl.entries.find(e => !e.you && e.sim); if (you) verdict(you.sim, ghost ? ghost.sim.distance : champ.python_distance_m); }
   });
-  function verdict(sim) {
-    const v = $('verdict'), d = sim.distance, ratio = d / champ.python_distance_m * 100;
-    v.hidden = false; v.className = 'verdict' + (d > champ.python_distance_m ? ' win' : '');
-    v.innerHTML = sim.fell ? `<strong>0.00 m</strong>${t('youFell')}` : d > champ.python_distance_m ? `<strong>${d.toFixed(2)} m</strong>${t('beat')}` : `<strong>${d.toFixed(2)} m</strong>${Math.max(ratio, 0).toFixed(0)}% ${t('ofChamp')}`;
+  function verdict(sim, target) {
+    const v = $('verdict'), d = sim.distance, ratio = target > 0 ? d / target * 100 : 100;
+    v.hidden = false; v.className = 'verdict' + (d > target ? ' win' : '');
+    v.innerHTML = sim.fell ? `<strong>0.00 m</strong>${t('youFell')}` : d > target ? `<strong>${d.toFixed(2)} m</strong>${t('beat')}` : `<strong>${d.toFixed(2)} m</strong>${Math.max(ratio, 0).toFixed(0)}% ${t('ofChamp')}`;
     status('ready');
   }
   function refresh() { cellButtons(); $('verdict').hidden = true; player.playing = false; player.reset();
@@ -402,6 +437,7 @@ function initBuild() {
     if (preset === 'clear') grid = grid.map(r => r.map(() => 0));
     else if (preset === 'demo') { grid = Array.from({length: 5}, () => Array(5).fill(0)); DATA.R.demo_body.forEach((row, i) => row.forEach((v, j) => grid[i + 1][j + 1] = v)); presetPhases = null; $('rhythm').value = 'wave'; $('omega').value = 3; }
     else if (preset === 'random') { do { grid = grid.map(r => r.map(() => Math.random() < .3 ? 0 : 1 + Math.floor(Math.random() * 4))); } while (!SoftRobot.valid(grid)); $('rhythm').value = 'wave'; }
+    else if (preset === 'fbchamp') { const c = DATA.L.coevolution.controllers.coevo_feedback; grid = c.body.map(r => r.slice()); brain = 'feedback'; $$('#brain-seg .chip').forEach(x => x.classList.toggle('active', x.dataset.brain === 'feedback')); brainUi(); }
     else { const cp = DATA.cp.find(c => c.id === preset); grid = cp.body.map(r => r.slice()); presetPhases = cp.controller.phases; $('omega').value = cp.controller.omega; $('rhythm').value = 'evolved'; }
     $('omega-out').textContent = (+$('omega').value).toFixed(1) + ' rad/s'; refresh();
   }
@@ -413,6 +449,10 @@ function initBuild() {
   $('omega').addEventListener('input', () => { $('omega-out').textContent = (+$('omega').value).toFixed(1) + ' rad/s'; refresh(); });
   $('rhythm').addEventListener('change', () => { if ($('rhythm').value === 'evolved' && !presetPhases) { $('rhythm').value = 'wave'; status('evolvedOnly', '', true); return; } refresh(); });
   $('ghost').addEventListener('change', refresh);
+  function brainUi() { $('brain-note').textContent = t(brain === 'feedback' ? 'brainNoteFb' : 'brainNote'); $('rhythm-field').style.opacity = brain === 'feedback' ? .4 : 1; $('omega').disabled = $('rhythm').disabled = brain === 'feedback'; }
+  $$('#brain-seg .chip').forEach(b => b.addEventListener('click', () => { $$('#brain-seg .chip').forEach(x => x.classList.toggle('active', x === b)); brain = b.dataset.brain; brainUi(); refresh(); }));
+  $$('#build-env .chip').forEach(b => b.addEventListener('click', () => { $$('#build-env .chip').forEach(x => x.classList.toggle('active', x === b)); benv = b.dataset.buildEnv; refresh(); }));
+  listeners.push(brainUi);
   $('run').addEventListener('click', () => { if (!SoftRobot.valid(grid)) return status('invalid', '', true); $('verdict').hidden = true; player.reset(); player.play(); status('running'); });
   $('share').addEventListener('click', async () => { writeHash(); try { await navigator.clipboard.writeText(location.href); status('copied'); } catch { status('copyFail', '', true); } });
   listeners.push(() => { paletteButtons(); cellButtons(); $('build-status').textContent = t(statusKey); player.reset(); });

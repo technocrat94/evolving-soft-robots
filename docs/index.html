@@ -102,11 +102,23 @@
   <section id="race" class="block">
     <div class="block-head">
       <p class="eyebrow"><span class="num">02</span> <span data-i18n="raceEyebrow">GHOST RACE</span></p>
-      <h2 data-i18n="raceTitle">Same physics. Same 5 seconds. Three eras.</h2>
-      <p class="section-lead" data-i18n="raceLead">The best robots from generation 1, 30 and 60 start on the same line. Nothing differs except what evolution wrote into their genomes.</p>
+      <h2 data-i18n="raceTitle">Same physics. Same 5 seconds. Who wins?</h2>
+      <p class="section-lead" data-i18n="raceLead">Race three generations of evolution, or pit open-loop robots against feedback-controlled ones on rough ground and under pushes. Nothing differs except what evolution wrote into their genomes.</p>
     </div>
     <div class="card race-card">
-      <canvas id="race-canvas" class="race-canvas" aria-label="Race between generations"></canvas>
+      <div class="race-modes">
+        <div class="row wrap seg" id="race-mode">
+          <button class="chip active" type="button" data-race-mode="eras" data-i18n="modeEras">Three generations</button>
+          <button class="chip" type="button" data-race-mode="control" data-i18n="modeControl">Open-loop vs. feedback</button>
+        </div>
+        <div class="row wrap seg" id="race-env">
+          <button class="chip active" type="button" data-race-env="flat" data-i18n="eFlat">Flat</button>
+          <button class="chip" type="button" data-race-env="rough" data-i18n="eRough">Rough terrain</button>
+          <button class="chip" type="button" data-race-env="push" data-i18n="ePush">Push at 2.5 s</button>
+        </div>
+      </div>
+      <p id="race-note" class="race-note"></p>
+      <canvas id="race-canvas" class="race-canvas" aria-label="Robot race"></canvas>
       <div class="race-bar">
         <div id="leaderboard" class="leaderboard mono"></div>
         <div class="row">
@@ -173,7 +185,7 @@
     <div class="block-head">
       <p class="eyebrow"><span class="num">04</span> <span data-i18n="buildEyebrow">YOUR TURN</span></p>
       <h2 data-i18n="buildTitle">Can you beat evolution?</h2>
-      <p class="section-lead" data-i18n="buildLead">Tap cells to cycle materials, pick a rhythm, and race your design against the generation-60 champion's ghost.</p>
+      <p class="section-lead" data-i18n="buildLead">Tap cells to cycle materials, choose an open-loop rhythm or plug in an evolved feedback brain, then test your design on flat ground, rough terrain or under a push.</p>
     </div>
     <div class="build">
       <div class="card build-panel">
@@ -185,13 +197,28 @@
             <button class="chip" type="button" data-preset="demo" data-i18n="pDemo">Walker</button>
             <button class="chip" type="button" data-preset="gen1" data-i18n="pGen1">Gen 1</button>
             <button class="chip" type="button" data-preset="gen60" data-i18n="pGen60">Champion</button>
+            <button class="chip" type="button" data-preset="fbchamp" data-i18n="pFb">🧠 Feedback champ</button>
             <button class="chip" type="button" data-preset="random" data-i18n="pRandom">🎲 Random</button>
             <button class="chip" type="button" data-preset="clear" data-i18n="pClear">Clear</button>
           </div>
         </div>
         <label class="field"><span><span data-i18n="frequency">Frequency ω</span> <output id="omega-out" class="mono">3.0 rad/s</output></span>
           <input id="omega" type="range" min="1" max="6" step="0.1" value="3"></label>
-        <label class="field"><span data-i18n="rhythm">Rhythm</span>
+        <div class="field"><span data-i18n="brainLabel">Brain</span>
+          <div class="row wrap seg" id="brain-seg">
+            <button class="chip active" type="button" data-brain="sine" data-i18n="brainSine">Open-loop rhythm</button>
+            <button class="chip" type="button" data-brain="feedback" data-i18n="brainFeedback">Feedback brain 🧠</button>
+          </div>
+          <small id="brain-note" class="hint" data-i18n="brainNote">Fixed sine waves — the robot never looks at its sensors.</small>
+        </div>
+        <div class="field"><span data-i18n="terrainLabel">Test ground</span>
+          <div class="row wrap seg" id="build-env">
+            <button class="chip active" type="button" data-build-env="flat" data-i18n="eFlat">Flat</button>
+            <button class="chip" type="button" data-build-env="rough" data-i18n="eRough">Rough terrain</button>
+            <button class="chip" type="button" data-build-env="push" data-i18n="ePush">Push at 2.5 s</button>
+          </div>
+        </div>
+        <label class="field" id="rhythm-field"><span data-i18n="rhythm">Rhythm</span>
           <select id="rhythm">
             <option value="sync" data-i18n="rSync">All cells in sync</option>
             <option value="wave" data-i18n="rWave">Travelling wave (front → back)</option>
