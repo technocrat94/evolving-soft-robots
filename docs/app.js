@@ -61,6 +61,15 @@ const I18N = {
     vNo: '僅平地訓練時，假說未獲支持',
     findB: 'B 的原始測試中，平地訓練神經控制器的平均表現較差，五個最佳個體皆在崎嶇地形翻倒。C 測試多變環境訓練是否改變結果：保留崎嶇測試成功率由 8% 提升至 94%，但尚未在統計上確立回授特有的優勢。',
     takeB: '回授提供資訊；抗擾動需要控制器經過適當設計或訓練來使用資訊。請看 C 的隨機環境訓練與純時鐘消融。',
+    tabD: 'D · 從零開始共同演化',
+    hypD: 'B 和 C 分頁借用的是搭配 sin 波演化出來的身體。如果讓每種控制器從零開始演化自己的身體，閉迴路回授應該會贏。',
+    coevoCaption: '長條 = 6 個配對種子（42–47）的平均，點 = 各個種子，誤差線 = ±1 標準差。兩種條件都從隨機身體開始，用 C 分頁的領域隨機化訓練（60 隻 × 40 代，每隻 4 個情境），並接受相同的保留測試集。',
+    bodiesLabel: '12 個優勝者的身體', coevoVerdict: '未獲支持——平手',
+    findD: '起點公平之後，兩種控制器幾乎都不會翻倒（保留測試成功率 98.4% vs 99.2%）。開迴路平均走得比較遠（11.79 vs 10.19 m），但不同種子之間的差異大得多（標準差 4.01 vs 1.05 m）。兩項差異都不顯著。',
+    takeD: '拿掉身體的偏差後，C 分頁裡的存活差距消失了：回授的成功率從 88.6%（借來的身體）升到 99.2%（自己演化的身體）。回授用一點速度換來了穩定性。',
+    coevoCaveat: '兩者的成功率都接近 100%，代表這個測試集太簡單、分不出高下；下一步需要更難或訓練分布以外的地形。回授的優勝者關掉肌肉後位移較大（0.26 vs 0.02 m）。只有 6 個種子，兩種條件的參數數量也不同。',
+    coevoSine: '共同演化・開迴路', coevoFeedback: '共同演化・回授',
+    coevoLiveNote: '兩邊都用種子 42，依照和 C 分頁相同的慣例事先決定。在這塊崎嶇地形上回授走得比較遠——跟平均結果相反，所以只當作示範。',
     tabC: 'C · 領域隨機化', compareLeft: '控制器 1', compareRight: '控制器 2',
     seeDomain: '查看 C · 領域隨機化 →', tryDomain: '即時比較這些控制器 →',
     stressNote: '即時個體皆為種子 42，使用 C 的第一個保留崎嶇／推力設定；上方 B 圖表保留原始測試設定。單次結果可能不同於五個種子的平均。',
@@ -535,6 +544,62 @@ function initRobust() {
   chart();
   const io = new IntersectionObserver(es => { if (es[0].isIntersecting)restartStress();else{clearTimeout(autoTimer);autoTimer=null;player.playing=false;} }, {threshold: .3}); io.observe($('robust-canvas'));
 }
+
+/* ---------------- tab D: co-evolution from scratch ---------------- */
+const COEVO=[['coevo_sine',ORANGE],['coevo_feedback',VIOLET]];
+function initCoevo() {
+  const E=DATA.L.coevolution; if(!E) return;
+  let metric='distance_m', env='flat';
+  const name=k=>t(k==='coevo_sine'?'coevoSine':'coevoFeedback');
+  const sum=(c,e)=>E.summary.find(r=>r.condition===c&&r.environment===e);
+  function chart(){
+    $('coevo-legend').innerHTML=COEVO.map(([k,c])=>`<span><i style="background:${c}"></i>${name(k)}</span>`).join('');
+    const box=$('coevo-chart');box.replaceChildren();
+    const W=760,H=340,m={l:48,r:16,t:26,b:40},svg=el('svg',{viewBox:`0 0 ${W} ${H}`});box.append(svg);
+    const pct=metric==='success_rate',ymax=pct?100:20,Y=v=>H-m.b-Math.max(0,Math.min(v,ymax))/ymax*(H-m.t-m.b);
+    for(let i=0;i<=4;i++){const v=ymax*i/4;el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:'#22332f'},svg);el('text',{x:m.l-8,y:Y(v)+4,'text-anchor':'end'},svg).textContent=Math.round(v)+(pct?'%':'');}
+    el('text',{x:m.l,y:m.t-10},svg).textContent=pct?(lang==='zh'?'成功率':'success rate'):(lang==='zh'?'有效距離 (m)':'eligible distance (m)');
+    const envs=['all','flat','rough','push'],gw=(W-m.l-m.r)/envs.length,bw=gw*.28;
+    envs.forEach((e,gi)=>{
+      const gx=m.l+gw*gi+gw/2;
+      el('text',{x:gx,y:H-m.b+22,'text-anchor':'middle',style:'fill:#c4d1cb;font-size:13px'},svg).textContent=e==='all'?(lang==='zh'?'全部 21 個':'All 21'):t('envName')[e];
+      COEVO.forEach(([c,col],ci)=>{
+        const s=sum(c,e),mean=(pct?100:1)*s[metric+'_mean'],sd=(pct?100:1)*s[metric+'_sd'],x=gx+(ci?6:-6-bw);
+        const rect=el('rect',{x,y:Y(0),width:bw,height:0,rx:4,fill:col,opacity:ci?.6:.85},svg);
+        requestAnimationFrame(()=>{rect.style.transition='all .8s cubic-bezier(.2,.8,.2,1)';rect.setAttribute('y',Y(mean));rect.setAttribute('height',Y(0)-Y(mean));});
+        el('line',{x1:x+bw/2,x2:x+bw/2,y1:Y(mean-sd),y2:Y(mean+sd),stroke:'#e8efe9','stroke-width':1.5,opacity:.7},svg);
+        el('text',{x:x+bw/2,y:H-m.b-8,'text-anchor':'middle',style:'fill:#0b1211;font-size:11px;font-weight:700'},svg).textContent=pct?mean.toFixed(0):mean.toFixed(1);
+        E.runs.filter(r=>r.condition===c&&r.environment===e).forEach((r,k)=>el('circle',{cx:x+bw*(.15+.14*k),cy:Y((pct?100:1)*r[metric]),r:3.8,fill:'#e8efe9',stroke:'#0b1211','stroke-width':1.2},svg));
+      });
+    });
+    $('coevo-table').innerHTML=`<tr><th>${t('thCond')}</th><th>${t('thDistance')}</th><th>${t('thSuccess')}</th></tr>`+COEVO.map(([c,col])=>{const s=sum(c,'all');return `<tr><td><i style="background:${col}"></i>${name(c)}</td><td>${s.distance_m_mean.toFixed(2)} ± ${s.distance_m_sd.toFixed(2)}</td><td>${(100*s.success_rate_mean).toFixed(1)} ± ${(100*s.success_rate_sd).toFixed(1)}</td></tr>`;}).join('');
+    $('coevo-stats').innerHTML=E.tests.map(r=>`<div><span>${lang==='zh'?'回授 − 開迴路':'feedback − sine'} · ${t(r.metric==='success_rate'?'statSuccess':'statDistance')}</span><span>Δ <b>${r.metric==='success_rate'?(100*r.mean_paired_difference).toFixed(1)+' pp':r.mean_paired_difference.toFixed(2)+' m'}</b> · p <b>${r.p_value.toFixed(3)}</b> · Holm <b>${r.holm_adjusted_p_value.toFixed(3)}</b></span></div>`).join('');
+    const g=$('coevo-bodies');g.replaceChildren();
+    COEVO.forEach(([c,col])=>{
+      const lab=document.createElement('div');lab.className='row-label';lab.style.color=col;lab.textContent=name(c);g.append(lab);
+      E.bodies[c].forEach(b=>{const f=document.createElement('figure'),sv=document.createElementNS(NS,'svg');sv.setAttribute('viewBox','0 0 5 5');blueprint(sv,b.body);
+        const run=E.runs.find(r=>r.condition===c&&r.seed===b.seed&&r.environment==='all'),cap=document.createElement('figcaption');
+        cap.textContent=`${lang==='zh'?'種子':'seed'} ${b.seed} · ${run.distance_m.toFixed(1)} m`;f.append(sv,cap);g.append(f);});
+    });
+    const a=sum('coevo_sine','all'),b=sum('coevo_feedback','all');
+    $('coevo-body-stats').textContent=lang==='zh'?`平均格數／致動器：開迴路 ${a.cells_mean.toFixed(1)} / ${a.actuators_mean.toFixed(1)}，回授 ${b.cells_mean.toFixed(1)} / ${b.actuators_mean.toFixed(1)}。回授演化出的身體稍微小一點。`
+      :`Mean cells / actuators: sine ${a.cells_mean.toFixed(1)} / ${a.actuators_mean.toFixed(1)}, feedback ${b.cells_mean.toFixed(1)} / ${b.actuators_mean.toFixed(1)}. Feedback evolved slightly smaller bodies.`;
+  }
+  const ctl=E.controllers;
+  const player=new Player($('coevo-canvas'),{
+    make:()=>{const o=env==='rough'?{terrain:'rough',terrain_heights:DATA.R.robustness_terrain.heights}:env==='push'?DATA.R.robustness_push:{};
+      return [{sim:newSim(ctl.coevo_sine,o),label:name('coevo_sine'),labelColor:ORANGE,trail:[]},{sim:newSim(ctl.coevo_feedback,o),outline:VIOLET,label:name('coevo_feedback'),labelColor:VIOLET,labelDy:18,trail:[],trailColor:'rgba(185,163,255,.35)'}];},
+    view:pl=>{const s=pl.entries[0].sim,n=pl.entries[1].sim,cx=(s.mean(0)+n.mean(0))/2,w=viewWidth(pl.canvas,20,15),pt=DATA.R.robustness_push.push_time;
+      return {left:cx-w/2,width:w,ground:.8,flash:env==='push'&&s.time>pt&&s.time<pt+.6?'← '+t('pushNow'):''};},
+    onTick:pl=>{const [s,n]=pl.entries;$('cd-sine').textContent=s.sim.fell?t('fell'):fmt(s.sim.distance);$('cd-nn').textContent=n.sim.fell?t('fell'):fmt(n.sim.distance);},
+    onDone:pl=>{clearTimeout(pl.again);pl.again=setTimeout(()=>{if(pl.visible&&!$('panel-coevo').hidden){pl.reset();pl.play();}},1500);}
+  });
+  $$('#coevo-metric .chip').forEach(b=>b.addEventListener('click',()=>{$$('#coevo-metric .chip').forEach(x=>x.classList.toggle('active',x===b));metric=b.dataset.coevoMetric;chart();}));
+  $$('#coevo-env .chip').forEach(b=>b.addEventListener('click',()=>{$$('#coevo-env .chip').forEach(x=>x.classList.toggle('active',x===b));env=b.dataset.coevoEnv;player.reset();player.play();}));
+  window.addEventListener('lab-tab',ev=>{if(ev.detail==='coevo'){chart();player.reset();player.play();}else player.playing=false;});
+  listeners.push(()=>{chart();player.entries[0].label=name('coevo_sine');player.entries[1].label=name('coevo_feedback');player.draw();});
+  chart();
+}
 function initTabs() {
   const tabs=$$('.tab');
   function select(key){
@@ -566,7 +631,7 @@ async function init() {
     const [r, l] = await Promise.all([fetch('robots.json').then(x => x.json()), fetch('lab.json').then(x => x.json())]);
     Object.assign(DATA, {R: r, L: l, C: r.constants, cp: l.checkpoints});
   } catch (e) { document.querySelector('.lead').textContent = 'Could not load data. Serve this folder over HTTP (python -m http.server) and reload.'; console.error(e); return; }
-  initHero(); initCounters(); initExplorer(); initRace(); renderMaterials(); initBuild(); initTabs(); initAblation(); initRobust(); initDomain(); initReveal();
+  initHero(); initCounters(); initExplorer(); initRace(); renderMaterials(); initBuild(); initTabs(); initAblation(); initRobust(); initDomain(); initCoevo(); initReveal();
   listeners.push(renderMaterials);
   $('language').addEventListener('click', () => { lang = lang === 'en' ? 'zh' : 'en'; applyLang(); });
   if (/^zh/i.test(navigator.language || '')) { lang = 'zh'; applyLang(); }

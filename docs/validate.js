@@ -6,7 +6,7 @@ const exportsToCheck=data.robots.slice();
 const labPath=path.join(__dirname,'lab.json');
 if(fs.existsSync(labPath)){
  const lab=JSON.parse(fs.readFileSync(labPath,'utf8'));
- for(const robot of Object.values(lab.domain_randomization?.controllers||{})){
+ for(const robot of [...Object.values(lab.domain_randomization?.controllers||{}),...Object.values(lab.coevolution?.controllers||{})]){
   if(!exportsToCheck.some(r=>r.id===robot.id))exportsToCheck.push(robot);
  }
 }

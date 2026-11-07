@@ -94,6 +94,33 @@ def main():
         'validation':json.loads((ASSETS/'domain_randomization_validation.json').read_text()),
         'controllers':controllers,'test_set':heldout_schedule(),
         'population':60,'generations':40,'seeds':[42,43,44,45,46]}
+    # Upgrade E: closed-loop co-evolution from scratch.
+    coevo_stats=json.loads((ASSETS/'coevolution_statistics.json').read_text())
+    coevo_live={}
+    for condition in ('coevo_sine','coevo_feedback'):
+        body,genome,_=load_controller(ASSETS/f'coevo_winners/{condition}_42.npz')
+        parameters=genome.parameters()
+        references={}
+        for environment,episode in [('flat',heldout_schedule()[0]),('rough',heldout_schedule()[1]),('push',heldout_schedule()[11])]:
+            diag={};fitness=simulate(body,parameters,diagnostics=diag,**episode_options(episode))
+            references[environment]={'distance_m':fitness,'raw_distance_m':diag['raw_distance'],'fell':diag['fell']}
+        controller={k:v.tolist() if isinstance(v,np.ndarray) else v for k,v in parameters.items()}
+        if controller.get('kind')=='closed_loop' and len(controller['w2'])==25:
+            # The browser simulator indexes outputs by actuator in row-major order; keep only those rows.
+            cells=[r*5+c for r in range(5) for c in range(5) if body[r][c] in (3,4)]
+            controller['w2']=[controller['w2'][i] for i in cells];controller['b2']=[controller['b2'][i] for i in cells]
+        coevo_live[condition]={'id':condition,'body':body.tolist(),'controller':controller,
+                               'python_distance_m':references['flat']['distance_m'],'references':references,'seed':42}
+    bodies={}
+    for condition in ('coevo_sine','coevo_feedback'):
+        for seed in coevo_stats['seeds']:
+            with np.load(ASSETS/f'coevo_winners/{condition}_{seed}.npz') as d: bodies.setdefault(condition,[]).append({'seed':seed,'body':d['body'].astype(int).tolist()})
+    payload['coevolution']={
+        'summary':coevo_stats['summary'],'tests':coevo_stats['paired_tests'],
+        'runs':[{k:num(v) for k,v in r.items()} for r in rows(ASSETS/'coevolution_runs.csv')],
+        'bodies':bodies,'controllers':coevo_live,'seeds':coevo_stats['seeds'],
+        'population':coevo_stats['population'],'generations':coevo_stats['generations'],
+        'training_episodes':coevo_stats['training_episodes'],'training_unstable_episodes':coevo_stats['training_unstable_episodes']}
     out = ROOT / 'docs' / 'lab.json'
     out.write_text(json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8')
     print(f'Wrote {out} ({out.stat().st_size/1024:.1f} KB): {len(checkpoints)} checkpoints.')

@@ -239,6 +239,10 @@ Winners are selected on generation 40's training batch, then evaluated on D's sa
 
 ![All six co-evolved winning bodies per controller family](assets/coevo_bodies.png)
 
+![Seed-42 co-evolved sine vs. co-evolved feedback on held-out rough profile 1](assets/coevo_race.gif)
+
+The race uses seed 42 for both conditions, chosen in advance by the same convention as Upgrade D. On this rough profile feedback travels farther (12.86 m vs 9.72 m), the opposite of the six-seed average, so it is an illustration rather than a typical result. Regenerate with `python coevolution_media.py`. The interactive version is tab **D** of the [live lab](https://technocrat94.github.io/evolving-soft-robots/#experiments).
+
 Sine traveled farther on average, while feedback had less observed distance variation and a 0.79 percentage-point higher success rate. Exact paired two-sided sign-flip tests across six seeds do **not** establish a difference: distance p = **0.4375**, success p = **1.0000** (Holm-adjusted across the two outcomes: **0.8750**, **1.0000**). Co-evolution removes the fixed sine-evolved starting body, but does not equalize controller parameter counts or search difficulty. With only six seeds and near-ceiling success, these results support neither feedback superiority nor equivalence.
 
 All **115,200 training episodes** were numerically stable; **5,018** were tilt-disqualified. All **252 active + 252 actuation-disabled held-out episodes** were stable; mean passive raw distances were **0.018 ± 0.094 m** (sine) and **0.259 ± 0.370 m** (feedback), measured without changing winner selection. The study took **2,280.332 s (38.01 min)** on ten cores; all 25 existing Python tests passed in one suite run.

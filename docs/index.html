@@ -46,7 +46,7 @@
   </section>
 
   <section class="stats" aria-label="Key numbers">
-    <div><strong class="mono" data-count="210000">0</strong><span data-i18n="stat1">training episodes</span></div>
+    <div><strong class="mono" data-count="325200">0</strong><span data-i18n="stat1">training episodes</span></div>
     <div><strong class="mono" data-count="11.3" data-decimals="1" data-suffix="×">0</strong><span data-i18n="stat2">farther than generation 1</span></div>
     <div><strong class="mono" data-count="19.24" data-decimals="2" data-suffix=" m">0</strong><span data-i18n="stat3">in 5 simulated seconds</span></div>
     <div><strong class="mono" data-count="0">0</strong><span data-i18n="stat4">numerical explosions</span></div>
@@ -225,6 +225,7 @@
       <button class="tab active" role="tab" data-tab="ablation" type="button" data-i18n="tabA">A · Body vs. brain</button>
       <button class="tab" role="tab" data-tab="robust" type="button" data-i18n="tabB">B · Does feedback help?</button>
       <button class="tab" role="tab" data-tab="domain" type="button" data-i18n="tabC">C · Domain randomization</button>
+      <button class="tab" role="tab" data-tab="coevo" type="button" data-i18n="tabD">D · Co-evolving from scratch</button>
     </div>
 
     <div class="tabpanel" data-panel="ablation">
@@ -314,6 +315,47 @@
         </div>
       </div>
     </div>
+
+    <div class="tabpanel" data-panel="coevo" hidden>
+      <div class="exp-grid">
+        <div class="card">
+          <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypD">Tabs B and C borrowed a body that evolved with a sine controller. If each controller evolves its own body from scratch, closed-loop feedback should win.</span></p>
+          <div class="row wrap seg" id="coevo-metric">
+            <button class="chip active" type="button" data-coevo-metric="distance_m" data-i18n="mEligible">Eligible distance</button>
+            <button class="chip" type="button" data-coevo-metric="success_rate" data-i18n="mSuccess">Success rate</button>
+          </div>
+          <div class="legend mono" id="coevo-legend"></div>
+          <div id="coevo-chart" class="chart"></div>
+          <p class="caption" data-i18n="coevoCaption">Bars = mean over 6 paired seeds (42–47), dots = individual seeds, whiskers = ±1 SD. Both conditions start from random bodies, train with tab C's domain randomization (60 robots × 40 generations, 4 episodes each) and face the same held-out test set.</p>
+          <p class="card-label mono" style="margin-top:22px" data-i18n="bodiesLabel">THE 12 WINNING BODIES</p>
+          <div id="coevo-bodies" class="body-gallery"></div>
+          <p class="caption" id="coevo-body-stats"></p>
+        </div>
+        <div class="card findings">
+          <p class="card-label mono" data-i18n="heldoutSummary">HELD-OUT · ALL 21 EPISODES</p>
+          <table class="data mono" id="coevo-table"></table>
+          <div id="coevo-stats" class="stat-chips mono"></div>
+          <div class="verdict-box">
+            <span class="mono verdict-tag partial" data-i18n="coevoVerdict">NOT SUPPORTED — A DRAW</span>
+            <p data-i18n="findD">With a fair start, both controllers almost never fall (98.4% vs 99.2% held-out success). Sine travels farther on average (11.79 vs 10.19 m) but varies far more between seeds (SD 4.01 vs 1.05 m). Neither difference is significant.</p>
+          </div>
+          <p class="takeaway" data-i18n="takeD">Removing the body bias closed the survival gap from tab C: feedback's success rose from 88.6% (borrowed body) to 99.2% (its own body). Feedback trades a little speed for consistency.</p>
+          <p class="caption" data-i18n="coevoCaveat">Success is near 100% for both, so this test set is too easy to separate them; harder or out-of-distribution terrain is the next step. Feedback winners drift more with muscles off (0.26 vs 0.02 m). Six seeds; the two conditions also differ in parameter count.</p>
+          <p class="card-label mono" style="margin-top:18px" data-i18n="liveTest">LIVE STRESS TEST</p>
+          <div class="row wrap seg" id="coevo-env">
+            <button class="chip active" type="button" data-coevo-env="flat" data-i18n="eFlat">Flat</button>
+            <button class="chip" type="button" data-coevo-env="rough" data-i18n="eRough">Rough terrain</button>
+            <button class="chip" type="button" data-coevo-env="push" data-i18n="ePush">Push at 2.5 s</button>
+          </div>
+          <canvas id="coevo-canvas" class="sim-canvas" aria-label="Co-evolved sine versus co-evolved feedback robot"></canvas>
+          <div class="duel mono">
+            <div><i class="sw sine"></i><span data-i18n="coevoSine">Co-evolved sine</span><b id="cd-sine">+0.00 m</b></div>
+            <div><i class="sw nn"></i><span data-i18n="coevoFeedback">Co-evolved feedback</span><b id="cd-nn">+0.00 m</b></div>
+          </div>
+          <p class="caption" data-i18n="coevoLiveNote">Seed 42 for both, chosen in advance by the same convention as tab C. On this rough profile feedback goes farther — the opposite of the average, so treat it as an illustration.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- 06 VALIDATION -->
@@ -323,7 +365,7 @@
       <h2 data-i18n="valTitle">How do we know it's real?</h2>
     </div>
     <div class="val-grid">
-      <div class="card val"><strong class="mono">0 / 210,000</strong><span data-i18n="val1">unstable training episodes (NaN or explosion)</span></div>
+      <div class="card val"><strong class="mono">0 / 325,200</strong><span data-i18n="val1">unstable training episodes (NaN or explosion)</span></div>
       <div class="card val"><strong class="mono">&lt; 10⁻¹²</strong><span data-i18n="val2">relative error between this page's JavaScript physics and the Python simulator</span></div>
       <div class="card val"><strong class="mono">25</strong><span data-i18n="val3">automated unit tests</span></div>
       <div class="card val"><strong class="mono">15 / 15</strong><span data-i18n="val4">domain-randomized winners replayed from saved genomes (tolerance 10⁻¹²)</span></div>
