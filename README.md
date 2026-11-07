@@ -174,12 +174,63 @@ python robustness.py
 python verify_robustness.py --study results/experiments/robustness/run_YYYYMMDD_HHMM
 ```
 
+## Domain randomization (Upgrade D)
+
+Upgrade B trained feedback only on flat ground, and all five neural winners failed on its rough profile. **Hypothesis:** feedback is useful when training exposes the controller to disturbances that require a response. Domain randomization tests this idea; adding sensors alone does not design a disturbance-rejecting controller.
+
+Three families evolve on the **fixed generation-60 showcase body**, with five matched seeds (42–46), **60 candidates × 40 generations**: `sine`, `neural_feedback`, and `neural_clock_only`. The neural families have identical 7 → 8 → actuator-count tanh architectures and matching initial weights; clock-only masks the first five inputs to zero while retaining sine/cosine clock inputs, biases, parameter count, and genetic operators. Thus feedback availability, rather than simply network size, is the intended ablation. All retain amplitude 0.2, omega 1–6 rad/s, contact damping and the sustained-tilt rule.
+
+Each candidate receives four full five-second episodes per generation: flat; two independently drawn rough profiles; and flat with a backward push. Fitness is **mean eligible distance across all four**, including zeros for tilt failures. Every generation draws new profile seeds and a new push time (uniform 1.5–3.5 s) and magnitude (uniform 0.8–2.0 m/s). All candidates share that generation's environments. Separate seeded environment schedules are shared across controller families for each optimizer seed; elites are reevaluated. Rough heights remain uniform 0–0.12 m, spaced 0.5 m, as in B. Changing batches make training scores non-monotonic and unsuitable for comparing scores across generations directly.
+
+Selection uses the best individual in **generation 40 on its current training batch**; no test episode selects a winner or tunes a setting. The held-out set contains flat, **10 new rough profiles and 10 new push settings**, with disjoint seed namespaces. Every randomized winner and all ten Upgrade B flat-trained winners receive the same 21 test episodes, plus actuation-disabled audits. The aggregate gives each episode equal weight (1/21 flat, 10/21 rough, 10/21 push); terrain-specific summaries are also saved. Success is the fraction **not tilt-disqualified**, regardless of distance.
+
+![Held-out distances and success rates after domain randomization](assets/domain_randomization_plot.png)
+
+| Controller | Held-out distance, mean ± SD (m) | Success, mean ± SD (%) |
+|---|---:|---:|
+| Flat-trained sine (B) | 10.385 ± 3.753 | 53.33 ± 18.57 |
+| Flat-trained neural (B) | 5.955 ± 1.980 | 40.00 ± 7.22 |
+| Randomized sine | 12.276 ± 1.809 | 87.62 ± 4.26 |
+| Randomized neural feedback | 11.260 ± 2.057 | 88.57 ± 9.28 |
+| Randomized neural clock-only | 9.561 ± 2.119 | 77.14 ± 19.17 |
+
+Randomized neural feedback improves descriptively over flat-trained neural control: **5.955 → 11.260 m**, and **40.00% → 88.57%** success. It also has higher observed aggregate means than clock-only, but the exact tests do **not** establish a feedback-specific advantage. On rough terrain, its observed success is **94%**, compared with **8%** for flat-trained neural, **60%** for randomized clock-only, and **76%** for randomized sine. The trade-off matters: randomized sine has the highest aggregate distance and **98%** push success, versus **82%** for feedback. These terrain-specific observations are descriptive, not additional significance claims.
+
+| Planned comparison | Metric | Raw p | Holm p |
+|---|---|---:|---:|
+| Feedback vs clock-only | Aggregate distance | 0.1875 | 0.7500 |
+| Feedback vs clock-only | Aggregate success | 0.2500 | 0.7500 |
+| Feedback vs sine | Aggregate distance | 0.5000 | 1.0000 |
+| Feedback vs sine | Aggregate success | 1.0000 | 1.0000 |
+
+**No planned comparison is significant.** Varied training clearly changes the observed robustness pattern in this experiment, but feedback is not an automatic win or proven superior. In control-theory terms, disturbance rejection requires an appropriately designed or trained controller; sensor availability alone is insufficient. This experiment is consistent with that motivation, while also showing that a well-trained open-loop policy can be robust. It does not prove that feedback only helps under domain randomization.
+
+The full study took **2,850.069 s (47.50 min)**, including training, held-out active/passive evaluation and initial plot/GIF generation. Independent replay, a deterministic rerender and browser QA were additional verification work.
+
+![Seed-42 flat-trained neural, randomized feedback and randomized sine on the first held-out rough profile](assets/robust_controller_rough.gif)
+
+The GIF and interactive **Robustness** section use seed 42 and the first held-out rough profile, chosen by convention before viewing test results. All three pass on this particular profile: flat-trained neural travels **16.361 m**, randomized feedback **14.267 m**, and randomized sine **14.321 m**. This single example favors the baseline despite its poor aggregate rough success. The web section offers flat/rough terrain and three controller choices, with both raw and eligible distances visible. These are illustrative trials; the summary uses every winner and all test episodes.
+
+The two planned feedback comparisons (against clock-only and sine) use exact paired two-sided sign-flip tests on per-seed held-out means, assuming symmetric paired differences / within-pair label exchangeability under the null. Holm correction covers **four tests together**: two comparisons × distance and success. With only five seed pairs, the smallest two-sided raw p-value is 0.0625, so this design cannot establish significance at 0.05 even before correction. Error bars show sample SD across optimizer seeds, not confidence intervals; the 21 test episodes are not treated as 21 independent training seeds.
+
+**Validation:** 36,000 candidates / **144,000 training episodes**, zero numerical instability, and **32,382 tilt-disqualified episodes**. All 600 checkpoints preserve the fixed body and omega bounds; all 15 final four-episode scores replay independently. The held-out audit includes **525 active and 525 passive episodes**, all stable, with zero training/test seed overlap. All 25 Python tests and 13 JS/Python controller/environment checks pass.
+
+[CSV summaries](assets/domain_randomization_table.csv), [Markdown table](assets/domain_randomization_table.md), [per-seed results](assets/domain_randomization_per_seed.csv), [all test episodes and passive audits](assets/domain_randomization_episodes.csv), [statistics](assets/domain_randomization_statistics.json), [validation](assets/domain_randomization_validation.json), and [environment schedules](assets/domain_randomization_manifest.json) are tracked. Small winner checkpoints are under `assets/domain_controllers/`; raw training logs stay ignored. Physical and standard GA parameters remain in `config.py`; D's fixed study protocol is declared in `domain_randomization.py` and saved with its settings.
+
+```sh
+python domain_randomization.py
+python domain_randomization.py --analyze results/experiments/domain_randomization/run_YYYYMMDD_HHMM
+python verify_domain_randomization.py --study results/experiments/domain_randomization/run_YYYYMMDD_HHMM
+python export_robots.py
+node docs/validate.js
+```
+
 ## Validation
 
 - **Tilt rule:** the best-fit rotation of all nodes relative to the starting body is checked every `0.02 s`. More than **30°** of tilt sustained for **0.2 s** disqualifies the run. This discourages falling and sliding; it is a conservative heuristic, not a guarantee against every possible exploit.
 - **Actuation-disabled check:** rerun the same final body from the same initial state with actuator amplitude zero. It moves **0.078180 m**, compared with **19.239387 m** actively. The passive distance is raw displacement even if a passive run would fail the tilt rule.
 - **Stability:** all **6,000 candidate evaluations** in the full run stayed finite and within the simulator's safety bounds. The tilt rule disqualified **820 evaluations**, including repeated genomes across generations; no evaluation was numerically unstable.
-- **Tests:** 15 unit tests cover shared mesh topology, valid bodies, repeatability, ground contact, dense-body stability, frequency bounds, unchanged elites, saved-genome reloads, fall disqualification, frozen-gene constraints and exact statistics.
+- **Tests:** 25 unit tests cover mesh topology, valid bodies, repeatability, contact, stability, bounds, elites, reloads, fall disqualification, frozen genes, exact statistics, feedback sensors, pushes, environment schedules and clock-only masking (including complete-rollout equivalence).
 
 The curated CSV retains each generation's `best`, `average` and `tilt_disqualified` values. Supporting metrics and the original full-run integrity summary are included under `assets/`; large raw results are excluded.
 
@@ -187,7 +238,7 @@ The curated CSV retains each generation's `best`, `average` and `tilt_disqualifi
 
 The [browser lab](https://technocrat94.github.io/evolving-soft-robots/) runs plain HTML, CSS and JavaScript from `docs/`, with no framework or build step. Watch generations 1, 30 and 60 side by side, pause/restart them, or edit a 5 × 5 body and try omega from 1–6 rad/s. Clicking cycles empty → rigid → soft → horizontal actuator → vertical actuator. Custom bodies use synchronized sine phases; invalid or disconnected bodies are rejected. The page supports English and Traditional Chinese and includes the three experiment figures.
 
-`export_robots.py` exports the showcase checkpoints and the best flat-trained neural controller to `docs/robots.json`, including physical constants and a reproducible rough profile. The JavaScript simulator also supports neural control, rough ground and pushes. Node replay of all four exported robots matches Python within **4 × 10⁻¹³ percent** relative error in this environment—well within the requested 10% tolerance. This is a numerical parity check, not physical validation. [Exact comparison](assets/js_parity.csv).
+`export_robots.py` exports the showcase checkpoints, the best flat-trained neural controller, and Upgrade D's preselected demo controllers to `docs/robots.json`, including physical constants and reproducible terrain. The JavaScript simulator also supports neural control, rough ground and pushes. The original four flat-ground exports match Python within **4 × 10⁻¹³ percent** relative error in this environment. Upgrade D adds flat, held-out rough and held-out push parity checks for its three demo choices, comparing raw displacement and fall status as well as eligible fitness. This is numerical parity, not physical validation. [Exact comparison](assets/js_parity.csv).
 
 ```sh
 python export_robots.py
@@ -273,6 +324,8 @@ evolving-soft-robots/
 ├── experiments.py          # Matched-seed ablations, aggregation and exact statistics
 ├── controllers.py          # Sensors, neural policy and reproducible terrain
 ├── robustness.py           # Fixed-body feedback experiment and robustness audits
+├── domain_randomization.py # Varied-environment training and held-out feedback ablation
+├── verify_domain_randomization.py # Independent episode/checkpoint audit
 ├── verify_robustness.py    # Independent checkpoint and winner replay checks
 ├── export_robots.py        # Portable web data and Python reference scores
 ├── docs/                   # Static bilingual web demo and Node parity checker
@@ -299,6 +352,8 @@ evolving-soft-robots/
 - **Simplified mechanics:** lumped equal node masses, linear springs, projected contact and fixed-step integration are illustrative approximations. These results do not certify hardware performance.
 - **Hopping is allowed:** no minimum ground-contact percentage is enforced. The final winner is airborne for a substantial fraction of time.
 - **Validation scope:** direct execution was tested on macOS. Spawn-safe entry points support Windows/Linux usage, but those platforms have not been directly tested.
+- **Limited disturbance distribution:** training/test roughness has the same height range and spacing; this is new-sample generalization within one distribution, not transfer to unseen terrain types or larger disturbances. Sensors are ideal and noiseless.
+- **Experimental power and budgets:** five optimizer seeds have coarse exact-test resolution. Randomized training uses four times as many simulation episodes per candidate as B; better results cannot isolate environment diversity from the additional evaluation budget. Final-batch winner selection is noisy, and a fixed body limits morphology generalization.
 
 ## What I learned
 
@@ -313,11 +368,12 @@ evolving-soft-robots/
 
 *Choose and expand the directions that interest you.*
 
-- [ ] Add different terrains, slopes and rough surfaces.
+- [ ] Test slopes, larger unseen roughness, sensor noise/delay and impulses outside the training range.
 - [ ] Evolve jumping or climbing tasks.
 - [ ] Compare evolved bodies with topology optimization.
 - [ ] Add self-collision and investigate more realistic contact models.
-- [ ] Compare multiple seeds and perform timestep-convergence studies.
+- [ ] Add more independent seeds, held-out environment sets, timestep-convergence studies and equal-episode-budget training baselines.
+- [ ] Compare recurrent feedback policies, input normalization, output-rate limits and alternative robust objectives; tune only with a separate validation set.
 - [ ] Extend the simulator to 3D.
 
 ## License

@@ -86,16 +86,21 @@ def upright_cosine(reference, positions):
 
 
 def simulate(body, controller_params=None, steps=None, record=False, diagnostics=None,
-             actuation_enabled=True, terrain='flat', push=False):
+             actuation_enabled=True, terrain='flat', push=False,
+             terrain_seed=C.ROUGH_SEED, push_time=C.PUSH_TIME,
+             push_magnitude=-C.PUSH_DELTA_V, track_contact=True):
     """Return signed COM displacement; with record, return (fitness, frames).
 
     Open-loop params contain ``omega`` and body-shaped ``phases``. Closed-loop
-    params also set ``kind='closed_loop'`` and provide the four neural arrays.
+    params set ``kind='closed_loop'`` and provide the four neural arrays;
+    ``kind='neural_clock_only'`` uses the same network with five sensors masked.
     Invalid bodies or unstable runs return zero; failed recordings are empty.
     Sustained toppling disqualifies a run (fitness zero); otherwise fitness is
     exactly signed COM displacement. actuation_enabled=False provides a passive
     control run without changing global configuration. Diagnostics include raw distance and fall
-    status as well as time/min_y at EVERY physics step.
+    status as well as time/min_y at EVERY physics step when track_contact=True.
+    Terrain seeds and push settings are per-rollout arguments, never mutable
+    globals, so multiprocessing candidates share exactly the intended episodes.
     """
     empty = np.empty((0, 0, 2))
     if diagnostics is not None:
@@ -104,6 +109,12 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     if not is_valid(body):
         return (0.0, empty) if record else 0.0
     body = np.asarray(body)
+    if terrain not in ('flat', 'rough'):
+        raise ValueError('terrain must be flat or rough')
+    if not np.isfinite(push_time) or push_time < 0 or not np.isfinite(push_magnitude) or push_magnitude < 0:
+        raise ValueError('Push time and magnitude must be finite and nonnegative')
+    def surface_at(x):
+        return ground(x, terrain, terrain_seed)
     params = controller_params or {}
     omega = float(params.get('omega', C.OMEGA))
     phases = np.asarray(params.get('phases', np.zeros(body.shape)), dtype=float)
@@ -116,7 +127,7 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     p, springs, owners, rest, _ = _mesh(body)
     p[:,1] += C.START_HEIGHT
     if terrain != 'flat':
-        p[:,1] += float(ground(p[:,0], terrain)[0].max())
+        p[:,1] += float(surface_at(p[:,0])[0].max())
     v = np.zeros_like(p)
     initial_x = p[:,0].mean()
     reference = p - p.mean(axis=0)
@@ -125,7 +136,7 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     fell = False
     worst_cosine = 1.0
     a, b = springs.T
-    neural = params.get('kind', 'open_loop') == 'closed_loop'
+    neural = params.get('kind', 'open_loop') in ('closed_loop', 'neural_clock_only')
     actuator_cells = np.argwhere((body == 3) | (body == 4))
     cell_index = {tuple(cell):i for i,cell in enumerate(actuator_cells)}
     owner_matrix = np.zeros((len(owners),len(actuator_cells)))
@@ -155,12 +166,12 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     amplitude = C.AMPLITUDE if actuation_enabled else 0.0
     stride = max(1, round(1 / (C.FPS * C.DT)))
     frames = [p.copy()] if record else []
-    if diagnostics is not None:
+    if diagnostics is not None and track_contact:
         min_y = np.empty(steps + 1)
-        min_y[0] = (p[:,1]-ground(p[:,0],terrain)[0]).min()
+        min_y[0] = (p[:,1]-surface_at(p[:,0])[0]).min()
     for step in range(steps):
         t = step * C.DT
-        surface, _ = ground(p[:,0], terrain) if terrain != 'flat' else (0.0, 0.0)
+        surface, _ = surface_at(p[:,0]) if terrain != 'flat' else (0.0, 0.0)
         if neural:
             if step % C.CONTROL_INTERVAL == 0:
                 inputs, previous_angle = sensors(reference,p,v,surface,front,previous_angle,t,omega)
@@ -190,8 +201,8 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
             acc[:,axis] = (np.bincount(a, weights=force[:,axis], minlength=len(p))
                           - np.bincount(b, weights=force[:,axis], minlength=len(p))) / C.MASS
         acc[:,1] -= C.GRAVITY
-        if push and not pushed and step >= round(C.PUSH_TIME/C.DT):
-            v[:,0] += C.PUSH_DELTA_V
+        if push and not pushed and step >= round(push_time/C.DT):
+            v[:,0] -= push_magnitude
             pushed = True
         v += C.DT * acc
         p += C.DT * v
@@ -203,7 +214,7 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
             vx = v[contact,0]
             v[contact,0] = np.sign(vx)*np.maximum(np.abs(vx)-C.FRICTION*normal_dv, 0)
         else:
-            heights, slopes = ground(p[:,0],terrain)
+            heights, slopes = surface_at(p[:,0])
             contact = p[:,1] < heights
             p[contact,1] = heights[contact]
             slopes = slopes[contact]
@@ -223,11 +234,11 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
             tilted_time = (tilted_time + C.DT*C.POSTURE_CHECK_INTERVAL
                            if cosine < fall_cosine else 0.0)
             fell = fell or tilted_time >= C.FALL_DURATION - 1e-12
-        if diagnostics is not None:
-            min_y[step+1] = (p[:,1]-ground(p[:,0],terrain)[0]).min() if terrain != 'flat' else p[:,1].min()
+        if diagnostics is not None and track_contact:
+            min_y[step+1] = (p[:,1]-surface_at(p[:,0])[0]).min() if terrain != 'flat' else p[:,1].min()
         if record and ((step+1) % stride == 0 or step+1 == steps):
             frames.append(p.copy())
-    if diagnostics is not None:
+    if diagnostics is not None and track_contact:
         diagnostics.update(time=np.arange(steps+1)*C.DT, min_y=min_y)
     raw_distance = float(p[:,0].mean()-initial_x)
     if diagnostics is not None:

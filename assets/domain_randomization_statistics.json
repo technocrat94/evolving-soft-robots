@@ -1,0 +1,42 @@
+[
+  {
+    "comparison": "randomized_neural_feedback vs randomized_neural_clock_only",
+    "metric": "mean_distance_m",
+    "p_value": 0.1875,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "mean_paired_difference": 1.6985143951024013,
+    "holm_adjusted_p_value": 0.75,
+    "significant": false
+  },
+  {
+    "comparison": "randomized_neural_feedback vs randomized_neural_clock_only",
+    "metric": "success_rate",
+    "p_value": 0.25,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "mean_paired_difference": 0.11428571428571428,
+    "holm_adjusted_p_value": 0.75,
+    "significant": false
+  },
+  {
+    "comparison": "randomized_neural_feedback vs randomized_sine",
+    "metric": "mean_distance_m",
+    "p_value": 0.5,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "mean_paired_difference": -1.015784385150991,
+    "holm_adjusted_p_value": 1.0,
+    "significant": false
+  },
+  {
+    "comparison": "randomized_neural_feedback vs randomized_sine",
+    "metric": "success_rate",
+    "p_value": 1.0,
+    "permutations": 32,
+    "method": "exact paired two-sided sign-flip test",
+    "mean_paired_difference": 0.00952380952380949,
+    "holm_adjusted_p_value": 1.0,
+    "significant": false
+  }
+]

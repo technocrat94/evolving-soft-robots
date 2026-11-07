@@ -1,0 +1,3926 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "conditions": [
+    "sine",
+    "neural_feedback",
+    "neural_clock_only"
+  ],
+  "population": 60,
+  "generations": 40,
+  "workers": 10,
+  "training_schedules": {
+    "42": [
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 517898
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 353220
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.825459828666109,
+          "push_magnitude": 1.1902681501916967
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 267360
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 924627
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3662078293826556,
+          "push_magnitude": 0.9196362160298407
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 343278
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 756763
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.032482404780286,
+          "push_magnitude": 0.8924052175236497
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 108825
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 420878
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.341784559459968,
+          "push_magnitude": 1.8020142828375711
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 664274
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 997986
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.594856358916374,
+          "push_magnitude": 1.5944094612634763
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 230600
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 315502
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.043944532382438,
+          "push_magnitude": 1.9035032259554026
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 823893
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 214667
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2765917071941497,
+          "push_magnitude": 1.3019616269412366
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 774443
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 354835
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5666497723772441,
+          "push_magnitude": 1.9194826280989663
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 990756
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 769411
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.1858950994636723,
+          "push_magnitude": 1.1440944079250719
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 239912
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 911645
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.830317516065878,
+          "push_magnitude": 1.249911875363181
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 844430
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 494980
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.217116163355799,
+          "push_magnitude": 1.4216939256949837
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 613352
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 873049
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7811848656721259,
+          "push_magnitude": 0.8918439088207584
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 285377
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 768512
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.808794356414515,
+          "push_magnitude": 1.5035246073514534
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 123970
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 352838
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6044408502044254,
+          "push_magnitude": 0.9509163967561921
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 342968
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 729210
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3882589070055853,
+          "push_magnitude": 1.4041699550183782
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 357397
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 105018
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.127404412753946,
+          "push_magnitude": 1.5718118687328728
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 697132
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 663903
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9894724010080054,
+          "push_magnitude": 1.4253074793544247
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 124304
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 569044
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1362690808538436,
+          "push_magnitude": 0.8981031226291674
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 125123
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 669979
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.843913138538854,
+          "push_magnitude": 1.158680286270132
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 291416
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 807813
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.184885969846653,
+          "push_magnitude": 1.0519070224074754
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 174902
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 760885
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.0500710368345008,
+          "push_magnitude": 1.3825511418712821
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 502164
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 770500
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6486352292893423,
+          "push_magnitude": 1.679512774349196
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 482223
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 452883
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2633073386667473,
+          "push_magnitude": 0.8386667090308385
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 677231
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 174552
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5713877522154986,
+          "push_magnitude": 1.7716922024567698
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 243322
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 685252
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.623393958292069,
+          "push_magnitude": 1.710978017267222
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 860846
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 823221
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9344069087045563,
+          "push_magnitude": 1.8338508240812474
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 856015
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 586926
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6321148299917816,
+          "push_magnitude": 1.2679132951794845
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 879826
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 665552
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.934224996835389,
+          "push_magnitude": 1.7103346142853975
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 409809
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 927715
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.67362596834926,
+          "push_magnitude": 1.3389453878210396
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 428527
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 190523
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9558100621889396,
+          "push_magnitude": 1.2197656546435889
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 461941
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 561004
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3226164506177924,
+          "push_magnitude": 1.4504739721058577
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 962914
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 760403
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.769381334733497,
+          "push_magnitude": 1.3350904487035382
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 549047
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 553018
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2503317856733043,
+          "push_magnitude": 1.9411103582009985
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 462838
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 739221
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9496019736933872,
+          "push_magnitude": 0.9550494559937691
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 125777
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 270917
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.329380334273263,
+          "push_magnitude": 1.3724746361645963
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 341266
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 975558
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.853612513453009,
+          "push_magnitude": 1.279845030607911
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 937587
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 769190
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.9938315273481697,
+          "push_magnitude": 1.6335275876229667
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 744219
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 211389
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2366659999159095,
+          "push_magnitude": 1.6317041143119846
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 698731
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 164633
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2277364432542313,
+          "push_magnitude": 1.7277119712425417
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 331865
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 856769
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1335827752273713,
+          "push_magnitude": 1.1750748448957957
+        }
+      ]
+    ],
+    "43": [
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 938300
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 936436
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.0863527366959778,
+          "push_magnitude": 1.624613993068773
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 307871
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 730818
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7815188926541945,
+          "push_magnitude": 1.1896172004271077
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 568956
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 626651
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.0317751310812038,
+          "push_magnitude": 1.9649900145450754
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 851037
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 122255
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6913760658791503,
+          "push_magnitude": 1.067584270518462
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 247990
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 628826
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5279910161518329,
+          "push_magnitude": 1.3046404445382842
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 682092
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 676454
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.181989332265914,
+          "push_magnitude": 1.5602830169267983
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 974775
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 269015
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.446284960679023,
+          "push_magnitude": 1.2575937604980068
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 359092
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 645880
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.0689138146505757,
+          "push_magnitude": 1.059639041851739
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 794329
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 633873
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3374860308296523,
+          "push_magnitude": 1.5373881960299618
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 120402
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 617781
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.764301603852262,
+          "push_magnitude": 1.2162639531092139
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 684095
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 469250
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.667944517315639,
+          "push_magnitude": 1.9902442695485676
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 492286
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 640868
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4650306405928974,
+          "push_magnitude": 1.99035682952955
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 877821
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 426078
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.098618021481198,
+          "push_magnitude": 1.2534253757146607
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 126432
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 801738
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5476256245170463,
+          "push_magnitude": 1.853179063681619
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 682596
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 759648
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3723251135940493,
+          "push_magnitude": 1.5076761055425523
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 978247
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 853048
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3838473325413503,
+          "push_magnitude": 1.6896715263721385
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 419790
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 592790
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1508940025367203,
+          "push_magnitude": 1.575254548945779
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 241505
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 101266
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.018727485306142,
+          "push_magnitude": 1.8359959724675776
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 795134
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 243098
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.233030441935828,
+          "push_magnitude": 1.3396465381342617
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 921550
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 314638
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.956688219306135,
+          "push_magnitude": 1.7873067800994444
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 526529
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 583433
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.427373625308146,
+          "push_magnitude": 1.3501871374966088
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 630502
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 367250
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.386537822297893,
+          "push_magnitude": 1.5435380477287426
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 573511
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 316138
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.348527786844667,
+          "push_magnitude": 1.6168523259074454
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 553590
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 563679
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.401235585288841,
+          "push_magnitude": 1.1671341716629804
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 273999
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 459702
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.864057138254031,
+          "push_magnitude": 1.1767926683601464
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 950033
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 564558
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.081635611580821,
+          "push_magnitude": 1.510105608541034
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 730354
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 577144
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2116419566652477,
+          "push_magnitude": 1.985060619864479
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 114376
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 387764
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.287396848934043,
+          "push_magnitude": 1.0784373000641734
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 293027
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 158618
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.362020528344182,
+          "push_magnitude": 1.8786569524609398
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 219073
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 818644
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.962170613370975,
+          "push_magnitude": 1.1388164764174118
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 380602
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 236939
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.554704339404811,
+          "push_magnitude": 1.9488239250544546
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 106352
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 735584
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.1001511691449686,
+          "push_magnitude": 1.403436918165275
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 982064
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 284609
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.265236071854604,
+          "push_magnitude": 1.5271075497156186
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 350457
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 514151
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.88091237032211,
+          "push_magnitude": 1.1193479227969425
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 994915
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 501443
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.9608794086601202,
+          "push_magnitude": 0.8660065177095747
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 397563
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 862088
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.3992911279504696,
+          "push_magnitude": 1.9965837935610924
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 968372
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 737637
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.037337704647432,
+          "push_magnitude": 0.8446973872457507
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 691187
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 164202
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3172158811305112,
+          "push_magnitude": 1.3884682619338784
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 295712
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 824524
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2299595526441873,
+          "push_magnitude": 0.9097531928076659
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 289375
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 734197
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.8106947444272419,
+          "push_magnitude": 0.8729982864133059
+        }
+      ]
+    ],
+    "44": [
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 331807
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 231339
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.794760156151487,
+          "push_magnitude": 1.9774545620287838
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 197613
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 240660
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9828305962062829,
+          "push_magnitude": 1.9915812606111172
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 692661
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 381708
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5552646115933713,
+          "push_magnitude": 1.5643308888972625
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 616726
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 814808
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6123950794849384,
+          "push_magnitude": 1.4888231611217557
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 206959
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 875168
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.8617893730527686,
+          "push_magnitude": 1.5779056972538756
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 282247
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 910453
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.561210916144141,
+          "push_magnitude": 1.06037520201156
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 803380
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 825084
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2016457381238546,
+          "push_magnitude": 1.4421274754734723
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 104849
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 161496
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.271590233472735,
+          "push_magnitude": 1.5436758366696142
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 351553
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 480273
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.282349269723059,
+          "push_magnitude": 0.9949315351868901
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 690589
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 794339
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7007383081096998,
+          "push_magnitude": 0.9910564166554652
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 149713
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 835474
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6577722820618903,
+          "push_magnitude": 1.2614951911965793
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 124166
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 909813
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2487934726675634,
+          "push_magnitude": 1.901617785693765
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 714536
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 847240
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.44644496719478,
+          "push_magnitude": 1.8037361442955344
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 640172
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 774087
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6452349030700524,
+          "push_magnitude": 1.8151537573132344
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 837201
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 774835
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1271499940903813,
+          "push_magnitude": 1.9901335036969647
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 742826
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 180292
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.29205184472118,
+          "push_magnitude": 1.2218167013813965
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 868390
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 764506
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.42371240307852,
+          "push_magnitude": 1.5824012132985434
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 660742
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 209999
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.518015000828047,
+          "push_magnitude": 0.9644265469613743
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 874745
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 285014
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.018756863209777,
+          "push_magnitude": 1.6926805854846143
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 105282
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 432859
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.311442776661004,
+          "push_magnitude": 1.171097496204919
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 966242
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 460159
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6007076195533776,
+          "push_magnitude": 1.2438778177950225
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 190781
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 856165
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.846865256600155,
+          "push_magnitude": 0.8817593010519598
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 753636
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 768439
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5313610226115204,
+          "push_magnitude": 1.559959306210498
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 374609
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 571099
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.8909144717987285,
+          "push_magnitude": 1.4191791502216144
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 953765
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 509677
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7455546614190114,
+          "push_magnitude": 0.9084825036037383
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 530003
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 371755
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7888367145158988,
+          "push_magnitude": 1.1372470742110719
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 545823
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 579462
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5877577507635896,
+          "push_magnitude": 1.181711145091494
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 331047
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 694707
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6839981833671374,
+          "push_magnitude": 1.0975283983893185
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 842849
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 581624
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9700789954589433,
+          "push_magnitude": 0.840288827585769
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 382099
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 322857
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5940693664628498,
+          "push_magnitude": 1.6247357393562056
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 604928
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 792054
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9498842283967528,
+          "push_magnitude": 1.5573090380808237
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 665584
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 694147
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.1181294657649117,
+          "push_magnitude": 1.684186272293345
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 864656
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 718634
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.351738241753236,
+          "push_magnitude": 1.6510238592807263
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 887961
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 994591
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6163935620102272,
+          "push_magnitude": 0.9189031773702896
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 924211
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 244903
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5188701307838097,
+          "push_magnitude": 0.8367006385379243
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 111474
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 184865
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1124013338432945,
+          "push_magnitude": 1.0074257306813945
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 687799
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 278107
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.25473995068715,
+          "push_magnitude": 1.878286555556255
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 696958
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 940171
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4701113105857524,
+          "push_magnitude": 1.4381054244624625
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 822438
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 360087
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.241129074888236,
+          "push_magnitude": 1.4268574237973575
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 172185
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 875587
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.9311893880010143,
+          "push_magnitude": 1.0383906502141977
+        }
+      ]
+    ],
+    "45": [
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 822854
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 440635
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.3555674985825643,
+          "push_magnitude": 1.2724209801407909
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 600677
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 345843
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.1683886507632293,
+          "push_magnitude": 0.8039617877816949
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 560251
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 987342
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.9087500572615785,
+          "push_magnitude": 1.0043359198631538
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 275347
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 957555
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.198748295843038,
+          "push_magnitude": 1.1604138116532938
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 403572
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 751802
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.585637004995178,
+          "push_magnitude": 1.7331003175518092
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 624096
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 526590
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.154001327871825,
+          "push_magnitude": 1.2004149011026768
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 325413
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 813503
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.1115596300774877,
+          "push_magnitude": 1.1895490581974593
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 570528
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 639785
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.90515907373394,
+          "push_magnitude": 1.3335049741543719
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 356026
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 194956
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.337919584264957,
+          "push_magnitude": 1.228348675792145
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 333834
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 194875
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.691377946690972,
+          "push_magnitude": 1.6485291167124847
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 913552
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 118537
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.050697780358992,
+          "push_magnitude": 1.3103696873085324
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 878175
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 486991
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9266484983600531,
+          "push_magnitude": 1.1703487366058267
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 421303
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 322409
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.6925673331256625,
+          "push_magnitude": 1.215074342300885
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 830182
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 516819
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.5601985720858997,
+          "push_magnitude": 1.8205620197844823
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 101509
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 611639
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.164844231955698,
+          "push_magnitude": 1.181756921897196
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 534235
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 844112
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.8799055644837077,
+          "push_magnitude": 1.093571199852065
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 956976
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 996687
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6421263568183004,
+          "push_magnitude": 0.9002051659306842
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 569312
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 290147
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.5964894178865063,
+          "push_magnitude": 1.4659298536891197
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 595112
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 777575
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.0590321362824495,
+          "push_magnitude": 1.0627351920558035
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 764069
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 534692
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.862277955146948,
+          "push_magnitude": 1.2632567115151065
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 976942
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 172947
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.21849773910773,
+          "push_magnitude": 0.9484013244440513
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 486986
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 351660
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.353841814092759,
+          "push_magnitude": 1.5214449938232097
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 965171
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 211695
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.5350596263130782,
+          "push_magnitude": 1.224679726393586
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 983673
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 484606
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.251646805489491,
+          "push_magnitude": 1.454308084352322
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 746478
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 344045
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4822913788095624,
+          "push_magnitude": 1.4503154470223512
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 485467
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 974563
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.517456004982471,
+          "push_magnitude": 0.9924854248445822
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 355934
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 806650
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.8678677586273487,
+          "push_magnitude": 1.8585153717819072
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 610235
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 117224
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9688667132801378,
+          "push_magnitude": 0.8980063233428188
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 233408
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 459713
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.501448106912455,
+          "push_magnitude": 1.872636460974668
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 561154
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 795602
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.19783109759869,
+          "push_magnitude": 0.8632045228622707
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 654050
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 833291
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6089345442711314,
+          "push_magnitude": 1.013768258606389
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 850572
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 267324
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1574616149529557,
+          "push_magnitude": 1.8833353909858668
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 814855
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 434253
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.122574490042468,
+          "push_magnitude": 1.7062531808379346
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 889061
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 289017
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1905409293803597,
+          "push_magnitude": 1.4493196381876743
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 104797
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 177445
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5395001568285178,
+          "push_magnitude": 1.2989372313465444
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 956862
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 183982
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.878926993042117,
+          "push_magnitude": 1.9616992437515965
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 812342
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 363564
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5714805806231453,
+          "push_magnitude": 1.3961571752151316
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 323707
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 914517
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.940645046658913,
+          "push_magnitude": 1.1167997184791965
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 214794
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 107180
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3373280214361296,
+          "push_magnitude": 1.7901916677619254
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 979288
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 937094
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4257507457918104,
+          "push_magnitude": 1.0647705954917084
+        }
+      ]
+    ],
+    "46": [
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 682912
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 588966
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.565047730707182,
+          "push_magnitude": 1.6257866131390784
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 417847
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 730643
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4240889810852053,
+          "push_magnitude": 0.9921261465992758
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 436507
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 589452
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.771660858635592,
+          "push_magnitude": 1.9214174624685696
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 533865
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 334164
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7021522023366666,
+          "push_magnitude": 1.78847766902644
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 436412
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 111721
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3882392975063462,
+          "push_magnitude": 1.1076625876229416
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 981142
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 580464
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.0905053788395556,
+          "push_magnitude": 1.572363415064743
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 258808
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 547883
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.1412916935908832,
+          "push_magnitude": 0.9402589495814587
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 358967
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 777317
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.660125355820907,
+          "push_magnitude": 1.5822020213673258
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 529257
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 563118
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.096510497314205,
+          "push_magnitude": 1.7147584541559737
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 922397
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 565390
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.3082548551410498,
+          "push_magnitude": 1.154222585511968
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 336964
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 795831
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9613662048994882,
+          "push_magnitude": 0.9627566785458992
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 627361
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 978378
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.5977107285346337,
+          "push_magnitude": 1.1564763940112677
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 283287
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 647098
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6454130117283532,
+          "push_magnitude": 1.9579099507653683
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 837427
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 172011
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.764381180667927,
+          "push_magnitude": 1.0932555680894873
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 983312
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 146701
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2524765369782234,
+          "push_magnitude": 1.5333948676104372
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 249397
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 628452
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.9428044745408117,
+          "push_magnitude": 1.8383290282413403
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 838001
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 123759
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6971858673809948,
+          "push_magnitude": 1.8317425571192643
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 857752
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 207981
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2500829403080247,
+          "push_magnitude": 1.7149406174018549
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 450593
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 746767
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2035432644329305,
+          "push_magnitude": 1.8431937270260046
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 695571
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 269060
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.0946300282518324,
+          "push_magnitude": 1.46259867106732
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 293671
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 285359
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7745556652238943,
+          "push_magnitude": 1.2001067326879982
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 539907
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 252211
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4946586265953727,
+          "push_magnitude": 1.6044437789138928
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 213477
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 556909
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2460931905728683,
+          "push_magnitude": 0.9709096711828116
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 978433
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 335003
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.2037341367894547,
+          "push_magnitude": 0.9234105542074564
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 891313
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 942339
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6052382784531691,
+          "push_magnitude": 0.9115205081442053
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 339309
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 559084
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.113902433398809,
+          "push_magnitude": 1.1590577734060974
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 559453
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 271364
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.6600384317668195,
+          "push_magnitude": 0.8420635275898516
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 751927
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 488774
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.85965007044662,
+          "push_magnitude": 1.2301934476891354
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 196515
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 449394
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.8561117572008565,
+          "push_magnitude": 1.2027378229433947
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 836546
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 616599
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5448528630952088,
+          "push_magnitude": 1.1646380877240314
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 528592
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 642065
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.9800781204647668,
+          "push_magnitude": 1.2592215264184201
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 687014
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 994021
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.4561630764274502,
+          "push_magnitude": 1.5813199427769564
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 325349
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 450596
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.0990886720573045,
+          "push_magnitude": 1.5112237467396454
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 519983
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 863723
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.7845840362068348,
+          "push_magnitude": 1.8821157040108651
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 849965
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 679443
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.5144550894106583,
+          "push_magnitude": 1.6020837873848932
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 941033
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 744628
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 1.5554968584292375,
+          "push_magnitude": 1.3644993070316036
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 430028
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 353772
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.2251091728533807,
+          "push_magnitude": 1.8644837565653638
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 940425
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 598467
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 2.8539205123088363,
+          "push_magnitude": 1.840651821106458
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 454514
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 200754
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.084089363911786,
+          "push_magnitude": 0.8994641902564502
+        }
+      ],
+      [
+        {
+          "terrain": "flat"
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 257332
+        },
+        {
+          "terrain": "rough",
+          "terrain_seed": 484280
+        },
+        {
+          "terrain": "flat",
+          "push": true,
+          "push_time": 3.3657745424707732,
+          "push_magnitude": 1.106134314900507
+        }
+      ]
+    ]
+  },
+  "runs": [
+    {
+      "condition": "sine",
+      "seed": 42,
+      "path": "sine/seed_42",
+      "seconds": 179.34739795792848
+    },
+    {
+      "condition": "sine",
+      "seed": 43,
+      "path": "sine/seed_43",
+      "seconds": 179.301179417409
+    },
+    {
+      "condition": "sine",
+      "seed": 44,
+      "path": "sine/seed_44",
+      "seconds": 179.24240408279002
+    },
+    {
+      "condition": "sine",
+      "seed": 45,
+      "path": "sine/seed_45",
+      "seconds": 179.5771689163521
+    },
+    {
+      "condition": "sine",
+      "seed": 46,
+      "path": "sine/seed_46",
+      "seconds": 177.17185508273542
+    },
+    {
+      "condition": "neural_feedback",
+      "seed": 42,
+      "path": "neural_feedback/seed_42",
+      "seconds": 190.86729041673243
+    },
+    {
+      "condition": "neural_feedback",
+      "seed": 43,
+      "path": "neural_feedback/seed_43",
+      "seconds": 192.5174687905237
+    },
+    {
+      "condition": "neural_feedback",
+      "seed": 44,
+      "path": "neural_feedback/seed_44",
+      "seconds": 192.41493508405983
+    },
+    {
+      "condition": "neural_feedback",
+      "seed": 45,
+      "path": "neural_feedback/seed_45",
+      "seconds": 192.76509679108858
+    },
+    {
+      "condition": "neural_feedback",
+      "seed": 46,
+      "path": "neural_feedback/seed_46",
+      "seconds": 193.65422816574574
+    },
+    {
+      "condition": "neural_clock_only",
+      "seed": 42,
+      "path": "neural_clock_only/seed_42",
+      "seconds": 192.22368100006133
+    },
+    {
+      "condition": "neural_clock_only",
+      "seed": 43,
+      "path": "neural_clock_only/seed_43",
+      "seconds": 192.2575422078371
+    },
+    {
+      "condition": "neural_clock_only",
+      "seed": 44,
+      "path": "neural_clock_only/seed_44",
+      "seconds": 192.57227749936283
+    },
+    {
+      "condition": "neural_clock_only",
+      "seed": 45,
+      "path": "neural_clock_only/seed_45",
+      "seconds": 192.48095637466758
+    },
+    {
+      "condition": "neural_clock_only",
+      "seed": 46,
+      "path": "neural_clock_only/seed_46",
+      "seconds": 193.12105591595173
+    }
+  ],
+  "selection": "best of generation 40 on its shared training batch; test set never used for selection",
+  "statistics": "paired exact sign-flip; Holm over two comparisons x two primary metrics",
+  "training_seconds": 2819.5952177904546,
+  "total_seconds": 2850.068636457436,
+  "analysis_seconds": 30.46636049915105
+}

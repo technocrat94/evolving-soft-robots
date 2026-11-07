@@ -48,8 +48,8 @@ def random_controller(kind, body, rng):
     omega = float(rng.uniform(C.OMEGA_MIN, C.OMEGA_MAX))
     if kind == 'open_loop':
         return ControllerGenome(kind, omega, phases=rng.uniform(0,2*np.pi,body.shape))
-    if kind != 'closed_loop':
-        raise ValueError('kind must be open_loop or closed_loop')
+    if kind not in ('closed_loop', 'neural_clock_only'):
+        raise ValueError('kind must be open_loop, closed_loop, or neural_clock_only')
     outputs = int(np.count_nonzero((body == 3) | (body == 4)))
     return ControllerGenome(kind, omega,
         w1=rng.normal(0,C.NN_INITIAL_STD,(C.NN_HIDDEN,C.NN_INPUTS)),

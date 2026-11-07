@@ -1,0 +1,136 @@
+[
+  {
+    "id": "flat",
+    "terrain": "flat"
+  },
+  {
+    "id": "rough_01",
+    "terrain": "rough",
+    "terrain_seed": 2000000
+  },
+  {
+    "id": "rough_02",
+    "terrain": "rough",
+    "terrain_seed": 2000001
+  },
+  {
+    "id": "rough_03",
+    "terrain": "rough",
+    "terrain_seed": 2000002
+  },
+  {
+    "id": "rough_04",
+    "terrain": "rough",
+    "terrain_seed": 2000003
+  },
+  {
+    "id": "rough_05",
+    "terrain": "rough",
+    "terrain_seed": 2000004
+  },
+  {
+    "id": "rough_06",
+    "terrain": "rough",
+    "terrain_seed": 2000005
+  },
+  {
+    "id": "rough_07",
+    "terrain": "rough",
+    "terrain_seed": 2000006
+  },
+  {
+    "id": "rough_08",
+    "terrain": "rough",
+    "terrain_seed": 2000007
+  },
+  {
+    "id": "rough_09",
+    "terrain": "rough",
+    "terrain_seed": 2000008
+  },
+  {
+    "id": "rough_10",
+    "terrain": "rough",
+    "terrain_seed": 2000009
+  },
+  {
+    "id": "push_01",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000000,
+    "push_time": 2.211018014226473,
+    "push_magnitude": 1.4730888129415067
+  },
+  {
+    "id": "push_02",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000001,
+    "push_time": 3.462739549825914,
+    "push_magnitude": 1.3435366777039823
+  },
+  {
+    "id": "push_03",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000002,
+    "push_time": 1.624466171402166,
+    "push_magnitude": 1.6497378243992478
+  },
+  {
+    "id": "push_04",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000003,
+    "push_time": 2.848812565534605,
+    "push_magnitude": 1.6688623993834153
+  },
+  {
+    "id": "push_05",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000004,
+    "push_time": 2.8687020180171308,
+    "push_magnitude": 1.7018802308694234
+  },
+  {
+    "id": "push_06",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000005,
+    "push_time": 2.3904477389396916,
+    "push_magnitude": 1.1923106606515217
+  },
+  {
+    "id": "push_07",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000006,
+    "push_time": 3.467229740262618,
+    "push_magnitude": 1.6529300808145528
+  },
+  {
+    "id": "push_08",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000007,
+    "push_time": 2.790301701224994,
+    "push_magnitude": 1.8128890841492291
+  },
+  {
+    "id": "push_09",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000008,
+    "push_time": 1.927298233921257,
+    "push_magnitude": 1.7605113902423348
+  },
+  {
+    "id": "push_10",
+    "terrain": "flat",
+    "push": true,
+    "setting_seed": 3000009,
+    "push_time": 1.8944536117476805,
+    "push_magnitude": 1.4650577053660874
+  }
+]

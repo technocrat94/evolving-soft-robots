@@ -1,0 +1,10 @@
+{
+  "episode": {
+    "id": "rough_01",
+    "terrain": "rough",
+    "terrain_seed": 2000000
+  },
+  "seed": 42,
+  "frames": 125,
+  "pixels_per_meter": 52.78047088378827
+}

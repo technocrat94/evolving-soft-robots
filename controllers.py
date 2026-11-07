@@ -1,6 +1,7 @@
 """NumPy sensor-feedback policy, held constant between control updates."""
 import numpy as np
 import config as C
+from functools import lru_cache
 
 
 def angle(reference, positions):
@@ -21,28 +22,33 @@ def sensors(reference, positions, velocities, height, front, previous_angle, t, 
 
 
 def neural_output(controller, inputs):
+    if controller.get('kind') == 'neural_clock_only':
+        inputs = inputs.copy()
+        inputs[:5] = 0.0
     hidden = np.tanh(np.sum(np.asarray(controller['w1'])*inputs[None,:],axis=1)
                      + controller['b1'])
     return np.tanh(np.sum(np.asarray(controller['w2'])*hidden[None,:],axis=1)
                    + controller['b2'])
 
 
-def terrain_profile():
+@lru_cache(maxsize=256)
+def terrain_profile(seed=C.ROUGH_SEED):
     x = np.arange(C.ROUGH_START, C.ROUGH_END+C.ROUGH_SPACING/2, C.ROUGH_SPACING)
-    heights = np.random.default_rng(C.ROUGH_SEED).uniform(0,C.ROUGH_HEIGHT,len(x))
+    heights = np.random.default_rng(seed).uniform(0,C.ROUGH_HEIGHT,len(x))
     return x, heights
 
 
 ROUGH_X, ROUGH_Y = terrain_profile()
 
 
-def ground(x, terrain='flat'):
+def ground(x, terrain='flat', terrain_seed=C.ROUGH_SEED):
     if terrain == 'flat':
         return np.zeros_like(x), np.zeros_like(x)
     if terrain != 'rough':
         raise ValueError('terrain must be flat or rough')
-    index = np.clip(np.searchsorted(ROUGH_X,x,side='right')-1,0,len(ROUGH_X)-2)
-    slope = (ROUGH_Y[index+1]-ROUGH_Y[index])/C.ROUGH_SPACING
-    height = np.interp(x,ROUGH_X,ROUGH_Y)
-    slope = np.where((x<ROUGH_X[0]) | (x>ROUGH_X[-1]),0,slope)
+    profile_x, profile_y = terrain_profile(terrain_seed)
+    index = np.clip(np.searchsorted(profile_x,x,side='right')-1,0,len(profile_x)-2)
+    slope = (profile_y[index+1]-profile_y[index])/C.ROUGH_SPACING
+    height = np.interp(x,profile_x,profile_y)
+    slope = np.where((x<profile_x[0]) | (x>profile_x[-1]),0,slope)
     return height,slope

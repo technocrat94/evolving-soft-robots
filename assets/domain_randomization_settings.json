@@ -1,0 +1,196 @@
+{
+  "DT": 0.002,
+  "SIM_SECONDS": 5.0,
+  "MASS": 0.1,
+  "GRAVITY": 9.81,
+  "STIFFNESS": {
+    "1": 1800.0,
+    "2": 250.0,
+    "3": 500.0,
+    "4": 500.0
+  },
+  "SPRING_DAMPING": 6.0,
+  "CONTACT_SPRING_DAMPING": 4.0,
+  "CONTACT_TOLERANCE": 1e-09,
+  "POPULATION_SIZE": 60,
+  "GENERATIONS": 40,
+  "FRICTION": 0.9,
+  "AMPLITUDE": 0.2,
+  "OMEGA": 3.0,
+  "START_HEIGHT": 0.02,
+  "MAX_POSITION": 10000.0,
+  "MAX_BODY_SIZE": 5,
+  "RANDOM_SEED": 42,
+  "FPS": 25,
+  "IMAGE_SIZE": [
+    720,
+    550
+  ],
+  "CAMERA_WIDTH": 10.0,
+  "COLORS": {
+    "1": "#444444",
+    "2": "#bbbbbb",
+    "3": "#f39c35",
+    "4": "#88ccee"
+  },
+  "DEMO_BODY": [
+    [
+      3,
+      1,
+      3
+    ],
+    [
+      4,
+      2,
+      4
+    ],
+    [
+      4,
+      0,
+      4
+    ],
+    [
+      3,
+      0,
+      3
+    ]
+  ],
+  "DEMO_PHASES": [
+    [
+      0.0,
+      0.0,
+      3.14
+    ],
+    [
+      1.57,
+      0.0,
+      4.71
+    ],
+    [
+      1.57,
+      0.0,
+      4.71
+    ],
+    [
+      0.0,
+      0.0,
+      3.14
+    ]
+  ],
+  "OMEGA_MIN": 1.0,
+  "OMEGA_MAX": 6.0,
+  "MUTATION_RATE": 0.08,
+  "ELITE_FRACTION": 0.2,
+  "TOURNAMENT_SIZE": 3,
+  "PHASE_MUTATION_STD": 0.25,
+  "OMEGA_MUTATION_STD": 0.35,
+  "INITIAL_MATERIAL_PROBABILITIES": [
+    0.3,
+    0.15,
+    0.15,
+    0.2,
+    0.2
+  ],
+  "MAX_INITIALIZATION_ATTEMPTS": 10000,
+  "MAX_CHILD_RETRIES": 50,
+  "WORKERS": null,
+  "PREVIEW_INTERVAL": 5,
+  "SMALL_POPULATION_SIZE": 10,
+  "SMALL_GENERATIONS": 5,
+  "RUN_UTC_OFFSET_HOURS": 8,
+  "FALL_ANGLE_DEGREES": 30.0,
+  "FALL_DURATION": 0.2,
+  "POSTURE_CHECK_INTERVAL": 10,
+  "COMPARISON_GENERATIONS": [
+    1,
+    30,
+    60
+  ],
+  "TIMELINE_GENERATIONS": [
+    1,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60
+  ],
+  "COMPARISON_PANEL_SIZE": [
+    480,
+    540
+  ],
+  "COMPARISON_GROUND_MARGIN": 65,
+  "COMPARISON_HEADER_HEIGHT": 100,
+  "COMPARISON_MIN_VIEW_HEIGHT": 7.0,
+  "PLOT_DPI": 160,
+  "MATERIAL_NAMES": {
+    "1": "Rigid",
+    "2": "Soft",
+    "3": "Horizontal actuator",
+    "4": "Vertical actuator"
+  },
+  "EXPERIMENT_SEEDS": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "EXPERIMENT_CONDITIONS": [
+    "co_evolution",
+    "body_only",
+    "control_only"
+  ],
+  "FIXED_OMEGA": 3.0,
+  "STATISTICAL_ALPHA": 0.05,
+  "CONTROL_INTERVAL": 10,
+  "NN_INPUTS": 7,
+  "NN_HIDDEN": 8,
+  "NN_INITIAL_STD": 0.5,
+  "NN_MUTATION_STD": 0.15,
+  "ROUGH_SEED": 2026,
+  "ROUGH_SPACING": 0.5,
+  "ROUGH_START": -20.0,
+  "ROUGH_END": 100.0,
+  "ROUGH_HEIGHT": 0.12,
+  "PUSH_TIME": 2.5,
+  "PUSH_DELTA_V": -1.5,
+  "ROBUSTNESS_SEEDS": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "ROBUSTNESS_TRAINING": "flat",
+  "DOMAIN_POPULATION": 60,
+  "DOMAIN_GENERATIONS": 40,
+  "TEST_ROUGH_SEEDS": [
+    2000000,
+    2000001,
+    2000002,
+    2000003,
+    2000004,
+    2000005,
+    2000006,
+    2000007,
+    2000008,
+    2000009
+  ],
+  "TEST_PUSH_SETTING_SEEDS": [
+    3000000,
+    3000001,
+    3000002,
+    3000003,
+    3000004,
+    3000005,
+    3000006,
+    3000007,
+    3000008,
+    3000009
+  ],
+  "TRAINING_SCHEDULE_SEED_SEQUENCE": [
+    314159,
+    "optimizer_seed"
+  ]
+}

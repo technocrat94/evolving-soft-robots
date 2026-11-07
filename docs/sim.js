@@ -34,15 +34,16 @@
    for(const s of this.springs){s.sin=0;s.cos=0;for(const o of s.owners)if(o.active){const phase=this.controller.phases?.[o.r]?.[o.c]||0;s.sin+=Math.cos(phase)/s.owners.length;s.cos+=Math.sin(phase)/s.owners.length;}}
   }
   mean(axis){return this.p.reduce((n,p)=>n+p[axis],0)/this.p.length;}
-  ground(x){if(this.options.terrain!=='rough')return [0,0];const C=this.C,ys=C.ROUGH_Y,xx=(x-C.ROUGH_START)/C.ROUGH_SPACING,i=clamp(Math.floor(xx),0,ys.length-2);if(xx<0)return [ys[0],0];if(xx>ys.length-1)return [ys.at(-1),0];const slope=(ys[i+1]-ys[i])/C.ROUGH_SPACING;return [ys[i]+(x-(C.ROUGH_START+i*C.ROUGH_SPACING))*slope,slope];}
+  ground(x){if(this.options.terrain!=='rough')return [0,0];const C=this.C,ys=this.options.terrain_heights||C.ROUGH_Y,xx=(x-C.ROUGH_START)/C.ROUGH_SPACING,i=clamp(Math.floor(xx),0,ys.length-2);if(xx<0)return [ys[0],0];if(xx>ys.length-1)return [ys.at(-1),0];const slope=(ys[i+1]-ys[i])/C.ROUGH_SPACING;return [ys[i]+(x-(C.ROUGH_START+i*C.ROUGH_SPACING))*slope,slope];}
   rotation(){let dot=0,cross=0;for(let i=0;i<this.p.length;i++){const r=this.reference[i],p=this.p[i];dot+=r[0]*p[0]+r[1]*p[1];cross+=r[0]*p[1]-r[1]*p[0];}return [Math.atan2(cross,dot),dot/Math.max(Math.hypot(dot,cross),1e-12)];}
   control(t){const C=this.C,c=this.controller,angle=this.rotation()[0],delta=Math.atan2(Math.sin(angle-this.previousAngle),Math.cos(angle-this.previousAngle));let vy=0,front=0,back=0;
    for(let i=0;i<this.p.length;i++){vy+=this.v[i][1];if(this.p[i][1]<=this.ground(this.p[i][0])[0]+C.CONTACT_TOLERANCE){if(this.front[i])front=1;else back=1;}}
    const input=[angle/Math.PI,delta/(C.CONTROL_INTERVAL*C.DT)/10,vy/this.p.length/5,front,back,Math.sin(this.omega*t),Math.cos(this.omega*t)];this.previousAngle=angle;
+   if(c.kind==='neural_clock_only')input.fill(0,0,5);
    const hidden=c.w1.map((row,i)=>Math.tanh(row.reduce((s,w,j)=>s+w*input[j],c.b1[i])));
    this.output=c.w2.map((row,i)=>Math.tanh(row.reduce((s,w,j)=>s+w*hidden[j],c.b2[i])));
   }
-  step(){const C=this.C;if(this.done)return;const t=this.stepIndex*C.DT,neural=this.controller.kind==='closed_loop';if(neural&&this.stepIndex%C.CONTROL_INTERVAL===0)this.control(t);
+  step(){const C=this.C;if(this.done)return;const t=this.stepIndex*C.DT,neural=['closed_loop','neural_clock_only'].includes(this.controller.kind);if(neural&&this.stepIndex%C.CONTROL_INTERVAL===0)this.control(t);
    const acc=this.p.map(()=>[0,-C.GRAVITY]);
    for(const s of this.springs){const a=this.p[s.a],b=this.p[s.b],va=this.v[s.a],vb=this.v[s.b],dx=b[0]-a[0],dy=b[1]-a[1],length=Math.hypot(dx,dy),nx=dx/Math.max(length,1e-12),ny=dy/Math.max(length,1e-12);
     let modulation=s.sin*Math.sin(this.omega*t)+s.cos*Math.cos(this.omega*t);if(neural){modulation=0;for(const o of s.owners)if(o.active)modulation+=this.output[o.index]/s.owners.length;}
@@ -50,7 +51,7 @@
     const f=s.k*(length-target)+(C.SPRING_DAMPING+C.CONTACT_SPRING_DAMPING*Number(touch))*((vb[0]-va[0])*nx+(vb[1]-va[1])*ny),fx=f*nx/C.MASS,fy=f*ny/C.MASS;
     acc[s.a][0]+=fx;acc[s.a][1]+=fy;acc[s.b][0]-=fx;acc[s.b][1]-=fy;
    }
-   if(this.options.push&&this.stepIndex===Math.round(C.PUSH_TIME/C.DT))for(const v of this.v)v[0]+=C.PUSH_DELTA_V;
+   if(this.options.push&&this.stepIndex===Math.round((this.options.push_time??C.PUSH_TIME)/C.DT))for(const v of this.v)v[0]-=this.options.push_magnitude??-C.PUSH_DELTA_V;
    for(let i=0;i<this.p.length;i++){const p=this.p[i],v=this.v[i];v[0]+=C.DT*acc[i][0];v[1]+=C.DT*acc[i][1];p[0]+=C.DT*v[0];p[1]+=C.DT*v[1];const [height,slope]=this.ground(p[0]);
     if(p[1]<height){p[1]=height;if(this.options.terrain!=='rough'){const normal=Math.max(-v[1],0);v[1]=Math.max(v[1],0);v[0]=Math.sign(v[0])*Math.max(Math.abs(v[0])-C.FRICTION*normal,0);}else{const norm=Math.sqrt(1+slope*slope),nx=-slope/norm,ny=1/norm,tx=ny,ty=-nx,dv=Math.max(-(v[0]*nx+v[1]*ny),0);v[0]+=dv*nx;v[1]+=dv*ny;const friction=clamp(v[0]*tx+v[1]*ty,-C.FRICTION*dv,C.FRICTION*dv);v[0]-=friction*tx;v[1]-=friction*ty;}}
     if(!Number.isFinite(p[0])||!Number.isFinite(p[1])||Math.max(Math.abs(p[0]),Math.abs(p[1]))>C.MAX_POSITION)this.stable=false;
