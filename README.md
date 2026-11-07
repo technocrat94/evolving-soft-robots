@@ -209,11 +209,11 @@ The full study took **2,850.069 s (47.50 min)**, including training, held-out ac
 
 ![Seed-42 flat-trained neural, randomized feedback and randomized sine on the first held-out rough profile](assets/robust_controller_rough.gif)
 
-The GIF and interactive **Robustness** section use seed 42 and the first held-out rough profile, chosen by convention before viewing test results. All three pass on this particular profile: flat-trained neural travels **16.361 m**, randomized feedback **14.267 m**, and randomized sine **14.321 m**. This single example favors the baseline despite its poor aggregate rough success. The web section offers flat/rough terrain and three controller choices, with both raw and eligible distances visible. These are illustrative trials; the summary uses every winner and all test episodes.
+The GIF uses seed 42 and the first held-out rough profile, chosen before viewing test results. All three pass on this particular profile: flat-trained neural travels **16.361 m**, randomized feedback **14.267 m**, and randomized sine **14.321 m**. This single example favors the baseline despite its poor aggregate rough success. The redesigned lab's live stress test includes these three specimens plus flat sine and randomized clock-only, with raw/eligible distances and flat/rough/push choices. These are illustrative trials; tab C's summary uses every winner and all test episodes.
 
 The two planned feedback comparisons (against clock-only and sine) use exact paired two-sided sign-flip tests on per-seed held-out means, assuming symmetric paired differences / within-pair label exchangeability under the null. Holm correction covers **four tests together**: two comparisons × distance and success. With only five seed pairs, the smallest two-sided raw p-value is 0.0625, so this design cannot establish significance at 0.05 even before correction. Error bars show sample SD across optimizer seeds, not confidence intervals; the 21 test episodes are not treated as 21 independent training seeds.
 
-**Validation:** 36,000 candidates / **144,000 training episodes**, zero numerical instability, and **32,382 tilt-disqualified episodes**. All 600 checkpoints preserve the fixed body and omega bounds; all 15 final four-episode scores replay independently. The held-out audit includes **525 active and 525 passive episodes**, all stable, with zero training/test seed overlap. All 25 Python tests and 13 JS/Python controller/environment checks pass.
+**Validation:** 36,000 candidates / **144,000 training episodes**, zero numerical instability, and **32,382 tilt-disqualified episodes**. All 600 checkpoints preserve the fixed body and omega bounds; all 15 final four-episode scores replay independently. The held-out audit includes **525 active and 525 passive episodes**, all stable, with zero training/test seed overlap. All 25 Python tests pass; the redesigned lab passes 19 JS/Python controller/environment checks, including all five stress-test choices.
 
 [CSV summaries](assets/domain_randomization_table.csv), [Markdown table](assets/domain_randomization_table.md), [per-seed results](assets/domain_randomization_per_seed.csv), [all test episodes and passive audits](assets/domain_randomization_episodes.csv), [statistics](assets/domain_randomization_statistics.json), [validation](assets/domain_randomization_validation.json), and [environment schedules](assets/domain_randomization_manifest.json) are tracked. Small winner checkpoints are under `assets/domain_controllers/`; raw training logs stay ignored. Physical and standard GA parameters remain in `config.py`; D's fixed study protocol is declared in `domain_randomization.py` and saved with its settings.
 
@@ -222,6 +222,7 @@ python domain_randomization.py
 python domain_randomization.py --analyze results/experiments/domain_randomization/run_YYYYMMDD_HHMM
 python verify_domain_randomization.py --study results/experiments/domain_randomization/run_YYYYMMDD_HHMM
 python export_robots.py
+python export_site_data.py
 node docs/validate.js
 ```
 
@@ -236,18 +237,20 @@ The curated CSV retains each generation's `best`, `average` and `tilt_disqualifi
 
 ## Interactive web demo (Upgrade C)
 
-The [browser lab](https://technocrat94.github.io/evolving-soft-robots/) runs plain HTML, CSS and JavaScript from `docs/`, with no framework or build step. Watch generations 1, 30 and 60 side by side, pause/restart them, or edit a 5 × 5 body and try omega from 1–6 rad/s. Clicking cycles empty → rigid → soft → horizontal actuator → vertical actuator. Custom bodies use synchronized sine phases; invalid or disconnected bodies are rejected. The page supports English and Traditional Chinese and includes the three experiment figures.
+The [browser lab](https://technocrat94.github.io/evolving-soft-robots/) runs plain HTML, CSS and JavaScript from `docs/`, with no framework or build step. The redesigned lab includes a seven-checkpoint evolution scrubber, a generation-1/30/60 ghost race, a 5 × 5 material editor with rhythm presets and shareable designs, and three experiment tabs drawn with SVG. Tab C presents domain randomization; the live stress test compares five seed-matched flat/randomized controllers on flat, rough and push conditions. All features support English and Traditional Chinese.
 
-`export_robots.py` exports the showcase checkpoints, the best flat-trained neural controller, and Upgrade D's preselected demo controllers to `docs/robots.json`, including physical constants and reproducible terrain. The JavaScript simulator also supports neural control, rough ground and pushes. The original four flat-ground exports match Python within **4 × 10⁻¹³ percent** relative error in this environment. Upgrade D adds flat, held-out rough and held-out push parity checks for its three demo choices, comparing raw displacement and fall status as well as eligible fitness. This is numerical parity, not physical validation. [Exact comparison](assets/js_parity.csv).
+`export_robots.py` exports the showcase checkpoints, the best flat-trained neural controller, and Upgrade D's preselected demo controllers to `docs/robots.json`, including physical constants and reproducible terrain. `export_site_data.py` adds seven checkpoints, histories, statistics and all five stress-test controllers to `lab.json`. The original four flat-ground exports match Python within **4 × 10⁻¹³ percent** relative error. All five stress choices are checked on flat, held-out rough and held-out push conditions, including raw displacement and fall status: **19 checks total**. This is numerical parity, not physical validation. [Exact comparison](assets/js_parity.csv).
 
 ```sh
 python export_robots.py
+python export_site_data.py
 node docs/validate.js
+python export_site_data.py  # refresh the embedded parity results
 python -m http.server 8000 --directory docs
 # Open http://localhost:8000
 ```
 
-GitHub Pages serves the `main` branch's `/docs` directory. Re-export after changing checkpoints, controllers, physics constants or result figures; commit the resulting files. Opening `index.html` directly with a `file://` URL can block the JSON fetch, so use HTTP locally.
+GitHub Pages serves the `main` branch's `/docs` directory. `robots.json` retains the simulator export schema; `lab.json` contains checkpoint histories, SVG-chart data, statistics and stress-test controllers. Run both exporters after changing source data. The redesign preserves `docs/sim.js` from the verified D implementation. Opening `index.html` directly with a `file://` URL can block JSON loading, so use HTTP locally.
 
 ## How to run
 

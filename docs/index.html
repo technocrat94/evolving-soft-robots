@@ -1,8 +1,348 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Watch soft robots evolve, build your own voxel robot, and explore reproducible locomotion experiments."><title>Evolving Soft Robots — Interactive Lab</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="robustness.css"><script defer src="sim.js"></script><script defer src="robustness.js"></script><script defer src="app.js"></script></head>
-<body><header><a class="brand" href="#">SOFT ROBOT LAB<span>01 / EVOLUTION IN MOTION</span></a><nav><a href="#evolution" data-i18n="watch">Watch evolution</a><a href="#design" data-i18n="design">Design a robot</a><a href="#results" data-i18n="results">Results</a><button id="language" aria-label="Switch to Traditional Chinese">繁體中文</button></nav></header>
-<main><section class="hero"><div class="eyebrow" data-i18n="eyebrow">COMPUTATIONAL EVOLUTION · A HANDS-ON EXPERIMENT</div><h1 data-i18n="title">A body. A rhythm.<br>A way forward.</h1><div class="hero-bottom"><p data-i18n="intro">No legs were programmed. A genetic algorithm discovered bodies and rhythms that turn soft material into forward motion. Watch it happen, then try your own design.</p><a class="round-link" href="https://github.com/technocrat94/evolving-soft-robots" target="_blank" rel="noopener">GitHub ↗</a></div><div class="metrics"><div><strong>19.24 m</strong><span data-i18n="metric1">showcase distance in 5 seconds</span></div><div><strong>5 × 5</strong><span data-i18n="metric2">cells. Countless possible bodies.</span></div><div><strong>60</strong><span data-i18n="metric3">generations of discovery</span></div></div></section>
-<section id="evolution"><div class="section-heading"><div><span class="eyebrow">01 / <span data-i18n="observe">OBSERVE</span></span><h2 data-i18n="watch">Watch evolution</h2></div><div class="controls"><button id="play" class="primary" data-i18n="play">Play</button><button id="pause" data-i18n="pause">Pause</button><button id="restart" data-i18n="restart">Restart</button></div></div><p class="section-intro" data-i18n="evolutionText">The same physics, three checkpoints. First an arch that shuffles; later a hooked front leg and a refined hopping gait. Ground ticks are one model meter apart.</p><div id="evolution-panels" class="evolution-panels"></div><p id="evolution-status" class="status" aria-live="polite"></p><p class="note" data-i18n="modelNote">A 2D mass-spring model, not a calibrated physical robot. Falling for 0.2 s beyond 30° gives zero eligible distance. Limbs can pass through the body.</p></section>
-<section id="design"><div class="section-heading"><div><span class="eyebrow">02 / <span data-i18n="experiment">EXPERIMENT</span></span><h2 data-i18n="designTitle">What would you build?</h2></div></div><p class="section-intro" data-i18n="designText">Click a cell to cycle its material. Keep every occupied cell connected by an edge and include at least one actuator. Your robot starts with synchronized sine-wave actuation.</p><div class="design-layout"><div class="editor-card"><div id="grid" role="group" aria-label="5 by 5 robot material editor"></div><div id="legend" class="legend"></div><label for="omega"><span data-i18n="frequency">Angular frequency</span><output id="omega-value">3.0 rad/s</output></label><input id="omega" type="range" min="1" max="6" step="0.1" value="3"><div class="controls"><button id="run" class="primary" data-i18n="run">Run my robot</button><button id="clear" data-i18n="clear">Clear grid</button></div><p id="design-status" class="status" aria-live="polite"></p></div><div class="design-preview"><canvas id="design-canvas" width="800" height="660" aria-label="Your robot simulation"></canvas><div class="preview-footer"><span data-i18n="yourRobot">YOUR ROBOT</span><strong id="design-distance">0.00 m</strong></div></div></div></section>
-<section id="results"><div class="section-heading"><div><span class="eyebrow">03 / <span data-i18n="evidence">EVIDENCE</span></span><h2 data-i18n="resultsTitle">Measure the progress.</h2></div></div><div class="result-list"><article><div><span class="result-number">A</span><h3 data-i18n="fitnessTitle">A punctuated search</h3><p data-i18n="fitnessText">The showcase plateaued around generations 30–40 before a later breakthrough; the dashed curve counts tilt disqualifications.</p></div><img src="assets/fitness_plot.png" alt="Showcase fitness and tilt disqualifications" loading="lazy"></article><article><div><span class="result-number">B</span><h3 data-i18n="ablationTitle">Body or controller?</h3><p data-i18n="ablationText">Across five seeds, joint evolution did not establish superiority over either fixed baseline; shaded bands show sample standard deviations.</p></div><img src="assets/ablation_plot.png" alt="Five-seed body and controller ablation" loading="lazy"></article><article><div><span class="result-number">C</span><h3 data-i18n="robustnessTitle">Does feedback help?</h3><p data-i18n="robustnessText">Sine and neural controllers trained on flat ground face rough terrain and a backward push; error bars show variability across five seeds.</p></div><img src="assets/robustness_plot.png" alt="Open-loop and closed-loop robustness comparison" loading="lazy"></article></div></section></main>
-<footer><div class="brand">SOFT ROBOT LAB</div><p data-i18n="footer">Built from springs, selection, and a little curiosity.</p><a href="https://github.com/technocrat94/evolving-soft-robots" data-i18n="source">Source, experiments & documentation ↗</a></footer></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A 2D soft-robot simulator and genetic algorithm that evolves bodies and gaits. Watch evolution, race the generations, build your own robot, and explore the experiments.">
+<meta property="og:title" content="Evolving Soft Robots — Interactive Lab">
+<meta property="og:description" content="210,000 training episodes. Evolved soft robots, feedback control, and domain randomization.">
+<meta name="theme-color" content="#0b1211">
+<title>Evolving Soft Robots — Interactive Lab</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="sim.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#top"><span class="dot"></span>SOFT ROBOT LAB</a>
+  <nav>
+    <a href="#explorer" data-i18n="navEvolution">Evolution</a>
+    <a href="#race" data-i18n="navRace">Race</a>
+    <a href="#how" data-i18n="navHow">How it works</a>
+    <a href="#build" data-i18n="navBuild">Build</a>
+    <a href="#experiments" data-i18n="navExperiments">Experiments</a>
+    <button id="language" class="chip" type="button">繁中</button>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="hero-canvas" class="hero-canvas" aria-label="The evolved champion robot running"></canvas>
+    <div class="hero-hud mono">
+      <span><b data-i18n="hudSpecimen">SPECIMEN</b> GEN-60</span>
+      <span><b>t</b> <output id="hero-time">0.00</output> s</span>
+      <span><b>x</b> <output id="hero-x">+0.00</output> m</span>
+    </div>
+    <div class="hero-copy">
+      <p class="eyebrow" data-i18n="heroEyebrow">MASS–SPRING PHYSICS × GENETIC ALGORITHM</p>
+      <h1 data-i18n="heroTitle">Nobody taught it to walk.</h1>
+      <p class="lead" data-i18n="heroLead">Every body and every rhythm on this page was discovered by evolution inside a physics simulator written from scratch. No gait was programmed — only a goal: move right.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#explorer" data-i18n="heroCta">Watch it evolve ↓</a>
+        <a class="button" href="https://github.com/technocrat94/evolving-soft-robots" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Key numbers">
+    <div><strong class="mono" data-count="210000">0</strong><span data-i18n="stat1">training episodes</span></div>
+    <div><strong class="mono" data-count="11.3" data-decimals="1" data-suffix="×">0</strong><span data-i18n="stat2">farther than generation 1</span></div>
+    <div><strong class="mono" data-count="19.24" data-decimals="2" data-suffix=" m">0</strong><span data-i18n="stat3">in 5 simulated seconds</span></div>
+    <div><strong class="mono" data-count="0">0</strong><span data-i18n="stat4">numerical explosions</span></div>
+  </section>
+
+  <!-- 01 EVOLUTION EXPLORER -->
+  <section id="explorer" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">01</span> <span data-i18n="exEyebrow">EVOLUTION, CHECKPOINT BY CHECKPOINT</span></p>
+      <h2 data-i18n="exTitle">Scrub through 60 generations.</h2>
+      <p class="section-lead" data-i18n="exLead">Drag the slider to load the best robot of any checkpoint. The body on the left is its genome; the simulation on the right is what that genome does.</p>
+    </div>
+    <div class="explorer">
+      <div class="explorer-controls">
+        <div class="gen-readout mono"><span data-i18n="generation">GENERATION</span><strong id="gen-label">60</strong></div>
+        <input id="gen-slider" type="range" min="0" max="6" step="1" value="6" aria-label="Generation checkpoint">
+        <div id="gen-ticks" class="gen-ticks mono"></div>
+        <div class="row">
+          <button id="evolve-play" class="button primary" type="button" data-i18n="autoEvolve">▶ Auto-evolve</button>
+          <button id="gen-replay" class="button" type="button" data-i18n="replay">↺ Replay</button>
+        </div>
+      </div>
+      <div class="explorer-genome card">
+        <p class="card-label mono" data-i18n="genome">GENOME · BODY PLAN</p>
+        <svg id="blueprint" viewBox="0 0 5 5" class="blueprint" aria-label="Body plan"></svg>
+        <dl class="specs mono">
+          <div><dt data-i18n="distance">Distance</dt><dd id="spec-distance">–</dd></div>
+          <div><dt>ω</dt><dd id="spec-omega">–</dd></div>
+          <div><dt data-i18n="cells">Cells</dt><dd id="spec-cells">–</dd></div>
+          <div><dt data-i18n="actuators">Actuators</dt><dd id="spec-act">–</dd></div>
+        </dl>
+      </div>
+      <div class="explorer-sim card">
+        <canvas id="explorer-canvas" class="sim-canvas" aria-label="Simulation of the selected checkpoint"></canvas>
+        <div class="canvas-hud mono"><span id="ex-time">0.00 s</span><span id="ex-dist">+0.00 m</span></div>
+      </div>
+    </div>
+    <div class="card chart-card">
+      <div class="chart-head">
+        <p class="card-label mono" data-i18n="fitnessLabel">FITNESS HISTORY · 100 ROBOTS × 60 GENERATIONS</p>
+        <div class="legend mono">
+          <span><i style="background:var(--orange)"></i><span data-i18n="best">Best</span></span>
+          <span><i style="background:var(--blue)"></i><span data-i18n="average">Average</span></span>
+          <span><i class="bar"></i><span data-i18n="disq">Tilt-disqualified</span></span>
+        </div>
+      </div>
+      <div id="fitness-chart" class="chart"></div>
+      <p class="caption" data-i18n="fitnessCaption">Progress is not smooth. The best distance froze at 14.33 m from generation 30 to 41, then broke through — a punctuated pattern familiar from biological evolution. Hover the chart to inspect any generation.</p>
+    </div>
+  </section>
+
+  <!-- 02 RACE -->
+  <section id="race" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">02</span> <span data-i18n="raceEyebrow">GHOST RACE</span></p>
+      <h2 data-i18n="raceTitle">Same physics. Same 5 seconds. Three eras.</h2>
+      <p class="section-lead" data-i18n="raceLead">The best robots from generation 1, 30 and 60 start on the same line. Nothing differs except what evolution wrote into their genomes.</p>
+    </div>
+    <div class="card race-card">
+      <canvas id="race-canvas" class="race-canvas" aria-label="Race between generations"></canvas>
+      <div class="race-bar">
+        <div id="leaderboard" class="leaderboard mono"></div>
+        <div class="row">
+          <button id="race-start" class="button primary" type="button" data-i18n="startRace">▶ Start race</button>
+          <button id="race-reset" class="button" type="button" data-i18n="reset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 HOW IT WORKS -->
+  <section id="how" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">03</span> <span data-i18n="howEyebrow">UNDER THE HOOD</span></p>
+      <h2 data-i18n="howTitle">Built from springs and selection.</h2>
+    </div>
+    <div class="how-grid">
+      <article class="card how-card">
+        <p class="card-label mono" data-i18n="physicsLabel">A · PHYSICS</p>
+        <h3 data-i18n="physicsTitle">Every cell is four masses and six springs</h3>
+        <svg class="voxel-diagram" viewBox="0 0 380 200" aria-hidden="true">
+          <g class="vx-anim">
+            <rect x="40" y="30" width="120" height="120" class="vx-fill"/>
+            <line x1="40" y1="30" x2="160" y2="150" class="sp diag"/><line x1="160" y1="30" x2="40" y2="150" class="sp diag"/>
+            <line x1="40" y1="30" x2="160" y2="30" class="sp act"/><line x1="40" y1="150" x2="160" y2="150" class="sp act"/>
+            <line x1="40" y1="30" x2="40" y2="150" class="sp"/><line x1="160" y1="30" x2="160" y2="150" class="sp"/>
+            <circle cx="40" cy="30" r="7" class="mass"/><circle cx="160" cy="30" r="7" class="mass"/>
+            <circle cx="40" cy="150" r="7" class="mass"/><circle cx="160" cy="150" r="7" class="mass"/>
+          </g>
+          <line x1="10" y1="172" x2="370" y2="172" class="groundline"/>
+          <text x="190" y="44" class="svg-t">m = 0.1</text>
+          <text x="190" y="74" class="svg-t act-t">L = L₀(1+A·sin(ωt+φ))</text>
+          <text x="190" y="104" class="svg-t">F = k(ℓ − L) + c·v</text>
+          <text x="190" y="134" class="svg-t">μ = 0.9</text>
+        </svg>
+        <p data-i18n="physicsText">Neighbouring cells share corners, so a robot is one connected mesh. Actuator cells change their springs' rest length with a sine wave; the ground pushes back with friction. Integration uses semi-implicit Euler at Δt = 2 ms.</p>
+        <div class="materials mono" id="materials"></div>
+      </article>
+      <article class="card how-card">
+        <p class="card-label mono" data-i18n="gaLabel">B · EVOLUTION</p>
+        <h3 data-i18n="gaTitle">A loop that rewards distance</h3>
+        <ol class="ga-loop">
+          <li><b data-i18n="ga1">Evaluate</b><span data-i18n="ga1t">Simulate each robot for 5 s, measure how far it moved.</span></li>
+          <li><b data-i18n="ga2">Select</b><span data-i18n="ga2t">Keep the top 20 % unchanged; pick parents by tournament.</span></li>
+          <li><b data-i18n="ga3">Crossover</b><span data-i18n="ga3t">Children inherit blocks of rows or columns from each parent.</span></li>
+          <li><b data-i18n="ga4">Mutate</b><span data-i18n="ga4t">Randomly change a few cells, phases and the frequency ω.</span></li>
+        </ol>
+        <p data-i18n="gaText">The genome is a 5 × 5 grid of materials plus one phase per cell and a global frequency — body and behaviour evolve together.</p>
+      </article>
+      <article class="card how-card">
+        <p class="card-label mono" data-i18n="guardLabel">C · ANTI-CHEATING</p>
+        <h3 data-i18n="guardTitle">Evolution will exploit any loophole</h3>
+        <p data-i18n="guardText">An early run discovered that falling over and sliding scores well. Two checks were added: a robot tilted beyond 30° for 0.2 s scores zero, and winners are re-run with actuation disabled to measure passive settling. These checks discourage exploits without guaranteeing physically realistic motion.</p>
+        <div class="guard-figs mono">
+          <div><strong>30° · 0.2 s</strong><span data-i18n="guard1">tilt rule</span></div>
+          <div><strong>0.078 m</strong><span data-i18n="guard2">champion with muscles off</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 BUILD -->
+  <section id="build" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">04</span> <span data-i18n="buildEyebrow">YOUR TURN</span></p>
+      <h2 data-i18n="buildTitle">Can you beat evolution?</h2>
+      <p class="section-lead" data-i18n="buildLead">Tap cells to cycle materials, pick a rhythm, and race your design against the generation-60 champion's ghost.</p>
+    </div>
+    <div class="build">
+      <div class="card build-panel">
+        <div id="editor" class="editor" role="group" aria-label="5 by 5 robot editor"></div>
+        <div id="palette" class="palette mono"></div>
+        <div class="presets">
+          <span class="card-label mono" data-i18n="presets">PRESETS</span>
+          <div class="row wrap">
+            <button class="chip" type="button" data-preset="demo" data-i18n="pDemo">Walker</button>
+            <button class="chip" type="button" data-preset="gen1" data-i18n="pGen1">Gen 1</button>
+            <button class="chip" type="button" data-preset="gen60" data-i18n="pGen60">Champion</button>
+            <button class="chip" type="button" data-preset="random" data-i18n="pRandom">🎲 Random</button>
+            <button class="chip" type="button" data-preset="clear" data-i18n="pClear">Clear</button>
+          </div>
+        </div>
+        <label class="field"><span><span data-i18n="frequency">Frequency ω</span> <output id="omega-out" class="mono">3.0 rad/s</output></span>
+          <input id="omega" type="range" min="1" max="6" step="0.1" value="3"></label>
+        <label class="field"><span data-i18n="rhythm">Rhythm</span>
+          <select id="rhythm">
+            <option value="sync" data-i18n="rSync">All cells in sync</option>
+            <option value="wave" data-i18n="rWave">Travelling wave (front → back)</option>
+            <option value="alt" data-i18n="rAlt">Alternating rows</option>
+            <option value="evolved" data-i18n="rEvolved">Evolved phases (presets only)</option>
+          </select></label>
+        <label class="toggle"><input id="ghost" type="checkbox" checked> <span data-i18n="ghostToggle">Race the champion's ghost</span></label>
+        <div class="row">
+          <button id="run" class="button primary" type="button" data-i18n="run">▶ Run</button>
+          <button id="share" class="button" type="button" data-i18n="share">🔗 Copy link</button>
+        </div>
+        <p id="build-status" class="status" aria-live="polite"></p>
+      </div>
+      <div class="card build-stage">
+        <canvas id="build-canvas" class="sim-canvas tall" aria-label="Your robot simulation"></canvas>
+        <div class="canvas-hud mono"><span id="b-time">0.00 s</span><span id="b-dist">+0.00 m</span></div>
+        <div id="verdict" class="verdict" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 EXPERIMENTS -->
+  <section id="experiments" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">05</span> <span data-i18n="expEyebrow">EXPERIMENTS</span></p>
+      <h2 data-i18n="expTitle">Three hypotheses. Honest answers.</h2>
+      <p class="section-lead" data-i18n="expLead">A single impressive run proves little. These experiments repeat everything over five random seeds and report what the data says — including when it disagrees with the hypothesis.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" data-tab="ablation" type="button" data-i18n="tabA">A · Body vs. brain</button>
+      <button class="tab" role="tab" data-tab="robust" type="button" data-i18n="tabB">B · Does feedback help?</button>
+      <button class="tab" role="tab" data-tab="domain" type="button" data-i18n="tabC">C · Domain randomization</button>
+    </div>
+
+    <div class="tabpanel" data-panel="ablation">
+      <div class="exp-grid">
+        <div class="card">
+          <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypA">Evolving body and controller together beats evolving only one of them.</span></p>
+          <div class="legend mono" id="ablation-legend"></div>
+          <div id="ablation-chart" class="chart"></div>
+          <p class="caption" data-i18n="ablationCaption">Mean best distance per generation, 5 seeds each, 60 robots × 40 generations. Shaded band = ±1 standard deviation. Click the legend to toggle a condition.</p>
+        </div>
+        <div class="card findings">
+          <table class="data mono" id="ablation-table"></table>
+          <div id="ablation-stats" class="stat-chips mono"></div>
+          <div class="verdict-box">
+            <span class="mono verdict-tag partial" data-i18n="vPartial">NOT CONFIRMED</span>
+            <p data-i18n="findA">Co-evolution reached the single best robot (20.77 m) but was also the least consistent. Evolving only the controller on a good hand-designed body was the most reliable. With 5 seeds, no difference is statistically significant after Holm correction.</p>
+          </div>
+          <p class="takeaway" data-i18n="takeA">Takeaway: a larger search space raises the ceiling and lowers the floor. Co-evolution likely needs a bigger budget to converge every time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpanel" data-panel="robust" hidden>
+      <div class="exp-grid">
+        <div class="card">
+          <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypB">A closed-loop neural controller with sensors is more robust to rough ground and pushes than an open-loop sine controller.</span></p>
+          <div class="row wrap seg" id="metric-seg">
+            <button class="chip active" type="button" data-metric="fitness_m" data-i18n="mEligible">Eligible distance</button>
+            <button class="chip" type="button" data-metric="raw_distance_m" data-i18n="mRaw">Raw displacement</button>
+          </div>
+          <div class="legend mono"><span><i style="background:var(--orange)"></i><span data-i18n="openLoop">Open-loop sine</span></span><span><i style="background:var(--violet)"></i><span data-i18n="closedLoop">Closed-loop neural</span></span></div>
+          <div id="robust-chart" class="chart"></div>
+          <p class="caption" data-i18n="robustCaption">Bars = mean over 5 seeds, dots = individual seeds. Both controllers drive the same champion body and were trained on flat ground only, then tested zero-shot. A tilted-over robot scores 0 eligible distance.</p>
+        </div>
+        <div class="card">
+          <p class="card-label mono" data-i18n="liveTest">LIVE STRESS TEST</p>
+          <div class="stress-choices">
+            <label class="field"><span data-i18n="compareLeft">Controller 1</span><select id="stress-left"></select></label>
+            <label class="field"><span data-i18n="compareRight">Controller 2</span><select id="stress-right"></select></label>
+          </div>
+          <div class="row wrap seg" id="env-seg">
+            <button class="chip active" type="button" data-env="flat" data-i18n="eFlat">Flat</button>
+            <button class="chip" type="button" data-env="rough" data-i18n="eRough">Rough terrain</button>
+            <button class="chip" type="button" data-env="push" data-i18n="ePush">Backward push</button>
+          </div>
+          <canvas id="robust-canvas" class="sim-canvas" aria-label="Open-loop versus closed-loop robot"></canvas>
+          <div class="duel mono">
+            <div><i class="sw sine"></i><span id="stress-name-left"></span><b id="d-sine">+0.00 m</b></div>
+            <div><i class="sw nn"></i><span id="stress-name-right"></span><b id="d-nn">+0.00 m</b></div>
+          </div>
+          <p id="stress-raw" class="caption mono"></p>
+          <p class="caption" data-i18n="stressNote">Live specimens use seed 42 and C's first held-out rough/push settings; B's chart above retains its original evaluation settings. Single trials can differ from the five-seed averages.</p>
+          <div class="row"><button id="stress-replay" class="button" type="button" data-i18n="replay">↺ Replay</button></div>
+          <div class="verdict-box">
+            <span class="mono verdict-tag no" data-i18n="vNo">NOT SUPPORTED WITH FLAT-ONLY TRAINING</span>
+            <p data-i18n="findB">In B's original test, flat-trained neural control lost on every mean and all five winners tipped over on rough terrain. Tab C tests whether varied training changes that result: held-out rough success rises from 8% to 94%, but a feedback-specific advantage is not statistically established.</p>
+          </div>
+          <p class="takeaway" data-i18n="takeB">Feedback provides information; disturbance rejection needs a controller designed or trained to use it. See C for the randomized-training and clock-only ablation.</p>
+          <button class="button" type="button" data-show-tab="domain" data-i18n="seeDomain">See C · Domain randomization →</button>
+        </div>
+      </div>
+    </div>
+    <div class="tabpanel" data-panel="domain" hidden>
+      <div class="exp-grid">
+        <div class="card">
+          <p class="hypothesis"><span class="mono" data-i18n="hyp">HYPOTHESIS</span> <span data-i18n="hypC">Feedback helps when the controller is trained in varied environments where feedback can be useful.</span></p>
+          <div class="row wrap seg" id="domain-metric">
+            <button class="chip active" type="button" data-domain-metric="distance" data-i18n="mEligible">Eligible distance</button>
+            <button class="chip" type="button" data-domain-metric="success" data-i18n="mSuccess">Success rate</button>
+          </div>
+          <div class="legend mono" id="domain-legend"></div>
+          <div id="domain-chart" class="chart"></div>
+          <p class="caption" data-i18n="domainCaption">Mean ± sample SD across five optimizer seeds. Every winner faces the same held-out flat episode, 10 rough profiles and 10 push settings. Success means passing the tilt rule, regardless of distance.</p>
+          <p class="caption" data-i18n="domainSetup">60 robots × 40 generations. Each candidate trains on four episodes: flat, two new rough profiles, and a random backward push. Batches change every generation and are shared by all candidates and controller families for each seed. The clock-only network masks all five feedback inputs.</p>
+        </div>
+        <div class="card findings">
+          <p class="card-label mono" data-i18n="heldoutSummary">HELD-OUT · ALL 21 EPISODES</p>
+          <div class="domain-table-wrap"><table class="data mono" id="domain-table"></table></div>
+          <div id="domain-stats" class="stat-chips mono"></div>
+          <div class="verdict-box">
+            <span class="mono verdict-tag partial" data-i18n="domainVerdict">PROMISING, NOT SIGNIFICANT</span>
+            <p data-i18n="findC">Randomized feedback reaches 11.26 m and 88.57% success, versus 5.95 m and 40.00% for flat-trained neural control. It exceeds clock-only's observed means, but all planned Holm-adjusted tests are non-significant. Randomized sine travels farther overall (12.28 m).</p>
+          </div>
+          <p class="takeaway" data-i18n="takeC">Training for disturbances matters. Feedback has the highest observed rough success (94%), while sine handles pushes better (98% versus 82%). This supports testing the training distribution, not declaring feedback universally superior.</p>
+          <p class="caption" data-i18n="domainCaveat">Five seed pairs have coarse test resolution. The four tests share one Holm correction; randomized training uses four times B's episode budget. New test samples share the training distribution, so broad transfer is unproven.</p>
+          <button class="button" type="button" data-show-tab="robust" data-i18n="tryDomain">Compare the controllers live →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 VALIDATION -->
+  <section id="validation" class="block">
+    <div class="block-head">
+      <p class="eyebrow"><span class="num">06</span> <span data-i18n="valEyebrow">VALIDATION & LIMITS</span></p>
+      <h2 data-i18n="valTitle">How do we know it's real?</h2>
+    </div>
+    <div class="val-grid">
+      <div class="card val"><strong class="mono">0 / 210,000</strong><span data-i18n="val1">unstable training episodes (NaN or explosion)</span></div>
+      <div class="card val"><strong class="mono">&lt; 10⁻¹²</strong><span data-i18n="val2">relative error between this page's JavaScript physics and the Python simulator</span></div>
+      <div class="card val"><strong class="mono">25</strong><span data-i18n="val3">automated unit tests</span></div>
+      <div class="card val"><strong class="mono">15 / 15</strong><span data-i18n="val4">domain-randomized winners replayed from saved genomes (tolerance 10⁻¹²)</span></div>
+    </div>
+    <div class="card limits">
+      <p class="card-label mono" data-i18n="limLabel">KNOWN LIMITATIONS</p>
+      <ul>
+        <li data-i18n="lim1">2D only, and not calibrated to any real soft material.</li>
+        <li data-i18n="lim2">No self-collision: limbs can pass through the body.</li>
+        <li data-i18n="lim3">The champion's frequency hit the upper bound (6 rad/s) — evolution wanted to go faster.</li>
+        <li data-i18n="lim4">D tests 10 new rough profiles and 10 pushes, all within the training distribution; five seeds and ideal sensors still limit generalisation.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div><a class="brand" href="#top"><span class="dot"></span>SOFT ROBOT LAB</a><p data-i18n="footer">Built from springs, selection and a little curiosity — by a mechanical engineering student.</p></div>
+  <div class="foot-links"><a href="https://github.com/technocrat94/evolving-soft-robots" target="_blank" rel="noopener" data-i18n="source">Source code & full README ↗</a></div>
+</footer>
+</body>
+</html>

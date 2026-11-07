@@ -209,11 +209,11 @@ Upgrade B 僅在平地訓練回授控制器，五個神經最佳個體皆在其�
 
 ![種子 42 的平地訓練神經、隨機環境回授及正弦控制器，在第一個保留崎嶇地形並排比較](assets/robust_controller_rough.gif)
 
-GIF 與網頁的**穩健性**互動區，依事先約定使用種子 42 與第一個保留崎嶇地形，未依測試成績挑選。此地形三者皆通過傾倒規則：平地訓練神經前進 **16.361 公尺**、隨機環境回授 **14.267 公尺**、隨機環境正弦 **14.321 公尺**。此單一個案有利於基準，儘管其總體崎嶇成功率低。網頁可切換平地／崎嶇地形及三種控制器，並同時顯示原始與有效位移。這是示範個案；摘要包含所有最佳個體與測試回合。
+GIF 依事先約定使用種子 42 與第一個保留崎嶇地形，未依測試成績挑選。此地形三者皆通過傾倒規則：平地訓練神經前進 **16.361 公尺**、隨機環境回授 **14.267 公尺**、隨機環境正弦 **14.321 公尺**。此單一個案有利於基準，儘管其總體崎嶇成功率低。新版網頁的即時壓力測試包含這三者，另加入平地正弦與隨機環境純時鐘，可切換平地／崎嶇／推力並顯示原始與有效位移。這是示範個案；C 分頁摘要包含所有最佳個體與測試回合。
 
 預先規劃的兩項回授比較（對純時鐘及正弦）以逐種子的保留測試平均值，進行精確、雙尾配對符號翻轉檢定，假定虛無假設下配對差值對稱，或配對內標籤可交換。Holm 校正同時涵蓋**四個檢定**：兩項比較 × 位移與成功率。只有五個配對種子時，雙尾原始 p 值最小為 0.0625，即使未校正也無法在 0.05 達到顯著。誤差棒為最佳化種子間的樣本標準差，並非信賴區間；不將 21 個測試回合視為 21 個獨立訓練種子。
 
-**驗證：**36,000 個體／**144,000 次訓練回合**，0 次數值不穩定，**32,382 次因傾倒取消資格**。600 個檢查點皆維持固定身體與頻率界線；15 個最終四回合分數經獨立重跑一致。保留測試含 **525 次主動與 525 次被動回合**，皆穩定，訓練／測試種子重疊為零。25 項 Python 測試與 13 項 JS/Python 控制器／環境檢核皆通過。
+**驗證：**36,000 個體／**144,000 次訓練回合**，0 次數值不穩定，**32,382 次因傾倒取消資格**。600 個檢查點皆維持固定身體與頻率界線；15 個最終四回合分數經獨立重跑一致。保留測試含 **525 次主動與 525 次被動回合**，皆穩定，訓練／測試種子重疊為零。25 項 Python 測試通過；新版實驗室通過 19 項 JS/Python 控制器／環境檢核，包含五種壓力測試選項。
 
 [CSV 摘要](assets/domain_randomization_table.csv)、[Markdown 表格](assets/domain_randomization_table.md)、[逐種子結果](assets/domain_randomization_per_seed.csv)、[所有測試回合與被動對照](assets/domain_randomization_episodes.csv)、[統計](assets/domain_randomization_statistics.json)、[驗證](assets/domain_randomization_validation.json)及[環境排程](assets/domain_randomization_manifest.json)皆納入版本控制。小型最佳控制器檔案位於 `assets/domain_controllers/`；原始訓練紀錄不追蹤。物理與標準遺傳演算法參數仍在 `config.py`；D 的固定研究規格宣告於 `domain_randomization.py`，並與設定一同儲存。
 
@@ -222,6 +222,7 @@ python domain_randomization.py
 python domain_randomization.py --analyze results/experiments/domain_randomization/run_YYYYMMDD_HHMM
 python verify_domain_randomization.py --study results/experiments/domain_randomization/run_YYYYMMDD_HHMM
 python export_robots.py
+python export_site_data.py
 node docs/validate.js
 ```
 
@@ -236,18 +237,20 @@ node docs/validate.js
 
 ## 互動網頁展示（Upgrade C）
 
-[瀏覽器實驗室](https://technocrat94.github.io/evolving-soft-robots/) 使用 `docs/` 中的純 HTML、CSS 與 JavaScript，不需框架或建置步驟。可並排觀看第 1、30、60 代，暫停／重新開始，或編輯 5 × 5 身體並測試 1–6 rad/s 的 omega。點擊依序切換空白 → 剛性 → 柔性 → 水平致動器 → 垂直致動器。自訂身體使用同步正弦相位；無效或不連通的設計會被拒絕。頁面支援英文與繁體中文，並展示三項實驗圖表。
+[瀏覽器實驗室](https://technocrat94.github.io/evolving-soft-robots/) 使用 `docs/` 中的純 HTML、CSS 與 JavaScript，不需框架或建置步驟。新版包含七個檢查點的演化滑桿、第 1／30／60 代幽靈競速、具有節奏預設與分享連結的 5 × 5 材料編輯器，以及使用 SVG 繪製的三個實驗分頁。C 分頁呈現領域隨機化；即時壓力測試可比較五種配對種子的平地／隨機環境控制器，在平地、崎嶇與推力條件的表現。所有功能支援英文與繁體中文。
 
-`export_robots.py` 將展示檢查點、平地訓練最佳神經控制器，以及 Upgrade D 預先選定的展示控制器匯出至 `docs/robots.json`，包含物理常數與可重現地形。JavaScript 模擬器也支援神經控制、崎嶇地形與推力。原始四個平地匯出個體，在此環境與 Python 的相對誤差皆低於 **4 × 10⁻¹³ %**。Upgrade D 另對三種展示控制器檢查平地、保留崎嶇地形與保留推力，同時比較原始位移、傾倒狀態及有效適應度。這是數值一致性檢核，不是實體驗證。[精確比較表](assets/js_parity.csv)。
+`export_robots.py` 將展示檢查點、平地訓練最佳神經控制器，以及 Upgrade D 預先選定的展示控制器匯出至 `docs/robots.json`，包含物理常數與可重現地形。`export_site_data.py` 另將七個檢查點、歷史、統計與五種壓力測試控制器匯出至 `lab.json`。原始四個平地個體與 Python 的相對誤差皆低於 **4 × 10⁻¹³ %**。五種壓力測試選項均檢查平地、保留崎嶇地形與保留推力，並比較原始位移與傾倒狀態，**共 19 項檢核**。這是數值一致性檢核，不是實體驗證。[精確比較表](assets/js_parity.csv)。
 
 ```sh
 python export_robots.py
+python export_site_data.py
 node docs/validate.js
+python export_site_data.py  # 更新內嵌的一致性檢核結果
 python -m http.server 8000 --directory docs
 # 開啟 http://localhost:8000
 ```
 
-GitHub Pages 使用 `main` 分支的 `/docs`。修改檢查點、控制器、物理常數或結果圖表後，請重新匯出並提交產生的檔案。直接以 `file://` 開啟 `index.html` 可能阻擋 JSON 載入，本機測試請使用 HTTP。
+GitHub Pages 使用 `main` 分支的 `/docs`。`robots.json` 保留模擬器匯出格式；`lab.json` 包含檢查點歷史、SVG 圖表資料、統計與壓力測試控制器。修改來源資料後，請執行兩個匯出程式。新版保留已驗證的 D 版 `docs/sim.js`。直接以 `file://` 開啟 `index.html` 可能阻擋 JSON 載入，本機測試請使用 HTTP。
 
 ## 執行方式
 

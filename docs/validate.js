@@ -2,8 +2,16 @@
 const fs=require('fs'),path=require('path'),assert=require('assert');
 const {Simulation,valid}=require('./sim.js');
 const data=JSON.parse(fs.readFileSync(path.join(__dirname,'robots.json'),'utf8'));
+const exportsToCheck=data.robots.slice();
+const labPath=path.join(__dirname,'lab.json');
+if(fs.existsSync(labPath)){
+ const lab=JSON.parse(fs.readFileSync(labPath,'utf8'));
+ for(const robot of Object.values(lab.domain_randomization?.controllers||{})){
+  if(!exportsToCheck.some(r=>r.id===robot.id))exportsToCheck.push(robot);
+ }
+}
 const rows=[];
-for(const robot of data.robots){
+for(const robot of exportsToCheck){
  for(const terrain of robot.references?Object.keys(robot.references):['flat']){
   const reference=robot.references?.[terrain]||{distance_m:robot.python_distance_m};
   const options=terrain==='push'?data.robustness_push:{terrain};
