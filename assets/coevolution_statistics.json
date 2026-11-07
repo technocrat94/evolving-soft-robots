@@ -1,0 +1,163 @@
+{
+  "summary": [
+    {
+      "condition": "coevo_sine",
+      "environment": "all",
+      "distance_m_mean": 11.784736127898023,
+      "distance_m_sd": 4.008839457641658,
+      "success_rate_mean": 0.9841269841269842,
+      "success_rate_sd": 0.024590370452110613,
+      "cells_mean": 19.833333333333332,
+      "cells_sd": 1.4719601443879746,
+      "actuators_mean": 14.0,
+      "actuators_sd": 0.6324555320336759,
+      "passive_distance_m_mean": 0.018382993913256256,
+      "passive_distance_m_sd": 0.0944216273569561
+    },
+    {
+      "condition": "coevo_sine",
+      "environment": "flat",
+      "distance_m_mean": 13.181431137463056,
+      "distance_m_sd": 3.9695552745738127,
+      "success_rate_mean": 1.0,
+      "success_rate_sd": 0.0,
+      "cells_mean": 19.833333333333332,
+      "cells_sd": 1.4719601443879746,
+      "actuators_mean": 14.0,
+      "actuators_sd": 0.6324555320336759,
+      "passive_distance_m_mean": 0.021627864957096305,
+      "passive_distance_m_sd": 0.028245642651959904
+    },
+    {
+      "condition": "coevo_sine",
+      "environment": "rough",
+      "distance_m_mean": 12.028429903019026,
+      "distance_m_sd": 4.134115547273901,
+      "success_rate_mean": 0.9833333333333334,
+      "success_rate_sd": 0.0408248290463863,
+      "cells_mean": 19.833333333333332,
+      "cells_sd": 1.4719601443879746,
+      "actuators_mean": 14.0,
+      "actuators_sd": 0.6324555320336759,
+      "passive_distance_m_mean": 0.05463263751803598,
+      "passive_distance_m_sd": 0.07572887388909044
+    },
+    {
+      "condition": "coevo_sine",
+      "environment": "push",
+      "distance_m_mean": 11.401372851820517,
+      "distance_m_sd": 3.947241422453959,
+      "success_rate_mean": 0.9833333333333334,
+      "success_rate_sd": 0.04082482904638629,
+      "cells_mean": 19.833333333333332,
+      "cells_sd": 1.4719601443879746,
+      "actuators_mean": 14.0,
+      "actuators_sd": 0.6324555320336759,
+      "passive_distance_m_mean": -0.01819113679590748,
+      "passive_distance_m_sd": 0.12118201850315712
+    },
+    {
+      "condition": "coevo_feedback",
+      "environment": "all",
+      "distance_m_mean": 10.193205506958352,
+      "distance_m_sd": 1.0539491190916521,
+      "success_rate_mean": 0.9920634920634921,
+      "success_rate_sd": 0.0194403947839935,
+      "cells_mean": 18.166666666666668,
+      "cells_sd": 1.7224014243685084,
+      "actuators_mean": 12.0,
+      "actuators_sd": 1.0954451150103321,
+      "passive_distance_m_mean": 0.2587630304028464,
+      "passive_distance_m_sd": 0.3700699957661264
+    },
+    {
+      "condition": "coevo_feedback",
+      "environment": "flat",
+      "distance_m_mean": 12.20992134996109,
+      "distance_m_sd": 1.4742151797200265,
+      "success_rate_mean": 1.0,
+      "success_rate_sd": 0.0,
+      "cells_mean": 18.166666666666668,
+      "cells_sd": 1.7224014243685084,
+      "actuators_mean": 12.0,
+      "actuators_sd": 1.0954451150103321,
+      "passive_distance_m_mean": 0.2771080291985675,
+      "passive_distance_m_sd": 0.40084177408075283
+    },
+    {
+      "condition": "coevo_feedback",
+      "environment": "rough",
+      "distance_m_mean": 10.023913319162263,
+      "distance_m_sd": 1.6365085358976716,
+      "success_rate_mean": 0.9833333333333334,
+      "success_rate_sd": 0.0408248290463863,
+      "cells_mean": 18.166666666666668,
+      "cells_sd": 1.7224014243685084,
+      "actuators_mean": 12.0,
+      "actuators_sd": 1.0954451150103321,
+      "passive_distance_m_mean": 0.3228361183291754,
+      "passive_distance_m_sd": 0.3629398645558564
+    },
+    {
+      "condition": "coevo_feedback",
+      "environment": "push",
+      "distance_m_mean": 10.160826110454165,
+      "distance_m_sd": 1.2710562422619942,
+      "success_rate_mean": 1.0,
+      "success_rate_sd": 0.0,
+      "cells_mean": 18.166666666666668,
+      "cells_sd": 1.7224014243685084,
+      "actuators_mean": 12.0,
+      "actuators_sd": 1.0954451150103321,
+      "passive_distance_m_mean": 0.19285544259694518,
+      "passive_distance_m_sd": 0.37641450761771517
+    }
+  ],
+  "paired_tests": [
+    {
+      "metric": "distance_m",
+      "p_value": 0.4375,
+      "permutations": 64,
+      "method": "exact paired two-sided sign-flip test",
+      "mean_paired_difference": -1.5915306209396738,
+      "holm_adjusted_p_value": 0.875
+    },
+    {
+      "metric": "success_rate",
+      "p_value": 1.0,
+      "permutations": 64,
+      "method": "exact paired two-sided sign-flip test",
+      "mean_paired_difference": 0.007936507936507945,
+      "holm_adjusted_p_value": 1.0
+    }
+  ],
+  "heldout_unstable_pairs": 0,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+  ],
+  "episodes_per_seed": 21,
+  "distance_definition": "mean eligible signed COM displacement; tilt-disqualified episodes score zero",
+  "sd_definition": "sample SD across six seeds",
+  "comparison": "coevo_feedback minus coevo_sine",
+  "training_tilt_disqualified_episodes": 5018,
+  "training_unstable_episodes": 0,
+  "population": 60,
+  "generations": 40,
+  "training_episodes": 115200,
+  "training_test_terrain_seed_overlap": 0,
+  "training_seconds": 2265.4247857080773,
+  "total_seconds": 2280.3320865007117,
+  "workers": 10,
+  "decisions": [
+    "Seeds 42-47; paired initial random bodies and shared Upgrade D schedules.",
+    "Fixed 25 row-major feedback outputs; inactive cells ignored; legacy actuator-only checkpoints unchanged.",
+    "Best on generation-40 training batch; no held-out winner selection.",
+    "Two-sided exact paired sign-flip tests with raw and Holm-adjusted p-values across the two outcomes.",
+    "Passive checks are measurements, not a post-hoc selection criterion."
+  ]
+}

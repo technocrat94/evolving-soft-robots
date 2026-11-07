@@ -139,19 +139,26 @@ def simulate(body, controller_params=None, steps=None, record=False, diagnostics
     neural = params.get('kind', 'open_loop') in ('closed_loop', 'neural_clock_only')
     actuator_cells = np.argwhere((body == 3) | (body == 4))
     cell_index = {tuple(cell):i for i,cell in enumerate(actuator_cells)}
-    owner_matrix = np.zeros((len(owners),len(actuator_cells)))
+    outputs = len(actuator_cells)
     if neural:
+        # Co-evolution keeps a fixed row-major output for every 5x5 grid cell.
+        # Legacy fixed-body checkpoints retain their actuator-only layout.
+        if np.shape(params.get('w2')) == (25, C.NN_HIDDEN) and body.shape == (5, 5):
+            outputs = 25
+            cell_index = {(r,c):r*5+c for r,c in actuator_cells}
         expected = ((C.NN_HIDDEN, C.NN_INPUTS), (C.NN_HIDDEN,),
-                    (len(actuator_cells), C.NN_HIDDEN), (len(actuator_cells),))
+                    (outputs, C.NN_HIDDEN), (outputs,))
         arrays = tuple(np.asarray(params.get(name), dtype=float)
                        for name in ('w1', 'b1', 'w2', 'b2'))
         if tuple(a.shape for a in arrays) != expected or not all(np.all(np.isfinite(a)) for a in arrays):
             raise ValueError('Closed-loop controller has invalid neural-network parameters')
+    owner_matrix = np.zeros((len(owners),outputs))
+    if neural:
         for spring, group in enumerate(owners):
             for r,c,_,active in group:
                 if active:
                     owner_matrix[spring,cell_index[(r,c)]] += 1/len(group)
-    output = np.zeros(len(actuator_cells))
+    output = np.zeros(outputs)
     previous_angle = angle(reference,p)
     front = reference[:,0] >= 0
     if neural and not np.any(~front):

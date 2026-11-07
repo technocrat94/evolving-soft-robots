@@ -226,6 +226,25 @@ python export_site_data.py
 node docs/validate.js
 ```
 
+## Co-evolving closed-loop control from scratch (Upgrade E)
+
+The fixed showcase body used in B/D was evolved with sine control, which could favor open-loop control. Here `coevo_sine` and `coevo_feedback` each evolve **body and controller from random populations**, using six paired seeds (42–47), **60 candidates × 40 generations**, and D's unchanged four-episode domain-randomization schedule. Paired conditions start with identical random bodies and share environments; feedback retains the seven sensors and eight tanh hidden units, with **25 fixed row-major cell outputs** (only actuator cells apply them). Omega remains 1–6 rad/s; damping, tilt disqualification and amplitude are unchanged.
+
+Winners are selected on generation 40's training batch, then evaluated on D's same 21 held-out episodes. Values below are mean ± sample SD across six seeds; aggregate distance includes zeros for tilt failures, and success means no tilt disqualification.
+
+| Condition | Held-out distance (m) | Success (%) | Mean cells | Mean actuators |
+|---|---:|---:|---:|---:|
+| `coevo_sine` | 11.785 ± 4.009 | 98.41 ± 2.46 | 19.83 | 14.00 |
+| `coevo_feedback` | 10.193 ± 1.054 | 99.21 ± 1.94 | 18.17 | 12.00 |
+
+![All six co-evolved winning bodies per controller family](assets/coevo_bodies.png)
+
+Sine traveled farther on average, while feedback had less observed distance variation and a 0.79 percentage-point higher success rate. Exact paired two-sided sign-flip tests across six seeds do **not** establish a difference: distance p = **0.4375**, success p = **1.0000** (Holm-adjusted across the two outcomes: **0.8750**, **1.0000**). Co-evolution removes the fixed sine-evolved starting body, but does not equalize controller parameter counts or search difficulty. With only six seeds and near-ceiling success, these results support neither feedback superiority nor equivalence.
+
+All **115,200 training episodes** were numerically stable; **5,018** were tilt-disqualified. All **252 active + 252 actuation-disabled held-out episodes** were stable; mean passive raw distances were **0.018 ± 0.094 m** (sine) and **0.259 ± 0.370 m** (feedback), measured without changing winner selection. The study took **2,280.332 s (38.01 min)** on ten cores; all 25 existing Python tests passed in one suite run.
+
+[Aggregate/per-environment table and tests](assets/coevolution_table.md), [per-seed CSV including passive checks](assets/coevolution_runs.csv), [statistics/settings](assets/coevolution_statistics.json), and all [12 small winner checkpoints](assets/coevo_winners/) are committed. Checkpoints retain D's NPZ schema; output shape distinguishes grid-wide feedback from legacy actuator-only controllers. Reproduce with `python coevolution.py`; regenerate summaries with `python coevolution.py --analyze results/experiments/coevolution/run_YYYYMMDD_HHMM`. This upgrade adds no website changes or GIFs.
+
 ## Validation
 
 - **Tilt rule:** the best-fit rotation of all nodes relative to the starting body is checked every `0.02 s`. More than **30°** of tilt sustained for **0.2 s** disqualifies the run. This discourages falling and sliding; it is a conservative heuristic, not a guarantee against every possible exploit.
